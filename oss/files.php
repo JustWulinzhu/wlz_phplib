@@ -41,6 +41,6 @@ class Files {
 
 }
 
-//$path = (new Files())->upload('test');
+$path = (new Files())->upload('test');
 //$ret = (new Files())->download('test/201904/gou.png', '/www_tmp/a.png');
-//print_r($ret);
+print_r($path);

@@ -35,5 +35,5 @@ require_once "fun.php";
 //$oss->signUrl($oss::BUCKET, 'test.png');
 //$oss->delete($oss::BUCKET, 'test.png');
 
-$ret = Curl::request('http://localhost/wlz_phplib/oss/files.php', 'POST', array('file' => new \CURLFile('/Users/wulinzhu/Documents/gou.png')));
+$ret = Curl::request('http://localhost/wlz_phplib/oss/files.php', 'POST', array('file' => new \CURLFile('/Users/wulinzhu/Downloads/jdk-8u191-macosx-x64.dmg')));
 print_r($ret);
