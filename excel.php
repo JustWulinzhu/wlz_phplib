@@ -47,7 +47,7 @@ class Excel {
      * @return array
      * @throws Exception
      */
-    public function readPHPExcel($file, $sheet = 0) {
+    public function readPHPExcel($file, $sheet) {
         $excel = new PHPExcel_Reader_Excel2007();
         if(! $excel->canRead($file)) {
             $excel = new PHPExcel_Reader_Excel5();
@@ -76,7 +76,7 @@ class Excel {
      * @return array
      * @throws Exception
      */
-    public function readIoFactory($file, $sheet = 0) {
+    public function readIoFactory($file, $sheet) {
         try {
             $file_type = PHPExcel_IOFactory::identify($file);
             $obj_reader = PHPExcel_IOFactory::createReader($file_type);
