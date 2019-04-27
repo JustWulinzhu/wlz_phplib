@@ -45,7 +45,7 @@ class Mail {
         //设置ssl连接smtp服务器的远程服务器端口号，以前的默认是25，但是现在新的好像已经不可用了 可选465或587
         $mail->Port = $this->port;
         //设置smtp的helo消息头 这个可有可无 内容任意
-        // $mail->Helo = 'Hello smtp.qq.com Server';
+        //$mail->Helo = 'Hello smtp.qq.com Server';
         //设置发件人的主机域 可有可无 默认为localhost 内容任意，建议使用你的域名
         //$mail->Hostname = 'http://zhaozhXXXxg.cn';
         //设置发送的邮件的编码 可选GB2312  据说utf8在某些客户端收信下会乱码
@@ -63,13 +63,13 @@ class Mail {
         //设置收件人邮箱地址 该方法有两个参数 第一个参数为收件人邮箱地址 第二参数为给该地址设置的昵称 不同的邮箱系统会自动进行处理变动 这里第二个参数的意义不大
         $mail->addAddress($to, $this->nickname);
         //添加多个收件人 则多次调用方法即可
-        // $mail->addAddress('xxx@163.com','l通知');
+        //$mail->addAddress('xxx@163.com','l通知');
         //添加该邮件的主题
         $mail->Subject = $title;
         //添加邮件正文 上方将isHTML设置成了true，则可以是完整的html字符串 如：使用file_get_contents函数读取本地的html文件
         $mail->Body = $content;
         //为该邮件添加附件 该方法也有两个参数 第一个参数为附件存放的目录（相对目录、或绝对目录均可） 第二参数为在邮件附件中该附件的名称
-        // $mail->addAttachment('./55.jpg','head.jpg');
+        //$mail->addAttachment('./55.jpg','head.jpg');
         //同样该方法可以多次调用 上传多个附件
         // $mail->addAttachment('./Juery-1.1.0.js','jquery.js');
         return $mail->send();

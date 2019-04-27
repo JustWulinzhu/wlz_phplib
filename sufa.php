@@ -74,5 +74,3 @@
             //zheban($arr, $num);
         }
     }
-    dd(zheban($arr, 9));
-
