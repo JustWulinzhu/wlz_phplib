@@ -54,12 +54,26 @@ class Oss {
      * @param $bucket
      * @param $name
      * @param $local_file
+     * @param string $call_back_url
      * @return bool
      * @throws Exception
      */
-    public function uploadFile($bucket, $name, $local_file) {
+    public function uploadFile($bucket, $name, $local_file, $call_back_url = '') {
         try {
-            $ret = self::getOssInstance()->uploadFile($bucket, $name, $local_file);
+            $options = null;
+            if ($call_back_url) {
+                $call_back_host = parse_url($call_back_url)['host'];
+                $params = "{
+                    'callbackUrl':{$call_back_url},
+                    'callbackHost':{$call_back_host},
+                    'callbackBodyType':'application/json',
+                }";
+                $options = array(OssClient::OSS_CALLBACK => $call_back_url,
+                    OssClient::OSS_CALLBACK_VAR => $params
+                );
+            }
+            Log::getInstance()->debug(array('oss uploadFile request params', json_encode(array($bucket, $name, $local_file, $options))));
+            $ret = self::getOssInstance()->uploadFile($bucket, $name, $local_file, $options);
             Log::getInstance()->debug(array('oss uploadFile response', json_encode($ret)));
         } catch (OssException $e) {
             Log::getInstance()->error(array('oss uploadFile errors', $e->getCode(), $e->getMessage()));

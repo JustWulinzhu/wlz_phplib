@@ -16,14 +16,15 @@ class Files {
      * 可采用模拟文件上传方式,demo :
      * Curl::request('http://localhost/wlz_phplib/oss/files.php', 'POST', array('file' => new \CURLFile('/Users/wulinzhu/Documents/gou.png')));
      * @param $dir
+     * @param $call_back_url
      * @return string
      */
-    public function upload($dir) {
+    public function upload($dir, $call_back_url = '') {
         $file_path = $dir . '/' . date('Ym', time()) . '/' . $_FILES['file']['name'];
         $file_tmp_name = $_FILES['file']['tmp_name'];
 
         $oss = new Oss();
-        $oss->uploadFile($oss::BUCKET, $file_path, $file_tmp_name);
+        $oss->uploadFile($oss::BUCKET, $file_path, $file_tmp_name, $call_back_url);
         return $file_path;
     }
 
@@ -41,6 +42,7 @@ class Files {
 
 }
 
-$path = (new Files())->upload('test');
+$call_back_url = 'http://localhost/wlz_phplib/test.php';
+$ret = (new Files())->upload('test');
 //$ret = (new Files())->download('test/201904/gou.png', '/www_tmp/a.png');
-print_r($path);
+print_r($ret);
