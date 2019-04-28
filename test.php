@@ -35,26 +35,11 @@ require_once "fun.php";
 //$oss->signUrl($oss::BUCKET, 'test.png');
 //$oss->delete($oss::BUCKET, 'test.png');
 
-// $ret = Curl::request('http://localhost/wlz_phplib/oss/files.php', 'POST', array('file' => new \CURLFile('/Users/wulinzhu/Downloads/jdk-8u191-macosx-x64.dmg')));
-// print_r($ret);
+Log::getInstance()->debug(array('oss upload callback', json_encode($_REQUEST)));
 
-$arr = [
-	1,2,3,4
-];
-$arr2 = [
-	'a','b','c'
-];
-
-foreach ($arr as $key => $a) {
-	foreach($arr2 as $b) {
-		echo $b."\n";
-		if ($b == 'b') {
-			break;
-		}
-	}
-	echo $a."<br>";
-}
-
+$url = 'http://localhost/wlz_phplib/oss/files.php';
+$ret = Curl::request($url, 'POST', array('file' => new \CURLFile('/www/wlz-project.tar.gz')));
+print_r($ret);
 
 
 
