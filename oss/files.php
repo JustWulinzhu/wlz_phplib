@@ -19,7 +19,7 @@ class Files {
      * @param $call_back_url
      * @return string
      */
-    public function upload($dir, $call_back_url) {
+    public function upload($dir, $call_back_url = '') {
         $file_path = $dir . '/' . date('Ym', time()) . '/' . $_FILES['file']['name'];
         $file_tmp_name = $_FILES['file']['tmp_name'];
 
@@ -31,18 +31,17 @@ class Files {
     /**
      * 文件下载
      * @param $file_path
-     * @param $local_file_path
-     * @return bool
+     * @param null $local_file_path
+     * @return string 文件流
      */
-    public function download($file_path, $local_file_path) {
+    public function download($file_path, $local_file_path = null) {
         $oss = new Oss();
-        $oss->get($oss::BUCKET, $file_path, $local_file_path);
-        return true;
+        $file = $oss->get($oss::BUCKET, $file_path, $local_file_path);
+        return $file;
     }
 
 }
 
-$call_back_url = 'http://localhost/wlz_phplib/test.php';
-$ret = (new Files())->upload('test', $call_back_url);
-//$ret = (new Files())->download('test/201904/gou.png', '/www_tmp/a.png');
-print_r($ret);
+//$call_back_url = 'http://localhost/wlz_phplib/test.php';
+//$ret = (new Files())->upload('test');
+//$ret = (new Files())->download('test/201904/gou.png');
