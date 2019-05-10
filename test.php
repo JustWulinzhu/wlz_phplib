@@ -47,15 +47,17 @@ $object3 = (object)array();
 //print_r($ret);
 
 
-$arr = array('name' => 'test');
-$object = (object)$arr;
-$curl = new Curl();
-$std = new stdClass();
-dd($std);
+//$arr = array('name' => 'test');
+//$object = (object)$arr;
+//$curl = new Curl();
+//$std = new stdClass();
+//dd($std);
 
 
-
-
+ob_start();
+echo 111;
+ob_clean();
+echo 222;
 
 
 
