@@ -1,12 +1,5 @@
 <?php
 
-    function dd($arr){
-        echo "<pre>";
-            print_r($arr);
-        echo "</pre>";
-        die;
-    }
-
     //冒泡排序
     $arr = [2, 5, 9, 1, 4];
     $count = count($arr);
@@ -55,8 +48,6 @@
         $arr = array_merge($left, [$base_num], $right);
         return $arr;
     }
-    
-    //dd($arr);
 
     //二分查找
     $arr = [1, 2 , 4, 5, 8, 9, 20, 22, 30];

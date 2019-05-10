@@ -12,7 +12,7 @@ require_once __DIR__ . '/' . 'fun.php';
 class Socket {
 
     //socket server
-    public function socketServer() {
+    public function server() {
         $socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
         if (socket_bind($socket, '172.18.0.1', 8888) == false) {
             echo 'server bind fail:' . socket_strerror(socket_last_error());
@@ -49,7 +49,7 @@ class Socket {
     }
 
     //socket client
-    public function socketClient() {
+    public function client() {
         //创建一个socket套接流
         $socket = socket_create(AF_INET,SOCK_STREAM, SOL_TCP);
         /****************设置socket连接选项，这两个步骤你可以省略*************/
@@ -84,15 +84,15 @@ $socket = new Socket();
 
 if (Fun::isCli()) {
     if ($argv[1] == 'server') {
-        $socket->socketServer();
+        $socket->server();
     } else {
-        $socket->socketClient();
+        $socket->client();
     }
 } else {
     if ($_GET['env'] == 'server') {
-        $socket->socketServer();
+        $socket->server();
     } else {
-        $socket->socketClient();
+        $socket->client();
     }
 }
 

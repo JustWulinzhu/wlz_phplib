@@ -4,16 +4,24 @@
  * Author: wulinzhu
  * Email: linzhu.wu@beebank.com
  * Date: 19/4/3 下午6:03
- * 图片流处理
+ * 图片流处理, 展示、压缩等
  */
 
 require_once "fun.php";
 
 class Image {
 
+    const IMAGE_TYPE_JPEG = 'jpeg';
+    const IMAGE_TYPE_PNG = 'png';
+    const IMAGE_TYPE_GIF = 'gif';
+
+    private $image = array(
+        self::IMAGE_TYPE_GIF, self::IMAGE_TYPE_JPEG, self::IMAGE_TYPE_PNG,
+    );
+
     /**
      * 图片流处理,展示图片
-     * @param $image_base64_info 图片流,经过base64encode之后的
+     * @param string $image_base64_info 图片流,经过base64encode之后的
      * @return string
      * @throws Exception
      */
@@ -21,25 +29,24 @@ class Image {
         $data = base64_decode($image_base64_info);
 
         $type = $this->getFileType($data);
+        Log::getInstance()->debug(array('file_type', $type));
 
         $im = imagecreatefromstring($data);
         if ($im) {
+            header("Content-Type: image/{$type}");
             switch ($type) {
                 case 'jpeg' :
-                    header("Content-Type: image/jpeg");
                     imagejpeg($im);
                     break;
                 case 'png' :
-                    header("Content-Type: image/png");
                     imagepng($im);
                     break;
                 case 'gif' :
-                    header("Content-Type: image/gif");
                     imagegif($im);
                     break;
                 default :
-                    header("Content-Type: image/png");
-                    imagepng($im);
+                    header("Content-Type: image/jpeg");
+                    imagejpeg($im);
             }
             imagedestroy($im);
         } else {
@@ -49,8 +56,110 @@ class Image {
     }
 
     /**
+     * 图片压缩下载(浏览器输出)
+     * @param $image_binary
+     * @param float $percent
+     * @throws Exception
+     */
+    public function compress($image_binary, $percent = 0.5) {
+        $origin_mem_limit = ini_get("memory_limit");
+        ini_set("memory_limit", "256M");
+
+        if ($percent <= 0 || $percent > 2) {
+            throw new Exception('压缩范围超出限制');
+        }
+        $type = $this->getFileType($image_binary);
+        if (! in_array($type, $this->image)) {
+            throw new Exception('错误的图片类型');
+        }
+
+        list($width, $height) = getimagesizefromstring($image_binary);
+
+        $new_width  = $percent * $width;
+        $new_height = $percent * $height;
+
+        $image = imagecreatetruecolor($new_width, $new_height);
+        $image_string = imagecreatefromstring($image_binary);
+        imagecopyresampled($image, $image_string, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
+
+        //指定浏览器输出下载
+        $filename = date('Ymd', time()) . '_' . substr(md5(mt_rand(1, 10000)), 0, 12) . '.' . $type;
+        header("Content-Type: application/octet-stream");
+        header("Content-Disposition: attachment; filename=$filename");
+        header("Pragma: no-cache");
+        header("Expires: 0");
+
+        header("Content-Type: image/{$type}");
+        switch ($type) {
+            case self::IMAGE_TYPE_GIF :
+                imagegif($image, null);
+                break;
+            case self::IMAGE_TYPE_JPEG :
+                imagejpeg($image, null);
+                break;
+            case self::IMAGE_TYPE_PNG :
+                imagepng($image, null);
+                break;
+        }
+        imagedestroy($image);
+        imagedestroy($image_string);
+
+        ini_set('memory_limit', $origin_mem_limit);
+    }
+
+    /**
+     * 图片压缩,返回文件流
+     * @param $image_binary
+     * @param float $percent
+     * @return string
+     * @throws Exception
+     */
+    public function compress_binary($image_binary, $percent = 0.5) {
+        $origin_mem_limit = ini_get("memory_limit");
+        ini_set("memory_limit", "256M");
+
+        if ($percent <= 0 || $percent > 2) {
+            throw new Exception('压缩范围超出限制');
+        }
+        $type = $this->getFileType($image_binary);
+        if (! in_array($type, $this->image)) {
+            throw new Exception('错误的图片类型');
+        }
+
+        list($width, $height) = getimagesizefromstring($image_binary);
+
+        $new_width  = $percent * $width;
+        $new_height = $percent * $height;
+
+        $image = imagecreatetruecolor($new_width, $new_height);
+        $image_string = imagecreatefromstring($image_binary);
+        imagecopyresampled($image, $image_string, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
+        //在php临时文件目录新建临时文件,前缀image_,用于下面图片保存
+        $tmp_file = tempnam(sys_get_temp_dir(), 'image_');
+
+        switch ($type) { //保存临时图片
+            case self::IMAGE_TYPE_GIF :
+                imagegif($image, $tmp_file);
+                break;
+            case self::IMAGE_TYPE_JPEG :
+                imagejpeg($image, $tmp_file);
+                break;
+            case self::IMAGE_TYPE_PNG :
+                imagepng($image, $tmp_file);
+                break;
+        }
+        imagedestroy($image);
+        imagedestroy($image_string);
+        $image_binary = file_get_contents($tmp_file);
+        unlink($tmp_file);
+        ini_set('memory_limit', $origin_mem_limit);
+
+        return $image_binary;
+    }
+
+    /**
      * 通过文件流获取文件类型
-     * @param $file 二进制文件流形式
+     * @param string $file 二进制文件流形式
      * @return string
      */
     public function getFileType($file) {
@@ -90,6 +199,7 @@ class Image {
 
 }
 
-$binary = file_get_contents('/Users/wulinzhu/Documents/a.png');
-$base64_binary = base64_encode($binary);
-(new Image())->getImage($base64_binary);
+/*****************************************************************************************/
+
+$binary = file_get_contents('/tmp/gaoqing.jpeg');
+$file = (new Image())->compress_binary($binary);

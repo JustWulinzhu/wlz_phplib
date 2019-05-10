@@ -106,7 +106,7 @@ class Oss {
      * @param $bucket
      * @param $name
      * @param null $local_file
-     * @return bool
+     * @return string
      * @throws Exception
      */
     public function get($bucket, $name, $local_file = null) {
@@ -122,7 +122,7 @@ class Oss {
             Log::getInstance()->error(array('oss get errors', $e->getCode(), $e->getMessage()));
             throw new Exception($e->getCode(), $e->getMessage());
         }
-        return true;
+        return $ret;
     }
 
     /**
