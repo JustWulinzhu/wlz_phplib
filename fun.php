@@ -7,7 +7,7 @@ require_once "ipc.php";
 require_once "mysql.php";
 require_once "curl.php";
 require_once "queue/queue.php";
-require_once "exceptionService.php";
+require_once "exceptions.php";
 require_once "oss/oss.php";
 require_once "mail.php";
 
