@@ -7,6 +7,11 @@
  */
 require_once "fun.php";
 
+/*******php新建空对象*******/
+$object1 = new stdClass();
+$object2 = new class {};
+$object3 = (object)array();
+
 //$image = "http://b.hiphotos.baidu.com/image/h%3D300/sign=c8a9d4e2841363270aedc433a18fa056/11385343fbf2b2114a65cd70c48065380cd78e41.jpg";
 //$res = Curl::curlGet($image);
 //file_put_contents('/www_tmp/a.png', $res);
@@ -35,17 +40,24 @@ require_once "fun.php";
 //$oss->signUrl($oss::BUCKET, 'test.png');
 //$oss->delete($oss::BUCKET, 'test.png');
 
-Log::getInstance()->debug(array('oss upload callback', json_encode($_REQUEST)));
-
-$url = 'http://localhost/wlz_phplib/oss/files.php';
-$ret = Curl::request($url, 'POST', array('file' => new \CURLFile('/www/wlz-project.tar.gz')));
-print_r($ret);
-
-
+//Log::getInstance()->debug(array('oss upload callback', json_encode($_REQUEST)));
+//
+//$url = 'http://localhost/wlz_phplib/oss/files.php';
+//$ret = Curl::request($url, 'POST', array('file' => new \CURLFile('/www/wlz-project.tar.gz')));
+//print_r($ret);
 
 
+//$arr = array('name' => 'test');
+//$object = (object)$arr;
+//$curl = new Curl();
+//$std = new stdClass();
+//dd($std);
 
 
+ob_start();
+echo 111;
+ob_clean();
+echo 222;
 
 
 

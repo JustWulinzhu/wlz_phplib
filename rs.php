@@ -8,16 +8,22 @@
  * 参考lock、transactionLock方法
  */
 include_once "fun.php";
-class RedisLock {
+
+class Rs {
 
     private $redis;
 
     const EXPIRE_TIME = 5; //预留3s的业务代码执行时间
     const DEFAULT_VALUE = 'default_value'; //预留3s的业务代码执行时间
 
-    function __construct($config) {
+    /**
+     * RedisLock constructor.
+     * @param string $host
+     * @param int $port
+     */
+    public function __construct($host = '127.0.0.1', $port = 6379) {
         $this->redis = new Redis();
-        $this->connect($config);
+        $this->connect($host, $port);
     }
 
     public function lock2($key, $expire_time = self::EXPIRE_TIME) {
@@ -219,17 +225,19 @@ class RedisLock {
     }
 
     /**
-     * @param $config
+     * redis连接
+     * @param $host
+     * @param $port
      * @return bool
      */
-    private function connect($config) {
-        $conn = $this->redis->connect($config['host'], $config['port']);
+    private function connect($host, $port) {
+        $conn = $this->redis->connect($host, $port);
         return $conn ? true : false;
     }
 
 
 }
-$redis = new RedisLock(array('host' => 'localhost', 'port' => 6379));
+$redis = new Rs();
 //$res = $redis->redisTransactionLock2('redis-lock');
 //$res = $redis->lock('redis-lock');
 //$res = $redis->consumeQueue(mt_rand(1, 99999999));

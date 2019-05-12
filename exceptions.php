@@ -7,7 +7,7 @@
  * 自定义异常处理类,继承基本Exception,可在本类中扩展自定义的方法
  */
 
-class ExceptionService extends Exception {
+class Exceptions extends Exception {
 
     public function __construct($message, $code) {
         parent::__construct($message, $code);

@@ -7,13 +7,18 @@ require_once "ipc.php";
 require_once "mysql.php";
 require_once "curl.php";
 require_once "queue/queue.php";
-require_once "exceptionService.php";
+require_once "exceptions.php";
 require_once "oss/oss.php";
+require_once "mail.php";
 
 class Fun
 {
 
-    //http状态码
+    /**
+     * http状态码
+     * @param $code
+     * @return mixed
+     */
     public static function http($code) {
         $http = array(
             100 => "HTTP/1.1 100 Continue",
@@ -59,7 +64,13 @@ class Fun
         return $http[$code];
     }
 
-    //多维数组按照某个字段排序
+    /**
+     * 二维数组按照某个字段排序
+     * @param $arr
+     * @param $field
+     * @param string $sort
+     * @return array
+     */
     public static function arraySort($arr, $field, $sort = 'ASC') {
         $data = [];
         foreach ($arr as $k => $v) {
@@ -77,8 +88,12 @@ class Fun
         return $result_arr;
     }
 
-    //$arr = ['中国', '美国', '日本', '韩国', '德国', '中国', '美国', '中国', '日本'];
-    //计算每个值出现的次数
+    /**
+     * $arr = ['中国', '美国', '日本', '韩国', '德国', '中国', '美国', '中国', '日本'];
+     * 计算每个值出现的次数
+     * @param $arr
+     * @return array
+     */
     public static function arrayKeysCount($arr) {
         $array_unique = array_unique($arr);
         $data = [];
@@ -94,7 +109,11 @@ class Fun
         return $data;
     }
 
-    //判断数组中是否有重复值
+    /**
+     * 判断数组中是否有重复值
+     * @param $arr
+     * @return bool
+     */
     public static function isArrayRepeat($arr) {
         for ($i = 0; $i < count($arr); $i++) {
             for ($j = $i + 1; $j < count($arr); $j++) {
@@ -108,29 +127,19 @@ class Fun
 
     //折半查找
     public static function binarySearch($arr, $value) {
-        $low = 0;
-        $high = count($arr);
-        while ($low <= $high) {
-            $mid = intval(($low + $high) / 2);
-            if ($value == $arr[$mid]) return $mid;
-            if ($arr[$mid] > $value) $high = $mid - 1;
-            if ($arr[$mid] < $value) $low = $mid + 1;
-        }
+
     }
 
     //冒泡排序
     public static function maoPao($arr) {
-        if (!is_array($arr)) return false;
-        $count = count($arr);
-        for ($i = 0; $i < $count; $i++) {
-            for ($j = 1; $j < $count - $i; $j++) {
 
-            }
-        }
-        return $arr;
     }
 
-    //处理坐标数据
+    /**
+     * 处理坐标数据
+     * @param $str
+     * @return array|string
+     */
     public static function pointFormat($str) {
         $data = [];
         $arr = explode("\n", $str); //以换行符分割成数组
@@ -143,7 +152,11 @@ class Fun
         return $data;
     }
 
-    //byte字节转M
+    /**
+     * byte字节转M
+     * @param $size
+     * @return string
+     */
     public static function formatSize($size) {
         $kb = $size / 1024;
         $mb = $kb / 1024;
@@ -153,24 +166,10 @@ class Fun
         return number_format($mb, 3, '.', '') . ' M';
     }
 
-    //二维数组按照某个值排序
-    public static function arraySortByField($array, $key, $order = "asc") {
-        $arr_num = $arr = array();
-        foreach ($array as $k => $v) {
-            $arr_num[$k] = $v[$key];
-        }
-        if ('asc' == $order) {
-            asort($arr_num);
-        } else {
-            arsort($arr_num);
-        }
-        foreach ($arr_num as $k => $v) {
-            $arr[$k] = $array[$k];
-        }
-        return $arr;
-    }
-
-    //获取http请求头信息
+    /**
+     * 获取http请求头信息
+     * @return array
+     */
     public static function getHttpHeaders() {
         $headers = array();
         foreach ($_SERVER as $name => $value) {
@@ -313,7 +312,7 @@ class Fun
      * @param $str
      * @return bool|string
      */
-    public function reverse2($str) {
+    public static function reverse2($str) {
         if (empty($str)) {
             return false;
         }
@@ -323,23 +322,15 @@ class Fun
     }
 
     /**
-     * 二分查找(折半查找)
-     * @param $arr
-     */
-    public static function zheBan($arr) {
-
-    }
-
-    /**
      * 逐行读取文件
      * fgetss 是读取一行文件但是会去掉html标记
      * @param $file
      * @return array
-     * @throws ExceptionService
+     * @throws Exception
      */
     public static function getFileContents($file) {
         if (! file_exists($file)) {
-            throw new ExceptionService('文件不存在');
+            throw new Exception('文件不存在');
         }
         $file = fopen($file, 'r');
         $file_arr = array();
