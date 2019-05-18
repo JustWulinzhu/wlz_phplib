@@ -8,9 +8,9 @@
 require_once "fun.php";
 
 /*******php新建空对象*******/
-$object1 = new stdClass();
-$object2 = new class {};
-$object3 = (object)array();
+//$object1 = new stdClass();
+//$object2 = new class {};
+//$object3 = (object)array();
 
 //$image = "http://b.hiphotos.baidu.com/image/h%3D300/sign=c8a9d4e2841363270aedc433a18fa056/11385343fbf2b2114a65cd70c48065380cd78e41.jpg";
 //$res = Curl::curlGet($image);
@@ -54,12 +54,11 @@ $object3 = (object)array();
 //dd($std);
 
 
-ob_start();
-echo 111;
-ob_clean();
-echo 222;
+//ob_start();
+//echo 111;
+//ob_clean();
+//echo 222;
 
 
-
-
-
+echo "<img src='https://openapi.beebank.com/file/download?name=aHR0cCUzQSUyRiUyRnByaXZhdGUtYmVlYmFuay1vcGVuYXBpLm9zcy1jbi1oempicC1iLWludGVybmFsLmFsaXl1bmNzLmNvbSUyRnRlc3QlMkYyMDE5MDUlMkZzei5wbmc%3D&compress=1&appkey=AkNWJEXLRJK4&t=1558081937&m=eb8c65690031'>";
+echo "<img src='https://openapi.beebank.com/file/download?name=aHR0cCUzQSUyRiUyRnByaXZhdGUtYmVlYmFuay1vcGVuYXBpLm9zcy1jbi1oempicC1iLWludGVybmFsLmFsaXl1bmNzLmNvbSUyRnRlc3QlMkYyMDE5MDUlMkZzei5wbmc%3D&appkey=AkNWJEXLRJK4&t=1558082005&m=d286688ece80'>";

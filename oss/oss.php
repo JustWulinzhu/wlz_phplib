@@ -114,8 +114,10 @@ class Oss {
             throw new Exception('file does not exist');
         }
         try {
+            $options = null;
             //$local_file,null下载到内存,如果是本地绝对路径即下载到对应路径
-            $options = is_null($local_file) ? null : array(OssClient::OSS_FILE_DOWNLOAD => $local_file);
+            if ($local_file) $options[OssClient::OSS_FILE_DOWNLOAD] = $local_file;
+
             $ret = self::getOssInstance()->getObject($bucket, $name, $options);
             Log::getInstance()->debug(array('oss get response', json_encode($ret)));
         } catch (OssException $e) {

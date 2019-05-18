@@ -114,7 +114,7 @@ class Image {
      * @return string
      * @throws Exception
      */
-    public function compress_binary($image_binary, $percent = 0.5) {
+    public function compressBinary($image_binary, $percent = 0.5) {
         $origin_mem_limit = ini_get("memory_limit");
         ini_set("memory_limit", "256M");
 
@@ -202,4 +202,4 @@ class Image {
 /*****************************************************************************************/
 
 $binary = file_get_contents('/tmp/gaoqing.jpeg');
-$file = (new Image())->compress_binary($binary);
+$file = (new Image())->compressBinary($binary);
