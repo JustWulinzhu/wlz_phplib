@@ -59,6 +59,15 @@ require_once "fun.php";
 //ob_clean();
 //echo 222;
 
-
-echo "<img src='https://openapi.beebank.com/file/download?name=aHR0cCUzQSUyRiUyRnByaXZhdGUtYmVlYmFuay1vcGVuYXBpLm9zcy1jbi1oempicC1iLWludGVybmFsLmFsaXl1bmNzLmNvbSUyRnRlc3QlMkYyMDE5MDUlMkZzei5wbmc%3D&compress=1&appkey=AkNWJEXLRJK4&t=1558081937&m=eb8c65690031'>";
-echo "<img src='https://openapi.beebank.com/file/download?name=aHR0cCUzQSUyRiUyRnByaXZhdGUtYmVlYmFuay1vcGVuYXBpLm9zcy1jbi1oempicC1iLWludGVybmFsLmFsaXl1bmNzLmNvbSUyRnRlc3QlMkYyMDE5MDUlMkZzei5wbmc%3D&appkey=AkNWJEXLRJK4&t=1558082005&m=d286688ece80'>";
+function test() {
+    try {
+        Log::getInstance()->info(array('try'));
+        return 111;
+    } catch (Exception $e) {
+        Log::getInstance()->debug(array('catch'));
+        return 222;
+    } finally {
+        Log::getInstance()->debug(array('finally'));
+        return 333;
+    }
+}

@@ -28,6 +28,18 @@ class Log {
     }
 
     /**
+     * 不存在的日志类型统一走debug
+     * @param $name
+     * @param $arguments
+     * @return bool|int
+     */
+    public function __call($name, $arguments) {
+        $data = $arguments[0];
+        $dir_name = is_array($arguments) && count($arguments) == 2 ? $arguments[1] : '';
+        return $this->debug($data, $dir_name);
+    }
+
+    /**
      * debug日志
      * @param array $data
      * @param string $dir_name
@@ -61,6 +73,7 @@ class Log {
     }
 
     /**
+     * 日志写入
      * @param array $data
      * @param string $dir_name
      * @return bool|int
@@ -112,7 +125,7 @@ class Log {
      * 判断是否为cli模式
      * @return bool
      */
-    public static function isCli(){
+    private static function isCli(){
         return preg_match("/cli/i", php_sapi_name()) ? true : false;
     }
 
