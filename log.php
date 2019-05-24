@@ -6,6 +6,8 @@
  * Date: 18/8/1 下午4:01
  * 日志类
  */
+require_once "fun.php";
+
 date_default_timezone_set('PRC');
 class Log {
 
@@ -80,7 +82,7 @@ class Log {
      * @throws Exception
      */
     private function log(array $data, $dir_name = '') {
-        if (self::isCli()) {
+        if (Fun::isCli()) {
             $request_uri = $_SERVER['SCRIPT_NAME'] ? $_SERVER['SCRIPT_NAME'] : $_SERVER['SCRIPT_FILENAME'];
             $request_uri = strstr($request_uri, '.', true);
             $root_dir = substr(trim(self::$root_dir, '/'), 0, strpos(trim(self::$root_dir, '/'), '/'));
@@ -119,14 +121,6 @@ class Log {
         $res = fwrite($file, $content);
         fclose($file);
         return $res ? true : false;
-    }
-
-    /**
-     * 判断是否为cli模式
-     * @return bool
-     */
-    private static function isCli(){
-        return preg_match("/cli/i", php_sapi_name()) ? true : false;
     }
 
 }
