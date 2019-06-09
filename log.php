@@ -94,17 +94,17 @@ class Log {
         $dir = self::$root_dir . $dir_name . "/" . date('Ym', time());
         $file = self::$type . "." . date('Ymd', time()) . ".log";
         $dir_file = $dir . '/' . $file;
-        if (!file_exists($dir)) { //创建文件需要www目录的写权限,chown -R www-data:root /www,解决办法:把www目录所属者改为对应php程序执行的用户(查看php执行用户ps aux)
+        if (! file_exists($dir)) { //创建文件需要www目录的写权限,chown -R www-data:root /www,解决办法:把www目录所属者改为对应php程序执行的用户(查看php执行用户ps aux)
             mkdir($dir, 0755, true);
         }
-        if (!file_exists($dir_file)) {
+        if (! file_exists($dir_file)) {
             touch($dir_file);
         }
         $data_str = implode(" | ", $data);
         $content = "[ " . $dir_file . " ] | " . date('Y-m-d H:i:s', time()) . " | " . (isset($_SERVER['SERVER_ADDR']) ? $_SERVER['SERVER_ADDR'] : '') . ' | ' . (isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '') . ' | ' . $data_str . "\n";
         $res = file_put_contents($dir_file, $content, FILE_APPEND);
-        $res =  $res ? $res : $this->write($dir_file, $content);
-        if (!$res) {
+        $res = $res ? $res : $this->write($dir_file, $content);
+        if (! $res) {
             throw new Exception('日志写入失败');
         }
         return $res;

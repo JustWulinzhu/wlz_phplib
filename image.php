@@ -5,6 +5,7 @@
  * Email: linzhu.wu@beebank.com
  * Date: 19/4/3 下午6:03
  * 图片流处理, 展示、压缩等
+ * 可采用阿里云OSS图片处理模块
  */
 
 require_once "fun.php";
@@ -63,7 +64,7 @@ class Image {
      */
     public function compress($image_binary, $percent = 0.5) {
         $origin_mem_limit = ini_get("memory_limit");
-        ini_set("memory_limit", "256M");
+        ini_set("memory_limit", "1024M");
 
         if ($percent <= 0 || $percent > 2) {
             throw new Exception('压缩范围超出限制');
@@ -201,5 +202,5 @@ class Image {
 
 /*****************************************************************************************/
 
-$binary = file_get_contents('/tmp/gaoqing.jpeg');
-$file = (new Image())->compressBinary($binary);
+$binary = file_get_contents('/tmp/sz.png');
+$file = (new Image())->compress($binary);

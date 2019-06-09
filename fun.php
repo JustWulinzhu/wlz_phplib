@@ -1,6 +1,8 @@
 <?php
 //公共函数库
 
+header("content-type='text/html',charset='utf-8'");
+
 require_once "print.php";
 require_once "log.php";
 require_once "ipc.php";
@@ -371,6 +373,15 @@ class Fun
      */
     public static function getExtendName($file_name) {
         return strtolower(substr(strrchr($file_name, "."), 1));
+    }
+
+    public static function xmlToArray($xmlObject){
+        $result = array();
+        foreach ((array) $xmlObject as $index => $node) {
+            $result[$index] = (is_object($node) || is_array($node)) ? self::xmlToArray($node) : $node;
+        }
+
+        return (is_array($result) && empty($result)) ? "" : $result;
     }
 
 }
