@@ -375,6 +375,11 @@ class Fun
         return strtolower(substr(strrchr($file_name, "."), 1));
     }
 
+    /**
+     * xml转obj
+     * @param $xmlObject
+     * @return array|string
+     */
     public static function xmlToArray($xmlObject){
         $result = array();
         foreach ((array) $xmlObject as $index => $node) {
@@ -383,5 +388,15 @@ class Fun
 
         return (is_array($result) && empty($result)) ? "" : $result;
     }
+
+    /**
+     * 判断是否为多维数组
+     * @param $array
+     * @return bool false不是,true是
+     */
+    public static function isArrayMultiDimension($array) {
+        return (count($array) == count($array, COUNT_RECURSIVE)) ? false : true;
+    }
+
 
 }
