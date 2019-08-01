@@ -202,5 +202,5 @@ class Image {
 
 /*****************************************************************************************/
 
-$binary = file_get_contents('/tmp/sz.png');
-$file = (new Image())->compress($binary);
+$binary = file_get_contents('/www/975BA281742AB3667F96001C977C8BE4.jpg');
+$file = (new Image())->compressBinary($binary);

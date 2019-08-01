@@ -398,5 +398,25 @@ class Fun
         return (count($array) == count($array, COUNT_RECURSIVE)) ? false : true;
     }
 
+    /**
+     * 递归对象转数组
+     * @param $obj
+     * @return array
+     */
+    public static function objToArray($obj) {
+        if (is_object($obj) && (! is_array($obj))) {
+            $obj = (array)$obj;
+        }
+        if (is_array($obj)) {
+            foreach ($obj as &$obj_item) {
+                if (is_object($obj_item) || is_array($obj_item)) {
+                    $obj_item = self::objToArray($obj_item);
+                }
+            }
+        }
+
+        return $obj;
+    }
+
 
 }

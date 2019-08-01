@@ -8,7 +8,6 @@
 header("content-type='text/html',charset='utf-8'");
 require_once "fun.php";
 
-
 /*******php新建空对象*******/
 //$object1 = new stdClass();
 //$object2 = new class {};
@@ -60,6 +59,13 @@ require_once "fun.php";
 //echo 111;
 //ob_clean();
 //echo 222;
+
+$arr = array('name' => 'test', 'info' => array('a' => 'aaa', 'b' => (object)array('bbb', 'ccc' => (object)array('ccc'))));
+$ret = Fun::objToArray($arr);
+dd($ret);
+
+$year = date('Y', time());
+$last_year = date('Y', strtotime("-1 year"));
 
 $ipc = new Ipc();
 $ipc->set('key', '111');
