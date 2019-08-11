@@ -11,8 +11,10 @@ require_once "fun.php";
 date_default_timezone_set('PRC');
 class Log {
 
-    private static $root_dir = '/www/log';
+    private static $root_dir = '';
     private static $type;
+
+    const ROOT_DIR = '/www/log';
 
     const LOG_TYPE_DEBUG = 'debug';
     const LOG_TYPE_WARNING = 'warning';
@@ -22,7 +24,8 @@ class Log {
     private function __construct() {}
     private function __clone() {}
 
-    public static function getInstance() {
+    public static function getInstance($root_dir = self::ROOT_DIR) {
+        self::$root_dir = $root_dir;
         if (is_null(self::$log)) {
             self::$log = new self;
         }
