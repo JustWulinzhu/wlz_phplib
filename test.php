@@ -60,6 +60,14 @@ require_once "fun.php";
 //ob_clean();
 //echo 222;
 
+$a = '9999999999999.990';
+echo $a/10000;die;
+
+dd(Fun::bcDivNumber($a));
+
+echo openssl_encrypt('111', 'DES-ECB', '1');die;
+
+
 $arr = array('name' => 'test', 'info' => array('a' => 'aaa', 'b' => (object)array('bbb', 'ccc' => (object)array('ccc'))));
 $ret = Fun::objToArray($arr);
 dd($ret);

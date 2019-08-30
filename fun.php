@@ -418,5 +418,18 @@ class Fun
         return $obj;
     }
 
+    /**
+     * 元转万元,避免精度问题(优先使用bc函数)
+     * @param $num
+     * @return string
+     */
+    public static function bcDivNumber($num) {
+        $num = intval($num) / 10000;;
+        $arr = explode('.', $num);
+        $int = $arr[0];
+        $float = count($arr) == 2 ? substr($arr[1], 0, 2) : '00';
+        return $int . '.' . $float;
+    }
+
 
 }
