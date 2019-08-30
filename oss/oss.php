@@ -68,7 +68,8 @@ class Oss {
                     'callbackHost':{$call_back_host},
                     'callbackBodyType':'application/json',
                 }";
-                $options = array(OssClient::OSS_CALLBACK => $call_back_url,
+                $options = array(
+                    OssClient::OSS_CALLBACK => $call_back_url,
                     OssClient::OSS_CALLBACK_VAR => $params
                 );
             }
@@ -115,9 +116,9 @@ class Oss {
         }
         try {
             $options = null;
-            //$local_file,null下载到内存,如果是本地绝对路径即下载到对应路径
-            if ($local_file) $options[OssClient::OSS_FILE_DOWNLOAD] = $local_file;
-
+            if ($local_file) { //$local_file,null下载到内存,如果是本地绝对路径即下载到对应路径
+                $options[OssClient::OSS_FILE_DOWNLOAD] = $local_file;
+            }
             $ret = self::getOssInstance()->getObject($bucket, $name, $options);
             Log::getInstance()->debug(array('oss get response', json_encode($ret)));
         } catch (OssException $e) {
