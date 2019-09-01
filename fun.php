@@ -127,16 +127,6 @@ class Fun
         return false;
     }
 
-    //折半查找
-    public static function binarySearch($arr, $value) {
-
-    }
-
-    //冒泡排序
-    public static function maoPao($arr) {
-
-    }
-
     /**
      * 处理坐标数据
      * @param $str
@@ -275,21 +265,6 @@ class Fun
         $res = fwrite($file, $content);
         fclose($file);
         return $res ? true : false;
-    }
-
-    /**
-     * 获取文件内容(一定规则)
-     * @param $file
-     * @return array|bool
-     */
-    public static function getContentsByFile($file) {
-        if (file_exists($file)) {
-            $str = file_get_contents($file);
-            $str = str_replace("\n", ' ', $str);
-            $str = trim($str);
-            return explode(' ', $str);
-        }
-        return false;
     }
 
     /**
