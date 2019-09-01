@@ -136,7 +136,7 @@ class Oss {
      * @throws Exception
      */
     public function delete($bucket, $name) {
-        try{
+        try {
             $ret = self::getOssInstance()->deleteObject($bucket, $name);
             Log::getInstance()->debug(array('oss delete response', json_encode($ret)));
         } catch (OssException $e) {
@@ -154,7 +154,7 @@ class Oss {
      * @throws Exception
      */
     public function isFileExist($bucket, $name) {
-        try{
+        try {
             $exist = self::getOssInstance()->doesObjectExist($bucket, $name);
         } catch (OssException $e) {
             Log::getInstance()->error(array('oss isFileExist errors', $e->getCode(), $e->getMessage()));

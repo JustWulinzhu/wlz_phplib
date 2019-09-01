@@ -13,7 +13,7 @@ class Mysql {
     private $table;
 
     function __construct($table) {
-        $this->mysql = new PDO('mysql:host=106.12.2.39; dbname=redis', 'root', '');
+        $this->mysql = new PDO('mysql:host=172.17.248.207; dbname=test', 'root', '');
         $this->mysql->exec("SET names utf8");
         $this->table = $table;
     }

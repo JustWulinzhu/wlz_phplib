@@ -67,14 +67,30 @@ class Log {
     }
 
     /**
-     * error日志
+     * error日志 邮件发送
      * @param array $data
      * @param string $dir_name
      * @return bool|int
      */
     public function error(array $data, $dir_name = '') {
         self::$type = self::LOG_TYPE_ERROR;
-        return $this->log($data, $dir_name);
+        $log_ret = $this->log($data, $dir_name);
+
+        $mail_config = array(
+            'from_title' => '武林柱异常报警系统',
+            'smtp_debug' => false,
+            'host' => 'smtp.qq.com',
+            'smtp_secure' => 'ssl',
+            'port' => 465,
+            'charset' => 'UTF-8',
+            'smtp_username' => '599075133@qq.com',
+            'smtp_password' => 'zodmkymshkpnbeaf',
+            'from' => '599075133@qq.com',
+            'nickname' => '',
+        );
+        (new mail($mail_config))->send('18515831680@163.com', '异常报警', json_encode($data));
+
+        return $log_ret;
     }
 
     /**

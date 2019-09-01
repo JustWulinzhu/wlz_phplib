@@ -1,4 +1,9 @@
 <?php
+/**
+ * 邮件系统: 发送方配置为qq邮箱
+ * 支持批量发送,附件发送,批量附件发送
+ * (new Mail())->send('xxx@163.com', '标题', '内容');
+ */
 
 require_once __DIR__ . "/PHPMailer/src/PHPMailer.php";
 require_once __DIR__ . "/PHPMailer/src/SMTP.php";
@@ -16,7 +21,24 @@ class Mail {
     private $from;
     private $nickname;
 
-    public function __construct($config) {
+    //默认发送方邮件配置
+    private $default_config = array(
+        'from_title' => '武林柱邮件系统',
+        'smtp_debug' => false,
+        'host' => 'smtp.qq.com',
+        'smtp_secure' => 'ssl',
+        'port' => 465,
+        'charset' => 'UTF-8',
+        'smtp_username' => '599075133@qq.com',
+        'smtp_password' => 'zodmkymshkpnbeaf',
+        'from' => '599075133@qq.com',
+        'nickname' => '',
+    );
+
+    public function __construct($config = array()) {
+        if (empty($config)) {
+            $config = $this->default_config;
+        }
         $this->from_title       = $config['from_title'];
         $this->smtp_debug       = $config['smtp_debug'];
         $this->host             = $config['host'];
@@ -29,7 +51,7 @@ class Mail {
         $this->nickname         = $config['nickname'];
     }
 
-    public function send($to, $title, $content) {
+    public function send($to, $title, $content, $files = '') {
         //实例化PHPMailer核心类
         $mail = new PHPMailer\PHPMailer\PHPMailer();
         //是否启用smtp的debug进行调试 开发环境建议开启 生产环境注释掉即可 默认关闭debug调试模式
@@ -60,19 +82,33 @@ class Mail {
         $mail->From = $this->from;
         //邮件正文是否为html编码 注意此处是一个方法 不再是属性 true或false
         $mail->isHTML(true);
-        //设置收件人邮箱地址 该方法有两个参数 第一个参数为收件人邮箱地址 第二参数为给该地址设置的昵称 不同的邮箱系统会自动进行处理变动 这里第二个参数的意义不大
-        $mail->addAddress($to, $this->nickname);
-        //添加多个收件人 则多次调用方法即可
-        //$mail->addAddress('xxx@163.com','l通知');
         //添加该邮件的主题
         $mail->Subject = $title;
         //添加邮件正文 上方将isHTML设置成了true，则可以是完整的html字符串 如：使用file_get_contents函数读取本地的html文件
         $mail->Body = $content;
+        //设置收件人邮箱地址 该方法有两个参数 第一个参数为收件人邮箱地址 第二参数为给该地址设置的昵称 不同的邮箱系统会自动进行处理变动 这里第二个参数的意义不大
+        if (is_array($to)) { //批量发送
+            foreach ($to as $item) {
+                $mail->addAddress($item, $this->nickname);
+            }
+        } else {
+            $mail->addAddress($to, $this->nickname);
+        }
         //为该邮件添加附件 该方法也有两个参数 第一个参数为附件存放的目录（相对目录、或绝对目录均可） 第二参数为在邮件附件中该附件的名称
-        //$mail->addAttachment('./55.jpg','head.jpg');
-        //同样该方法可以多次调用 上传多个附件
-        // $mail->addAttachment('./Juery-1.1.0.js','jquery.js');
-        return $mail->send();
+        if (is_array($files)) { //批量添加附件
+            foreach ($files as $file) {
+                if ($file) $mail->addAttachment($file);
+            }
+        } else {
+            if ($files) $mail->addAttachment($files);
+        }
+
+        try {
+            return $mail->send();
+        } catch (\Exception $e) {
+            Log::getInstance()->warning(array('mail send warning', $e->getCode(), $e->getMessage()));
+            throw $e;
+        }
     }
 
 }

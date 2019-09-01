@@ -8,6 +8,8 @@
 header("content-type='text/html',charset='utf-8'");
 require_once "fun.php";
 
+Log::getInstance()->error(array('test'));die;
+
 /*******php新建空对象*******/
 //$object1 = new stdClass();
 //$object2 = new class {};
