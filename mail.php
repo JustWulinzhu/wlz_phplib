@@ -23,23 +23,9 @@ class Mail {
     private $from;
     private $nickname;
 
-    //默认发送方邮件配置
-    private $default_config = array(
-        'from_title' => '武林柱邮件系统',
-        'smtp_debug' => false,
-        'host' => 'smtp.qq.com',
-        'smtp_secure' => 'ssl',
-        'port' => 465,
-        'charset' => 'UTF-8',
-        'smtp_username' => '599075133@qq.com',
-        'smtp_password' => 'zodmkymshkpnbeaf',
-        'from' => '599075133@qq.com',
-        'nickname' => '',
-    );
-
     public function __construct($config = array()) {
         if (empty($config)) {
-            $config = $this->default_config;
+            $config = Conf::getConfig('mail/mail');
         }
         $this->from_title       = $config['from_title'];
         $this->smtp_debug       = $config['smtp_debug'];

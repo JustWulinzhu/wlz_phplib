@@ -76,20 +76,7 @@ class Log {
         self::$type = self::LOG_TYPE_ERROR;
         $log_ret = $this->log($data, $dir_name);
 
-        $mail_config = array(
-            'from_title' => '武林柱异常报警系统',
-            'smtp_debug' => false,
-            'host' => 'smtp.qq.com',
-            'smtp_secure' => 'ssl',
-            'port' => 465,
-            'charset' => 'UTF-8',
-            'smtp_username' => '599075133@qq.com',
-            'smtp_password' => 'zodmkymshkpnbeaf',
-            'from' => '599075133@qq.com',
-            'nickname' => '',
-        );
-        (new mail($mail_config))->send('18515831680@163.com', '异常报警', json_encode($data));
-
+        (new mail(Conf::getConfig('mail/exception')))->send('18515831680@163.com', '异常报警', json_encode($data));
         return $log_ret;
     }
 

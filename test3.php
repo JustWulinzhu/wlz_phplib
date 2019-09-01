@@ -10,7 +10,7 @@ require_once "fun.php";
 
 $mysql = new Mysql('sl');
 
-for ($i=0; $i<10000; $i++) {
+for ($i=0; $i<100000; $i++) {
     $data = array(
         'serial_id' => base64_encode(mt_rand(0, 1000)),
         'appkey' => base64_encode(mt_rand(1000, 2000)),

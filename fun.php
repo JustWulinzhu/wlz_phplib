@@ -12,6 +12,7 @@ require_once "queue/queue.php";
 require_once "exceptions.php";
 require_once "oss/oss.php";
 require_once "mail.php";
+require_once "config/conf.php";
 
 class Fun
 {
