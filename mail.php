@@ -2,7 +2,7 @@
 /**
  * 邮件系统: 发送方配置为qq邮箱
  * 支持批量发送,附件发送,批量附件发送
- * (new Mail())->send('xxx@163.com', '标题', '内容');
+ * (new Mail())->send('xxx@163.com', '标题', '内容', '附件绝对路径');
  */
 
 require_once __DIR__ . "/PHPMailer/src/PHPMailer.php";
@@ -51,6 +51,15 @@ class Mail {
         $this->nickname         = $config['nickname'];
     }
 
+    /**
+     * 邮件发送
+     * @param string/array $to 收件人 单个、批量
+     * @param string $title 邮件标题
+     * @param string $content 邮件内容
+     * @param string $files 附件 单个、多个
+     * @return bool
+     * @throws Exception
+     */
     public function send($to, $title, $content, $files = '') {
         //实例化PHPMailer核心类
         $mail = new PHPMailer\PHPMailer\PHPMailer();
