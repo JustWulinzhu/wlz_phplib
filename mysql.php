@@ -9,12 +9,14 @@
 
 class Mysql {
 
-    private $mysql;
+    private $mysql = null;
     private $table;
 
     function __construct($table) {
         $conf = Conf::getConfig('db/db1');
-        $this->mysql = new PDO("mysql:host={$conf['host']}; dbname={$conf['db']}", $conf['user'], '');
+        if (is_null($this->mysql)) {
+            $this->mysql = new PDO("mysql:host={$conf['host']}; dbname={$conf['db']}", $conf['user'], '');
+        }
         $this->mysql->exec("SET names utf8");
         $this->table = $table;
     }
