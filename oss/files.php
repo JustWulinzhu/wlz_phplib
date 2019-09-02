@@ -42,11 +42,15 @@ class Files {
 
 }
 
-//$call_back_url = 'http://localhost/wlz_phplib/test.php';
-//$ret = (new Files())->upload('test');
-header("Content-Type: application/octet-stream");
-header("Content-Disposition: attachment; filename=85_3141b373.png");
-header("Pragma: no-cache");
-header("Expires: 0");
-$ret = (new Files())->download('test/201904/85_3141b373.png');
-echo $ret;
+if (isset($_GET['upload']) && $_GET['upload'] == 1) {
+    (new Files())->upload('test');
+} else if (isset($_GET['download']) && $_GET['download'] == 1) {
+    header("Content-Type: application/octet-stream");
+    header("Content-Disposition: attachment; filename=85_3141b373.png");
+    header("Pragma: no-cache");
+    header("Expires: 0");
+    $ret = (new Files())->download('test/201904/85_3141b373.png');
+    echo $ret;
+} else {
+    echo 'do nothing';
+}

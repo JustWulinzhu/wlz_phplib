@@ -31,19 +31,17 @@ class Oss {
 
     const BUCKET = 'private-wulinzhu-test';
 
-    const ACCESS_KEY_ID = 'LTAI7zgKaWGUoXg6';
-    const ACCESS_KEY_SECRET = 'bY8sOCy5Pm2lC1ARNOPcB9cqZOdyyo';
-    const END_POINT = 'oss-cn-beijing.aliyuncs.com';
-
     private static $oss_client = null;
+    private static $oss_conf = array();
 
     /**
      * 获取oss实例
      * @return null|OssClient
      */
     private static function getOssInstance() {
+        self::$oss_conf = Conf::getConfig('oss/oss');
         if (is_null(self::$oss_client)) {
-            self::$oss_client = new OssClient(self::ACCESS_KEY_ID, self::ACCESS_KEY_SECRET, self::END_POINT);
+            self::$oss_client = new OssClient(self::$oss_conf['access_key_id'], self::$oss_conf['access_key_secret'], self::$oss_conf['end_point']);
         }
         return self::$oss_client;
     }

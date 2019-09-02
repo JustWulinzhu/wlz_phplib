@@ -13,7 +13,8 @@ class Mysql {
     private $table;
 
     function __construct($table) {
-        $this->mysql = new PDO('mysql:host=172.17.248.207; dbname=test', 'root', '');
+        $conf = Conf::getConfig('db/db1');
+        $this->mysql = new PDO("mysql:host={$conf['host']}; dbname={$conf['db']}", $conf['user'], '');
         $this->mysql->exec("SET names utf8");
         $this->table = $table;
     }
@@ -41,6 +42,8 @@ class Mysql {
         $field = implode(",", array_keys($data));
         $field_values = "'" . implode("','", $data) . "'";
         $sql = "insert into " . $this->table . ' (' . $field . ')' . " values (" . $field_values . ')';
+        Log::getInstance()->debug(array($sql), 'sql');
+
         $res = $this->mysql->prepare($sql);
         $res->execute();
         return '00000' == $res->errorCode() ? true : $res->errorInfo();
@@ -64,6 +67,8 @@ class Mysql {
         }
         $value_str = trim($value_str, "and ");
         $sql = "update " . $this->table . ' set ' . $field_str . " where " . $value_str;
+        Log::getInstance()->debug(array($sql), 'sql');
+
         return $this->mysql->exec($sql);
     }
 
@@ -98,6 +103,8 @@ class Mysql {
         } else {
             $sql = "select " . $field_str . " from " . $this->table;
         }
+        Log::getInstance()->debug(array($sql), 'sql');
+
         return $this->query($sql);
     }
 

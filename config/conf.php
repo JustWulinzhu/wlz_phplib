@@ -55,7 +55,7 @@ class Conf {
         }
         foreach ($keys as $item) {
             if (! isset($config[$item])) {
-                continue;
+                break;
             }
             $config = $config[$item];
             if ($item == end($keys)) {
