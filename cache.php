@@ -9,7 +9,7 @@
  */
 include_once "fun.php";
 
-class Rs {
+class Cache {
 
     private $redis;
 
@@ -237,7 +237,7 @@ class Rs {
 
 
 }
-$redis = new Rs();
+$redis = new Cache();
 //$res = $redis->redisTransactionLock2('redis-lock');
 //$res = $redis->lock('redis-lock');
 //$res = $redis->consumeQueue(mt_rand(1, 99999999));

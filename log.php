@@ -14,8 +14,6 @@ class Log {
     private static $root_dir = '';
     private static $type;
 
-    const ROOT_DIR = '/www/log';
-
     const LOG_TYPE_DEBUG = 'debug';
     const LOG_TYPE_WARNING = 'warning';
     const LOG_TYPE_ERROR = 'error';
@@ -24,8 +22,10 @@ class Log {
     private function __construct() {}
     private function __clone() {}
 
-    public static function getInstance($root_dir = self::ROOT_DIR) {
-        self::$root_dir = $root_dir;
+    public static function getInstance($root_dir = '') {
+        if (empty($root_dir)) {
+            self::$root_dir = Conf::getConfig('log/log.root_path');
+        }
         if (is_null(self::$log)) {
             self::$log = new self;
         }

@@ -12,7 +12,7 @@ require_once "fun.php";
 //$mail_config = Conf::getConfig('mail/mail');
 //(new mail($mail_config))->send('18515831680@163.com', '异常报警', 'test');
 
-//Log::getInstance()->error(array('xxxxx'));die;
+Log::getInstance()->error(array('xxxxx'));die;
 
 /*******php新建空对象*******/
 //$object1 = new stdClass();
