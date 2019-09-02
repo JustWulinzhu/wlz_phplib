@@ -1,5 +1,7 @@
 <?php
 
+require_once "fun.php";
+
     //冒泡排序
     $arr = [2, 5, 9, 1, 4];
     $count = count($arr);
