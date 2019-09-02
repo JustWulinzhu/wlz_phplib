@@ -4,7 +4,9 @@
  * Author: wulinzhu
  * Email: linzhu.wu@beebank.com
  * Date: 19/9/2 上午12:10
- * 例: Conf::getConfig('mail/user.name')
+ * 获取配置文件类
+ * 命名配置文件方式: 在config目录下面创建php文件, 直接返回数组, key=>value方式定义配置内容, 支持多维形式
+ * 例: Conf::getConfig('mail/user.name'), 获取mail.php里面的user字段下面的name字段
  */
 
 require_once(dirname(__DIR__) . "/fun.php");
