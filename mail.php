@@ -5,8 +5,8 @@
  * (new Mail())->send('xxx@163.com', '标题', '内容', '附件绝对路径');
  */
 
-require_once __DIR__ . "/PHPMailer/src/PHPMailer.php";
-require_once __DIR__ . "/PHPMailer/src/SMTP.php";
+require_once __DIR__ . "/ext/PHPMailer/src/PHPMailer.php";
+require_once __DIR__ . "/ext/PHPMailer/src/SMTP.php";
 
 require_once "fun.php";
 

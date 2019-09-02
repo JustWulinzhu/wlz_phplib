@@ -9,9 +9,9 @@
  */
 require_once "fun.php";
 
-require_once './excel/PHPExcel.php';
-require_once './excel/PHPExcel/IOFactory.php';
-require_once './excel/PHPExcel/Reader/Excel5.php';
+require_once __DIR__ . '/ext/excel/PHPExcel.php';
+require_once __DIR__ . '/ext/excel/PHPExcel/IOFactory.php';
+require_once __DIR__ . '/ext/excel/PHPExcel/Reader/Excel5.php';
 
 class Excel {
 

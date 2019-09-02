@@ -22,7 +22,7 @@
  */
 
 require_once dirname(__DIR__) . "/fun.php";
-require_once dirname(__DIR__) . '/aliyun-oss/autoload.php';
+require_once dirname(__DIR__) . '/ext/aliyun-oss/autoload.php';
 
 use OSS\OssClient;
 use OSS\Core\OssException;

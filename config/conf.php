@@ -9,7 +9,7 @@
  * 例: Conf::getConfig('mail/user.name'), 获取mail.php里面的user字段下面的name字段
  */
 
-require_once(dirname(__DIR__) . "/fun.php");
+require_once dirname(__DIR__) . "/fun.php";
 
 class Conf {
 
