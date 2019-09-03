@@ -16,7 +16,6 @@
  * $local_file 下载到本地的文件名称,绝对路径
  *
  * demo
- *
  * 上传 (new Oss())->uploadFile('bucket', 'uploaded_file_name', 'local_file_name');
  * 下载 (new Oss())->get('bucket', 'uploaded_file_name', 'local_file_name');
  */
