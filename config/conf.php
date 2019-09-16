@@ -13,11 +13,10 @@ require_once dirname(__DIR__) . "/fun.php";
 
 class Conf {
 
-    private static $conf = array();
-
     /**
      * 引入配置文件
      * @param $file
+     * @return mixed
      * @throws Exception
      */
     public static function getFileData($file) {
@@ -32,7 +31,7 @@ class Conf {
             throw new \Exception('config file returns must be array');
         }
 
-        self::$conf = $data;
+        return $data;
     }
 
     /**
@@ -42,8 +41,7 @@ class Conf {
      * @throws Exception
      */
     public static function getConfig($key = '') {
-        self::getFileData($key);
-        $config = self::$conf;
+        $config = self::getFileData($key);
         $nodes = array_filter(explode("/", $key));
         if (count($nodes) == 1) return $config;
         list($file, $node) = $nodes;
