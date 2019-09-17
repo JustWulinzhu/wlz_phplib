@@ -7,7 +7,7 @@
  * mysql操作类
  */
 
-class Mysql {
+class Db {
 
     private $mysql = null;
     private $table;

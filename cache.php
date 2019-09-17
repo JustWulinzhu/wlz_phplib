@@ -55,8 +55,8 @@ class Cache {
         if ($is_lock) {
             $this->redis->expire($key, $expire_time);
             //业务代码,逻辑操作等等,可以先写入redis然后在更新数据库
-            $mysql = new Mysql('prize');
-            $mysql2 = new Mysql('user_prize');
+            $mysql = new Db('prize');
+            $mysql2 = new Db('user_prize');
             $count = count($mysql->select());
             $left_count = count($mysql->select(array('status' => 0), 'id'));
             $now_prize_id = $count - $left_count + 1;
@@ -114,8 +114,8 @@ class Cache {
         //例如100个商品,1000个人同时抢购,如何避免库存超卖的问题和两个用户抢到同一个商品的问题。
         //方法一:$this->lock();
         //方法二:本方法,事务加watch
-        $mysql = new Mysql('prize');
-        $mysql2 = new Mysql('user_prize');
+        $mysql = new Db('prize');
+        $mysql2 = new Db('user_prize');
         //商品总数
         $list = $mysql->select(array(), array('id', 'prize_key'));
         $all_count = count($list);
@@ -154,8 +154,8 @@ class Cache {
         $this->redis->set($key, $user_id);
         $res = $this->redis->exec();
         if ($res) {
-            $mysql = new Mysql('prize');
-            $mysql2 = new Mysql('user_prize');
+            $mysql = new Db('prize');
+            $mysql2 = new Db('user_prize');
             $count = count($mysql->select());
             $left_count = count($mysql->select(array('status' => 0), 'id'));
             $now_prize_id = $count - $left_count + 1;
@@ -203,8 +203,8 @@ class Cache {
             $value = $this->redis->rPop($queue_key);
             Log::getInstance()->debug(array('consumeQueue user_id', $value));
             if ($value) {
-                $mysql = new Mysql('prize');
-                $mysql2 = new Mysql('user_prize');
+                $mysql = new Db('prize');
+                $mysql2 = new Db('user_prize');
                 $count = count($mysql->select());
                 $left_count = count($mysql->select(array('status' => 0), 'id'));
                 $now_prize_id = $count - $left_count + 1;

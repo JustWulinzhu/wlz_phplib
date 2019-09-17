@@ -12,7 +12,7 @@ require_once "fun.php";
 //$mail_config = Conf::getConfig('mail/mail');
 //(new mail($mail_config))->send('18515831680@163.com', '异常报警', 'test');
 
-Log::getInstance()->error(array('xxxxx'));die;
+//Log::getInstance()->error(array('xxxxx'));die;
 
 /*******php新建空对象*******/
 //$object1 = new stdClass();
@@ -66,46 +66,46 @@ Log::getInstance()->error(array('xxxxx'));die;
 //ob_clean();
 //echo 222;
 
-$a = '9999999999999.990';
-echo $a/10000;die;
+//$a = '9999999999999.990';
+//echo $a/10000;die;
 
-dd(Fun::bcDivNumber($a));
+//dd(Fun::bcDivNumber($a));
 
-echo openssl_encrypt('111', 'DES-ECB', '1');die;
+//echo openssl_encrypt('111', 'DES-ECB', '1');die;
 
 
-$arr = array('name' => 'test', 'info' => array('a' => 'aaa', 'b' => (object)array('bbb', 'ccc' => (object)array('ccc'))));
-$ret = Fun::objToArray($arr);
-dd($ret);
+//$arr = array('name' => 'test', 'info' => array('a' => 'aaa', 'b' => (object)array('bbb', 'ccc' => (object)array('ccc'))));
+//$ret = Fun::objToArray($arr);
+//dd($ret);
 
-$year = date('Y', time());
-$last_year = date('Y', strtotime("-1 year"));
+//$year = date('Y', time());
+//$last_year = date('Y', strtotime("-1 year"));
 
-$ipc = new Ipc();
-$ipc->set('key', '111');
-$value = $ipc->get('key');
-dd($value);die;
+//$ipc = new Ipc();
+//$ipc->set('key', '111');
+//$value = $ipc->get('key');
+//dd($value);die;
 
-$arr = [111,[111]];
-$ret = Fun::isArrayMultiDimension($arr);
-var_dump($ret);die;
+//$arr = [111,[111]];
+//$ret = Fun::isArrayMultiDimension($arr);
+//var_dump($ret);die;
 
-$xml = '';
-$obj = simplexml_load_string($xml);
-$xmljson= json_encode($objectxml );//将对象转换个JSON
-$xmlarray=json_decode($xmljson,true);//将json转换成数组
+//$xml = '';
+//$obj = simplexml_load_string($xml);
+//$xmljson= json_encode($objectxml );//将对象转换个JSON
+//$xmlarray=json_decode($xmljson,true);//将json转换成数组
 //$arr = Fun::xmlToArray($xml);
-dd($xmlarray);
+//dd($xmlarray);
 
-$str = '1年';
-$unit = substr($str, -1, 1);
-$number = mb_substr($str, -2, 1);
-$str = preg_split('//', $str, -1, PREG_SPLIT_NO_EMPTY);
-$str = preg_split('/[0-9]/', $str);
-
-$str = '';
-$str = base64_decode($str);
-dd($str);
+//$str = '1年';
+//$unit = substr($str, -1, 1);
+//$number = mb_substr($str, -2, 1);
+//$str = preg_split('//', $str, -1, PREG_SPLIT_NO_EMPTY);
+//$str = preg_split('/[0-9]/', $str);
+//
+//$str = '';
+//$str = base64_decode($str);
+//dd($str);
 
 
 //function test() {

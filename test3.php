@@ -8,8 +8,8 @@
 
 require_once "fun.php";
 
-$mysql = new Mysql('sl');
-$ret = $mysql->select(array('data' => '29301521774ff3cbd26652b2d5c95996'));
+$db = new Db('sl');
+$ret = $db->select(array('data' => '29301521774ff3cbd26652b2d5c95996'));
 dd($ret);
 
 for ($i=0; $i<100000; $i++) {

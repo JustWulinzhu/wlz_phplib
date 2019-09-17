@@ -43,7 +43,7 @@ class Files {
 }
 
 if (isset($_GET['upload']) && $_GET['upload'] == 1) {
-    (new Files())->upload('test');
+    (new Files())->upload('iphone_picture');
 } else if (isset($_GET['download']) && $_GET['download'] == 1) {
     header("Content-Type: application/octet-stream");
     header("Content-Disposition: attachment; filename=85_3141b373.png");

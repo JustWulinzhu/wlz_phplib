@@ -326,20 +326,37 @@ class Fun
      * @return array
      */
     public static function scanDir($dir_name) {
-        $dir = opendir($dir_name);
+        $resource = opendir($dir_name);
         $files = array();
-        while ($file = readdir($dir)) {
+        while (false !== ($file = readdir($resource))) {
             if ($file == '.' || $file == '..') continue;
             if (is_dir($dir_name . '/' . $file)) {
-                echo '目录: ' . $file . "<br/>";
                 $files[$file] = self::scanDir($dir_name . '/' . $file);
             } else {
-                echo '文件:' . $file . "<br/>";
                 $files[] = $file;
             }
         }
-        closedir($dir);
+        closedir($resource);
         return $files;
+    }
+
+    /**
+     * 递归处理数组
+     * @param $arr
+     * @return array|bool
+     */
+    public static function recData($arr) {
+        if (! is_array($arr)) return false;
+
+        $data = [];
+        foreach ($arr as $item) {
+            if (is_array($item)) {
+                $data = array_merge($data, self::recData($item));
+            } else {
+                $data[] = $item;
+            }
+        }
+        return $data;
     }
 
     /**

@@ -7,9 +7,14 @@
  */
 require_once "fun.php";
 
-$a = '0000111';
-echo (int)$a;die;
-
-$ipc = new Ipc();
-$value = $ipc->get('key');
-dd($value);die;
+//递归测试
+function test($a) {
+    if ($a > 5) {
+        Log::getInstance()->debug(array($a, 1));
+        test($a - 1);
+    } else {
+        Log::getInstance()->debug(array($a, 2));
+        return;
+    }
+}
+test(10);
