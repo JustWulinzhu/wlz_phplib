@@ -324,8 +324,12 @@ class Fun
      * 递归遍历文件夹
      * @param $dir_name
      * @return array
+     * @throws Exception
      */
     public static function scanDir($dir_name) {
+        if (! is_readable($dir_name)) {
+            throw new Exception('目录不可读');
+        }
         $resource = opendir($dir_name);
         $files = array();
         while (false !== ($file = readdir($resource))) {

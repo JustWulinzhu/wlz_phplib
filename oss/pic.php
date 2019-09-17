@@ -10,12 +10,30 @@ require_once dirname(__DIR__) . '/' . 'fun.php';
 
 class Pic {
 
-    public function upload() {
-        $files = Fun::scanDir('/www/log/');
-        dd($files);
-        $ret = Curl::request('http://39.105.182.40/wlz_phplib/oss/files.php?upload=1', 'POST', array('file' => new \CURLFile('/www/975BA281742AB3667F96001C977C8BE4.jpg')));
+    const FILE_ROOT_DIR = '/www/tmp/';
+
+    private $pic = ['png', 'jpg', 'gif', 'jpeg'];
+
+    /**
+     * 批量上传图片到阿里云
+     * @param $path
+     * @return bool
+     */
+    public function upload($path) {
+        $files = Fun::scanDir($path);
+
+        foreach ($files as $file) {
+            if (in_array(Fun::getExtendName($file), $this->pic)) {
+                Curl::request(
+                    'http://39.105.182.40/wlz_phplib/oss/files.php?upload=1',
+                    'POST',
+                    array('file' => new \CURLFile(self::FILE_ROOT_DIR . $file))
+                );
+            }
+        }
+        return true;
     }
 
 }
 
-(new Pic())->upload();
+(new Pic())->upload('/www/tmp');

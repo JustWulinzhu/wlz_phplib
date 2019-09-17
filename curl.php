@@ -60,7 +60,7 @@ class Curl {
         if (0 != curl_errno($curl)) {
             Log::getInstance()->warning(array('CURL POST error msg', json_encode(curl_error($curl))));
         }
-        Log::getInstance()->debug(array('curl_post_info', json_encode(curl_getinfo($curl))));
+        Log::getInstance()->debug(array('curl_post_info', $response, json_encode(curl_getinfo($curl))));
         curl_close($curl);
         return $response;
     }
@@ -82,7 +82,7 @@ class Curl {
         if (0 != curl_errno($curl)) {
             Log::getInstance()->warning(array('CURL GET error msg', json_encode(curl_error($curl))));
         }
-        Log::getInstance()->debug(array('curl_get_info', json_encode(curl_getinfo($curl))));
+        Log::getInstance()->debug(array('curl_get_info', $response, json_encode(curl_getinfo($curl))));
         curl_close($curl);
         return $response;
     }
