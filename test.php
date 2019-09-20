@@ -8,6 +8,12 @@
 header("content-type='text/html',charset='utf-8'");
 require_once "fun.php";
 
+try {
+    throw new Exceptions('error', '10000');
+} catch (Exceptions $e) {
+    echo $e->getCode() . $e->getMessage();
+}
+
 //$ret = Curl::request('http://39.105.182.40/wlz_phplib/oss/files.php?upload=1', 'POST', array('file' => new \CURLFile('/www/975BA281742AB3667F96001C977C8BE4.jpg')));
 //$mail_config = Conf::getConfig('mail/mail');
 //(new mail($mail_config))->send('18515831680@163.com', '异常报警', 'test');

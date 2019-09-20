@@ -9,19 +9,11 @@
 
 class Exceptions extends Exception {
 
-    public function __construct($message, $code) {
-        parent::__construct($message, $code);
-    }
+    public function __construct($message, $code = 0) {
+        //记录抛错文件及代码行数
+        Log::getInstance()->error(array($message, $code, $this->getFile(), $this->getLine()), 'exceptions');
 
-    /**
-     * 获取抛出的错误信息
-     * @return string
-     */
-    public function getErrorMessage() {
-        $errors =  'errors in ' . $this->getFile() . ' ; lines number ' . $this->getLine() . ' ; error message: ' . '<b style="color:#EA0000">' . $this->getMessage() . '</b>';
-        $log_errors = $this->getFile() . ' | ' . $this->getLine() . ' | ' . $this->getMessage();
-        Log::getInstance()->error(array($log_errors), 'exception');
-        return $errors;
+        parent::__construct($message, $code);
     }
 
 }
