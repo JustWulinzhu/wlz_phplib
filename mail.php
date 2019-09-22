@@ -88,7 +88,7 @@ class Mail {
             foreach ($to as $item) {
                 $mail->addAddress($item, $this->nickname);
             }
-        } else {
+        } else { //单条发送
             $mail->addAddress($to, $this->nickname);
         }
         //为该邮件添加附件 该方法也有两个参数 第一个参数为附件存放的目录（相对目录、或绝对目录均可） 第二参数为在邮件附件中该附件的名称
@@ -96,7 +96,7 @@ class Mail {
             foreach ($files as $file) {
                 if ($file) $mail->addAttachment($file);
             }
-        } else {
+        } else { //单条附件
             if ($files) $mail->addAttachment($files);
         }
 
