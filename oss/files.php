@@ -49,7 +49,7 @@ if (isset($_GET['upload']) && $_GET['upload'] == 1) {
     header("Content-Disposition: attachment; filename=85_3141b373.png");
     header("Pragma: no-cache");
     header("Expires: 0");
-    $ret = (new Files())->download('test/201904/85_3141b373.png');
+    $ret = (new Files())->download($_GET['path']);
     echo $ret;
 } else {
     echo 'do nothing';

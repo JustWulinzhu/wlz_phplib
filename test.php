@@ -6,7 +6,11 @@
  * Date: 18/12/14 下午5:13
  */
 header("content-type='text/html',charset='utf-8'");
-require_once "fun.php";
+require_once __DIR__ . "/fun.php";
+ini_set('memory_limit', '512M');
+
+//$ret = (new Files())->download('ptotos/My Girl.zip', '/tmp/My Girl.zip');
+//die;
 
 try {
     throw new Exceptions('error', '10000');
