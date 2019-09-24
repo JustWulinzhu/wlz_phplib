@@ -235,6 +235,34 @@ class Fun
     }
 
     /**
+     * 获取手机客户端操作系统类型
+     * @return bool|string
+     */
+    public static function getClientType() {
+        if (
+            strpos($_SERVER['HTTP_USER_AGENT'], 'iPhone')
+            || strpos($_SERVER['HTTP_USER_AGENT'], 'iPad')
+            || strpos($_SERVER['HTTP_USER_AGENT'], 'iOS')
+            || $_SERVER['HTTP_USER_AGENT'] == 'iPhone'
+            || $_SERVER['HTTP_USER_AGENT'] == 'iPad'
+            || $_SERVER['HTTP_USER_AGENT'] == 'iOS'
+        )
+        {
+            return 'iOS';
+        } else if (
+            strpos($_SERVER['HTTP_USER_AGENT'], 'Android')
+            || strpos($_SERVER['HTTP_USER_AGENT'], 'android')
+            || $_SERVER['HTTP_USER_AGENT'] == 'android'
+            || $_SERVER['HTTP_USER_AGENT'] == 'Android'
+        )
+        {
+            return 'android';
+        } else {
+            return false;
+        }
+    }
+
+    /**
      * 获取字符串编码方式
      * @param $str
      * @return string
@@ -430,5 +458,13 @@ class Fun
         return $int . '.' . $float;
     }
 
-
+    /**
+     * 生成脱敏银行卡
+     * @param $bank_card
+     * @return string
+     */
+    public static function getEncryptBankCard($bank_card) {
+        return str_repeat('*', strlen($bank_card) - 4) . substr($bank_card, -4);
+    }
+    
 }
