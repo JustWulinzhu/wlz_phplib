@@ -14,6 +14,7 @@ require_once "oss/oss.php";
 require_once "oss/files.php";
 require_once "mail.php";
 require_once "config/conf.php";
+require_once "redis/baseRedis.php";
 
 class Fun
 {

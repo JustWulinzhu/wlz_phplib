@@ -13,7 +13,7 @@ ini_set('memory_limit', '512M');
 //die;
 
 try {
-    throw new Exceptions('error', '10000');
+    $ret = (new Queue())->get('lll');
 } catch (Exceptions $e) {
     echo $e->getCode() . $e->getMessage();
 }

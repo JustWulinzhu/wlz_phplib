@@ -51,6 +51,4 @@ if (isset($_GET['upload']) && $_GET['upload'] == 1) {
     header("Expires: 0");
     $ret = (new Files())->download($_GET['path']);
     echo $ret;
-} else {
-    echo 'do nothing';
 }

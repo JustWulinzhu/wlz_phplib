@@ -7,9 +7,10 @@
  * redis锁机制,防止并发请求造成的超卖等问题
  * 参考lock、transactionLock方法
  */
-include_once "fun.php";
 
-class Cache {
+require_once dirname(__DIR__) . '/' . 'fun.php';
+
+class Cache extends BaseRedis{
 
     private $redis;
 
@@ -17,13 +18,10 @@ class Cache {
     const DEFAULT_VALUE = 'default_value'; //预留3s的业务代码执行时间
 
     /**
-     * RedisLock constructor.
-     * @param string $host
-     * @param int $port
+     * Cache constructor.
      */
-    public function __construct($host = '127.0.0.1', $port = 6379) {
-        $this->redis = new Redis();
-        $this->connect($host, $port);
+    public function __construct() {
+        $this->redis = $this->getInstance();
     }
 
     public function lock2($key, $expire_time = self::EXPIRE_TIME) {
@@ -223,18 +221,6 @@ class Cache {
     public function unlock($key) {
         return $this->redis->del($key);
     }
-
-    /**
-     * redis连接
-     * @param $host
-     * @param $port
-     * @return bool
-     */
-    private function connect($host, $port) {
-        $conn = $this->redis->connect($host, $port);
-        return $conn ? true : false;
-    }
-
 
 }
 $redis = new Cache();
