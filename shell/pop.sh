@@ -3,7 +3,7 @@
 step=1 #间隔的秒数，不能大于60
 for (( i = 0; i < 60; i=(i+step) )); do
   $(/usr/local/php/bin/php '/www/wlz_phplib/queue/pop.php')
-  $(/usr/local/php/bin/php '/www/wlz_phplib/queue/pop2.php')
+  $(/usr/local/php/bin/php '/www/wlz_phplib/queue/upload/pop.php')
   sleep $step
 done
 exit 0

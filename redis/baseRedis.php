@@ -16,7 +16,7 @@ class BaseRedis {
      * @return null|Redis
      * @throws Exceptions
      */
-    public function getInstance() {
+    protected function getInstance() {
         $conf = Conf::getConfig('redis/db1');
         if (is_null($this->redis)) {
             $this->redis = new Redis();

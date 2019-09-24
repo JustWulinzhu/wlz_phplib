@@ -10,7 +10,7 @@ require_once dirname(__DIR__) . '/' . 'fun.php';
 
 class Pic {
 
-    const FILE_ROOT_DIR = '/www/tmp/';
+    const FILE_ROOT_DIR = '/iphone/20190917-031758/';
 
     private $pic = ['png', 'jpg', 'gif', 'jpeg'];
 
@@ -24,11 +24,12 @@ class Pic {
 
         foreach ($files as $file) {
             if (in_array(Fun::getExtendName($file), $this->pic)) {
-                Curl::request(
+                $ret = Curl::request(
                     'http://39.105.182.40/wlz_phplib/oss/files.php?upload=1',
                     'POST',
                     array('file' => new \CURLFile(self::FILE_ROOT_DIR . $file))
                 );
+                Log::getInstance()->debug([$file, $ret]);
             }
         }
         return true;
@@ -36,4 +37,4 @@ class Pic {
 
 }
 
-(new Pic())->upload('/www/tmp');
+(new Pic())->upload('/iphone/20190917-031758');
