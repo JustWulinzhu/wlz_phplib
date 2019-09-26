@@ -12,6 +12,8 @@ require_once "fun.php";
 
 class Image {
 
+    const TMP_PATH = '/tmp'; //默认文件保存路径
+
     const IMAGE_TYPE_JPEG = 'jpeg';
     const IMAGE_TYPE_PNG = 'png';
     const IMAGE_TYPE_GIF = 'gif';
@@ -159,6 +161,32 @@ class Image {
     }
 
     /**
+     * 修改图片尺寸
+     * @param $image_binary 图片二进制文件流
+     * @param $x 长
+     * @param $y 宽
+     * @return string 返回新的图片二进制文件流
+     * @throws Exceptions
+     */
+    public function modifyPicSize($image_binary, $x, $y) {
+        $type = $this->getFileType($image_binary);
+        if (! in_array($type, $this->image)) {
+            throw new Exceptions('错误的图片类型');
+        }
+        list($width, $height) = getimagesizefromstring($image_binary);
+        $im = imagecreatefromstring($image_binary);
+        $new_image = imagecreatetruecolor($x, $y);
+        imagecopyresized($new_image, $im, 0, 0, 0, 0, $x, $y, $width, $height);
+
+        $pic_name = date('YmdHis', time()) . '_' . substr(md5(microtime(true)), 0, 12) . '.' . $type; //生成新文件名称
+        $path = self::TMP_PATH . '/' . $pic_name; //文件默认保存路径
+        imagejpeg($new_image, $path, 100);
+        imagedestroy($im);
+        imagedestroy($new_image);
+        return file_get_contents($path);
+    }
+
+    /**
      * 通过文件流获取文件类型
      * @param string $file 二进制文件流形式
      * @return string
@@ -202,5 +230,5 @@ class Image {
 
 /*****************************************************************************************/
 
-$binary = file_get_contents('/www/975BA281742AB3667F96001C977C8BE4.jpg');
-$file = (new Image())->compressBinary($binary);
+$binary = file_get_contents('/tmp/587117BF24CA874C3134BD5A97B1EA44.jpg');
+$file = (new Image())->modifyPicSize($binary, 300, 300);
