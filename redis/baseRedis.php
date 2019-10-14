@@ -7,6 +7,8 @@
  * redis基类
  */
 
+require_once dirname(__DIR__) . '/' . 'fun.php';
+
 class BaseRedis {
 
     private $redis = null;
@@ -14,7 +16,7 @@ class BaseRedis {
     /**
      * 获取redis实例
      * @return null|Redis
-     * @throws Exceptions
+     * @throws Exception
      */
     protected function getInstance() {
         $conf = Conf::getConfig('redis/db1');
@@ -22,8 +24,11 @@ class BaseRedis {
             $this->redis = new Redis();
             try {
                 $this->redis->connect($conf['host'], $conf['port']);
-            } catch (Exceptions $e) {
-                throw new Exceptions('redis链接失败-' . $e->getMessage(), $e->getCode());
+                //判断redis connect是否连接成功
+                $this->redis->ping();
+            } catch (Exception $e) {
+                Log::getInstance()->error(array('redis链接失败', $e->getMessage(), $e->getCode()), 'exceptions');
+                throw new Exception('redis链接失败-' . $e->getMessage(), $e->getCode());
             }
         }
         return $this->redis;

@@ -76,7 +76,7 @@ class Log {
         self::$type = self::LOG_TYPE_ERROR;
         $log_ret = $this->log($data, $dir_name);
 
-        (new mail(Conf::getConfig('mail/exception')))->send('18515831680@163.com', '异常报警', json_encode($data));
+//        (new mail(Conf::getConfig('mail/exception')))->send('18515831680@163.com', '异常报警', json_encode($data));
         return $log_ret;
     }
 
@@ -101,10 +101,11 @@ class Log {
         $file = self::$type . "." . date('Ymd', time()) . ".log";
         $dir_file = $dir . '/' . $file;
         if (! file_exists($dir)) { //创建文件需要www目录的写权限,chown -R www-data:root /www,解决办法:把www目录所属者改为对应php程序执行的用户(查看php执行用户ps aux)
-            mkdir($dir, 0755, true);
+            mkdir($dir, 0777, true);
         }
         if (! file_exists($dir_file)) {
             touch($dir_file);
+            chmod($dir_file, 0777);
         }
         $data_str = implode(" | ", $data);
         $content = "[ " . $dir_file . " ] | " . date('Y-m-d H:i:s', time()) . " | " . (isset($_SERVER['SERVER_ADDR']) ? $_SERVER['SERVER_ADDR'] : '') . ' | ' . (isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '') . ' | ' . $data_str . "\n";
