@@ -9,13 +9,19 @@ header("content-type='text/html',charset='utf-8'");
 require_once __DIR__ . "/fun.php";
 ini_set('memory_limit', '512M');
 
+$ret = Url::createShortUrl('www.baidu.com');
+//$ret = Url::getUrl('aaaaaa');
+dd($ret);
+
+//dd(Fun::numTransform(62*15018571+1));
+
 //$ret = (new Files())->download('ptotos/My Girl.zip', '/tmp/My Girl.zip');
 //die;
 
 //$ret = Curl::request('http://39.105.182.40/wlz_phplib/oss/files.php?upload=1', 'POST', array('file' => new \CURLFile('/www/975BA281742AB3667F96001C977C8BE4.jpg')));
-$mail_config = Conf::getConfig('mail/mail');
-$ret = (new mail($mail_config))->send('985308821@qq.com', '屌雷螺母', 'FUCK QI');
-die;
+//$mail_config = Conf::getConfig('mail/mail');
+//$ret = (new mail($mail_config))->send('18515831680@qq.com', '屌雷螺母', 'FUCK QI');
+//die;
 //Log::getInstance()->error(array('xxxxx'));die;
 
 /*******php新建空对象*******/

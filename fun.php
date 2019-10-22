@@ -15,6 +15,7 @@ require_once "oss/files.php";
 require_once "mail.php";
 require_once "config/conf.php";
 require_once "redis/baseRedis.php";
+require_once "url.php";
 
 class Fun
 {
@@ -465,6 +466,27 @@ class Fun
      */
     public static function getEncryptBankCard($bank_card) {
         return str_repeat('*', strlen($bank_card) - 4) . substr($bank_card, -4);
+    }
+
+    /**
+     * 十进制转62进制。
+     * 可优化功能, 动态设置转换后的进制
+     * @param $num
+     * @return string
+     */
+    public static function numTransform($num) {
+        $num = intval($num);
+        $str = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        $len = strlen($str);
+        $charArr = str_split($str);
+
+        $char = '';
+        do {
+            $key = ($num - 1) % $len;
+            $char = $charArr[$key] . $char;
+            $num = floor(($num - $key) / $len);
+        } while ($num > 0);
+        return $char;
     }
     
 }

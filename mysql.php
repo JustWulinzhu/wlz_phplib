@@ -22,6 +22,24 @@ class Db {
     }
 
     /**
+     * 开启事务
+     * @return bool
+     */
+    public function transaction() { return $this->mysql->beginTransaction(); }
+
+    /**
+     * 提交事务
+     * @return bool
+     */
+    public function commit() { return $this->mysql->commit(); }
+
+    /**
+     * 回滚事务
+     * @return bool
+     */
+    public function rollBack() { return $this->mysql->rollBack(); }
+
+    /**
      * @param $res
      * @return array
      */
@@ -41,7 +59,12 @@ class Db {
      * @return int
      */
     public function insert(array $data) {
-        $field = implode(",", array_keys($data));
+        $arr = [];
+        foreach ($data as $keys => $item) {
+            $keys = '`' . $keys . '`';
+            $arr[$keys] = $item;
+        }
+        $field = implode(",", array_keys($arr));
         $field_values = "'" . implode("','", $data) . "'";
         $sql = "insert into " . $this->table . ' (' . $field . ')' . " values (" . $field_values . ')';
         Log::getInstance()->debug(array($sql), 'sql');
@@ -82,6 +105,33 @@ class Db {
     public function query($sql) {
         $result = $this->mysql->query($sql, PDO::FETCH_ASSOC);
         return self::formatQueryData($result);
+    }
+
+    /**
+     * 查询一条记录
+     * @param $condition
+     * @param $field
+     * @return array|mixed
+     */
+    public function queryone($condition, $field = '*') {
+        $ret = $this->select($condition, $field);
+        if ($ret) {
+            return current($ret);
+        }
+        return [];
+    }
+
+    /**
+     * 查询一条记录
+     * @param $sql
+     * @return array|mixed
+     */
+    public function queryoneSql($sql) {
+        $ret = $this->query($sql);
+        if ($ret) {
+            return current($ret);
+        }
+        return [];
     }
 
     /**

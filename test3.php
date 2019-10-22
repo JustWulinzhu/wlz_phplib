@@ -9,8 +9,6 @@
 require_once "fun.php";
 
 $db = new Db('sl');
-$ret = $db->select(array('data' => '29301521774ff3cbd26652b2d5c95996'));
-dd($ret);
 
 for ($i=0; $i<100000; $i++) {
     $data = array(
@@ -20,6 +18,6 @@ for ($i=0; $i<100000; $i++) {
         'status' => mt_rand(0, 1),
         'data' => md5(mt_rand(0, 10000)),
     );
-//    $ret = $mysql->insert($data);
+    $ret = $db->insert($data);
     Log::getInstance()->debug(array('mysql ret', $ret));
 }
