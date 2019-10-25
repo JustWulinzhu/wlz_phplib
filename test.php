@@ -9,9 +9,10 @@ header("content-type='text/html',charset='utf-8'");
 require_once __DIR__ . "/fun.php";
 ini_set('memory_limit', '512M');
 
-$ret = Url::createShortUrl('www.baidu.com');
-//$ret = Url::getUrl('aaaaaa');
-dd($ret);
+for ($i=1; $i<=10000; $i++) {
+    $ret = Url::createShortUrl('www.baidu.com?id=' . $i);
+    Log::getInstance()->debug(array($ret));
+}
 
 //dd(Fun::numTransform(62*15018571+1));
 
