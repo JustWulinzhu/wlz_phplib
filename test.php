@@ -9,7 +9,7 @@ header("content-type='text/html',charset='utf-8'");
 require_once __DIR__ . "/fun.php";
 ini_set('memory_limit', '512M');
 
-for ($i=1; $i<=10000; $i++) {
+for ($i=22000; $i<=23000; $i++) {
     $ret = Url::createShortUrl('www.baidu.com?id=' . $i);
     Log::getInstance()->debug(array($ret));
 }

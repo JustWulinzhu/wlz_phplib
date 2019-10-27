@@ -30,13 +30,17 @@ class Url {
         $sql = "select * from url order by id desc limit 1";
         $ret = $db->queryoneSql($sql);
 
+        $db->transaction();
         if (empty($ret)) {
             $data = array(
                 'key' => self::$num_start,
                 'url' => $url,
                 'short_url' => Fun::numTransform(self::$num_start),
             );
-            $db->insert($data);
+            if (! $db->insert($data)) {
+                $db->rollBack();
+                throw new Exception(__FUNCTION__ . '-' . __LINE__ .  ' 数据插入失败 !');
+            }
             $short_url = $data['short_url'];
         } else {
             $data = array(
@@ -44,9 +48,12 @@ class Url {
                 'url' => $url,
                 'short_url' => Fun::numTransform($ret['key'] + 1),
             );
-            $db->insert($data);
+            if (! $db->insert($data)) {
+                throw new Exception(__FUNCTION__ . '-' . __LINE__ . ' 数据插入失败 !');
+            }
             $short_url = $data['short_url'];
         }
+        $db->commit();
 
         return $short_url;
     }
