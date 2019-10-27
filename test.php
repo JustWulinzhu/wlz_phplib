@@ -9,10 +9,15 @@ header("content-type='text/html',charset='utf-8'");
 require_once __DIR__ . "/fun.php";
 ini_set('memory_limit', '512M');
 
-for ($i=22000; $i<=23000; $i++) {
-    $ret = Url::createShortUrl('www.baidu.com?id=' . $i);
-    Log::getInstance()->debug(array($ret));
-}
+$url = "http://mapglobal.baidu.com/mapsguide/hotcity?format=json";
+$ret = Curl::request($url);
+dd($ret);
+
+
+//for ($i=22000; $i<=23000; $i++) {
+//    $ret = Url::createShortUrl('www.baidu.com?id=' . $i);
+//    Log::getInstance()->debug(array($ret));
+//}
 
 //dd(Fun::numTransform(62*15018571+1));
 

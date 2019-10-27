@@ -12,12 +12,13 @@ require_once dirname(__DIR__) . '/' . 'fun.php';
 class Files {
 
     /**
-     * 文件上传,返回oss文件存储路径
+     * * 文件上传,返回oss文件存储路径
      * 可采用模拟文件上传方式,demo :
      * Curl::request('http://localhost/wlz_phplib/oss/files.php', 'POST', array('file' => new \CURLFile('/Users/wulinzhu/Documents/gou.png')));
      * @param $dir
-     * @param $call_back_url
+     * @param string $call_back_url
      * @return string
+     * @throws Exception
      */
     public function upload($dir, $call_back_url = '') {
         $file_path = $dir . '/' . date('Ym', time()) . '/' . $_FILES['file']['name'];
@@ -32,7 +33,8 @@ class Files {
      * 文件下载
      * @param $file_path
      * @param null $local_file_path
-     * @return string 文件流
+     * @return string
+     * @throws Exception
      */
     public function download($file_path, $local_file_path = null) {
         $oss = new Oss();

@@ -35,7 +35,8 @@ class Oss {
 
     /**
      * 获取oss实例
-     * @return null|OssClient
+     * @return OssClient|null
+     * @throws OssException
      */
     private static function getOssInstance() {
         self::$oss_conf = Conf::getConfig('oss/oss');

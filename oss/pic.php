@@ -18,6 +18,7 @@ class Pic {
      * 批量上传图片到阿里云
      * @param $path
      * @return bool
+     * @throws Exception
      */
     public function upload($path) {
         $files = Fun::scanDir($path);

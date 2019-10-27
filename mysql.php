@@ -56,7 +56,7 @@ class Db {
     /**
      * 通用插入方法
      * @param array $data
-     * @return int
+     * @return bool
      */
     public function insert(array $data) {
         $arr = [];
