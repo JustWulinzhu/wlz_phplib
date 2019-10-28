@@ -9,9 +9,13 @@ header("content-type='text/html',charset='utf-8'");
 require_once __DIR__ . "/fun.php";
 ini_set('memory_limit', '512M');
 
-$url = "http://mapglobal.baidu.com/mapsguide/hotcity?format=json";
-$ret = Curl::request($url);
+$ret = Rsa::encrypt('武林柱');
+$ret = Rsa::decrypt($ret);
 dd($ret);
+
+//$url = "http://mapglobal.baidu.com/mapsguide/hotcity?format=json";
+//$ret = Curl::request($url);
+//dd($ret);
 
 
 //for ($i=22000; $i<=23000; $i++) {
