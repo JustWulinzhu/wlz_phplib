@@ -9,6 +9,11 @@ header("content-type='text/html',charset='utf-8'");
 require_once __DIR__ . "/fun.php";
 ini_set('memory_limit', '512M');
 
+$ret = Aes::encrypt('测试', 'aes256');
+$ret2 = Aes::decrypt($ret, 'aes256');
+echo $ret;
+dd($ret2);
+
 $ret = Rsa::encrypt('武林柱');
 $ret = Rsa::decrypt($ret);
 dd($ret);

@@ -4,7 +4,7 @@
  * User: wulinzhu
  * Date: 19/10/28 上午11:27
  * Email: 18515831680@163.com
- * rsa 公钥 私钥
+ * rsa 公钥、私钥配置
  */
 
 return [

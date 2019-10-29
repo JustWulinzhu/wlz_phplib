@@ -48,8 +48,6 @@ require_once __DIR__ . '/' . 'cryptInterface.php';
 
 class Rsa implements CryptInterface {
 
-    const DEFAULT_KEY = 'common'; //默认rsa配置key
-
     /**
      * 获取私钥
      * @param $rsa_config
@@ -87,7 +85,7 @@ class Rsa implements CryptInterface {
         $crypted = '';
         if (! openssl_public_encrypt($data, $crypted, $public_key, $padding)) {
             while ($msg = openssl_error_string()) {
-                $err_msg .= $msg . '---';
+                $err_msg .= $msg . '\n';
             }
             throw new Exception($err_msg);
         }
@@ -111,7 +109,7 @@ class Rsa implements CryptInterface {
         $decrypted = '';
         if (! openssl_private_decrypt($data, $decrypted, $private_key, $padding)) {
             while ($msg = openssl_error_string()) {
-                $err_msg .= $msg . '---';
+                $err_msg .= $msg . '\n';
             }
             throw new Exception($err_msg);
         }

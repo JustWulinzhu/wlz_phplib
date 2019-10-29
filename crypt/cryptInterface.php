@@ -11,6 +11,8 @@ require_once dirname(__DIR__) . '/' . 'fun.php';
 
 interface CryptInterface {
 
+    const DEFAULT_KEY = 'common'; //默认配置key
+
     /**
      * 统一加密接口
      * @param $data
