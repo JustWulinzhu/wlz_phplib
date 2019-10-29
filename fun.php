@@ -119,6 +119,14 @@ class Fun
     }
 
     /**
+     * 判断当前请求是否是XMLHttpRequest(AJAX)
+     * @return boolean
+     */
+    public static function isAjax() {
+        return ($_SERVER['HTTP_X_REQUESTED_WITH'] === 'XMLHttpRequest') ? true : false;
+    }
+
+    /**
      * 判断数组中是否有重复值
      * @param $arr
      * @return bool
