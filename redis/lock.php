@@ -5,42 +5,81 @@
  * Email: linzhu.wu@beebank.com
  * Date: 18/7/12 下午4:23
  * redis锁机制,防止并发请求造成的超卖等问题
- * 参考lock、transactionLock方法
+ * 参考mutexLock、transactionLock方法
  * 参考文献: http://www.36nu.com/post/314
  */
 
 require_once dirname(__DIR__) . '/' . 'fun.php';
 
-class Cache extends BaseRedis {
+class Lock extends BaseRedis {
 
     private $redis;
 
-    const EXPIRE_TIME = 10; //默认业务执行时间
+    const EXPIRE_TIME = 15; //默认业务执行时间
     const DEFAULT_VALUE = 'default_value';
-    const REDIS_CACHE = 'redis_cache_';
+    const REDIS_LOCK = 'redis_lock_';
 
     /**
      * Cache constructor.
+     * @throws Exception
      */
     public function __construct() {
         $this->redis = $this->getInstance();
     }
 
     /**
-     * set加nx参数实现锁机制
-     * ques1: 如果处理时间比业务执行时间还长,会导致锁过期然后其他请求进来,解决方案,设置值为随机数,与下次请求进行对比,本方法暂不考虑此问题
+     * 阻塞锁,轮询10次等待获取锁，获取失败返回false
      * @param $key
-     * @param $value
+     * @return bool
+     */
+    public function blockLock($key) {
+        $lock_ret = $this->mutexLock($key);
+        if ($lock_ret) {
+            return true;
+        } else {
+            $i = 0;
+            while ($i < 10) { //轮询10次
+                $lock_ret = $this->mutexLock($key);
+                if ($lock_ret) {
+                    return true;
+                } else {
+                    Log::getInstance()->debug([__METHOD__, 'sleep', $key, $i]);
+                    sleep(5); //等待5秒再次尝试获取锁
+                    $i++;
+                }
+            }
+            return false;
+        }
+    }
+
+    /**
+     * 互斥锁, set加nx参数实现
+     *
+     * ques1: 如果key过期了业务程序还没执行完成,会导致锁过期其他请求进来获得锁，发生错误。
+     * 解决方案: （此方法采用方案2）
+     * 方案1. 设置值为随机数,与下次请求进行对比;
+     * 方案2. 设置key值为时间戳，当前时间+过期时间，每次请求进来时，判断现在当前时间与key值作大小比较，
+     *       如果当前时间大于key值，说明此key已经过期，然后手动删除此key。
+     *
+     * 例：
+     * $is_lock = (new Lock())->mutexLock('lock_id');
+     * if ($is_lock) {
+     *     //业务代码
+     * } else {
+     *     //直接返回，或者轮询等待获取锁
+     * }
+     *
+     * @param $key
      * @param int $ttl
      * @return bool
      */
-    public function lock($key, $value, $ttl = self::EXPIRE_TIME) {
-        $ret = $this->redis->set(self::REDIS_CACHE . $key, $value, array('nx', 'ex' => $ttl));
-        if ($ret) {
-            return true;
-        } else {
-            return false;
+    public function mutexLock($key, $ttl = self::EXPIRE_TIME) {
+        $locked_value = $this->redis->get($key);
+        if ($locked_value && $locked_value < time()) {
+            $this->unlock($key);
         }
+        $ret = $this->redis->set(self::REDIS_LOCK . $key, time() + $ttl, array('nx', 'ex' => $ttl));
+        return $ret ? true : false;
     }
 
     /**
@@ -51,15 +90,15 @@ class Cache extends BaseRedis {
      * @param $value
      * @return bool
      */
-    public function doLock($key, $value) {
-        $num = $this->redis->get(self::REDIS_CACHE . 'num');
+    public function doLock($key) {
+        $num = $this->redis->get(self::REDIS_LOCK . 'num');
         if ($num <= 0) {
             Log::getInstance()->debug(array('无产品'));
             return false;
         }
-        $ret = $this->lock($key, $value);
+        $ret = $this->mutexLock($key);
         if ($ret) {
-            $this->redis->decr(self::REDIS_CACHE . 'num');
+            $this->redis->decr(self::REDIS_LOCK . 'num');
             Log::getInstance()->debug(array('success'));
             $this->unlock($key);
             return true;
@@ -107,12 +146,4 @@ class Cache extends BaseRedis {
         return $this->redis->del($key);
     }
 
-}
-
-$redis = new Cache();
-$ret = $redis->doLock('test', 100);
-if ($ret) {
-    echo 'success';
-} else {
-    echo 'fail';
 }

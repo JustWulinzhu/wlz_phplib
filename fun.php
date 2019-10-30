@@ -15,6 +15,7 @@ require_once "oss/files.php";
 require_once "mail.php";
 require_once "config/conf.php";
 require_once "redis/baseRedis.php";
+require_once "redis/lock.php";
 require_once "url.php";
 require_once "crypt/rsa.php";
 require_once "crypt/aes.php";
@@ -291,7 +292,7 @@ class Fun
      */
     public static function write($file, $content) {
         $res = file_put_contents($file, $content, FILE_APPEND);
-        if (!$res) {
+        if (! $res) {
             $res = self::fWrite($file, $content);
         }
         return $res ? true : false;
