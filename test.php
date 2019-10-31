@@ -9,6 +9,12 @@ header("content-type='text/html',charset='utf-8'");
 require_once __DIR__ . "/fun.php";
 ini_set('memory_limit', '512M');
 
+$freq = new Frep();
+$freq->incr('test', Frep::FREQ_TYPE_HOUR);
+$ret = $freq->check('test', Frep::FREQ_TYPE_HOUR);
+$ret = $freq->clear('test', Frep::FREQ_TYPE_HOUR);
+var_dump($ret);
+
 $ret = (new Lock())->doLock('id1');
 die;
 

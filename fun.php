@@ -20,6 +20,7 @@ require_once "url.php";
 require_once "crypt/rsa.php";
 require_once "crypt/aes.php";
 require_once "crypt/cryptInterface.php";
+require_once "redis/freq.php";
 
 class Fun
 {
@@ -499,6 +500,32 @@ class Fun
             $num = floor(($num - $key) / $len);
         } while ($num > 0);
         return $char;
+    }
+
+    /**
+     * 剩余秒数
+     * @param string $type
+     * @return false|int
+     * @throws Exception
+     */
+    public static function getLeftSeconds($type = 'day') {
+        switch ($type) {
+            case 'day' :
+                $seconds = strtotime(date('Ymd', strtotime('+1 day'))) - time();
+                break;
+            case 'week' :
+                $seconds = strtotime(date('Ymd', strtotime('+1 week')) - time());
+                break;
+            case 'month' :
+                $seconds = strtotime(date('Ymd', strtotime('+1 month')) - time());
+                break;
+            case 'year' :
+                $seconds = strtotime(date('Ymd', strtotime('+1 year')) - time());
+                break;
+            default :
+                throw new Exception('错误的时间单位');
+        }
+        return $seconds;
     }
     
 }
