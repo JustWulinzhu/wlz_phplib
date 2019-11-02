@@ -37,6 +37,7 @@ class Log {
      * @param $name
      * @param $arguments
      * @return bool|int
+     * @throws Exception
      */
     public function __call($name, $arguments) {
         $data = $arguments[0];
@@ -49,6 +50,7 @@ class Log {
      * @param array $data
      * @param string $dir_name
      * @return bool|int
+     * @throws Exception
      */
     public function debug(array $data, $dir_name = '') {
         self::$type = self::LOG_TYPE_DEBUG;
@@ -60,6 +62,7 @@ class Log {
      * @param array $data
      * @param string $dir_name
      * @return bool|int
+     * @throws Exception
      */
     public function warning(array $data, $dir_name = '') {
         self::$type = self::LOG_TYPE_WARNING;
@@ -71,6 +74,7 @@ class Log {
      * @param array $data
      * @param string $dir_name
      * @return bool|int
+     * @throws Exception
      */
     public function error(array $data, $dir_name = '') {
         self::$type = self::LOG_TYPE_ERROR;
