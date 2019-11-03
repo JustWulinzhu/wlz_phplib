@@ -4,9 +4,8 @@
  * User: wulinzhu
  * Date: 19/11/3 下午5:15
  * Email: 18515831680@163.com
- * mns消息监听进程
  *
- * Linux后台执行命令 末尾加&
+ * "mns消息监听"进程
  *
  */
 
@@ -14,7 +13,7 @@ require_once dirname(dirname(__DIR__)) . "/fun.php";
 
 class Task {
 
-    const DEFAULT_EXEC_TIMES = 10000;
+    const DEFAULT_WAIT_SECONDS = 5; //无消息默认等待时间
 
     /**
      * 队列进程
@@ -25,23 +24,18 @@ class Task {
     public function process($queue_name) {
         $mns = new Mns();
 
-        $i = 0;
-        while ($i < self::DEFAULT_EXEC_TIMES) {
+        while (true) {
             try {
                 $ret = $mns->pop($queue_name);
-                if ($ret) {
+                if (1 === $ret['is_success']) {
                     //执行业务
-                    Log::getInstance()->debug([__CLASS__, __METHOD__, $queue_name, json_encode($ret), 'success']);
+                    Log::getInstance()->debug([__METHOD__, $queue_name, json_encode($ret), 'success']);
+                } else {
+                    throw new Exception($queue_name . ' pop failed', $ret['status']);
                 }
             } catch (\Throwable $e) {
-                Log::getInstance()->debug([__CLASS__, __METHOD__, $queue_name, $i, 'no task, sleep 5s', $e->getMessage(), $e->getCode()]);
-                sleep(5);
-            }
-
-            $i++;
-            if ($i >= self::DEFAULT_EXEC_TIMES) {
-                $i = 0;
-                Log::getInstance()->debug([__CLASS__, __METHOD__, 'reset $i']);
+                Log::getInstance()->debug([__METHOD__, $queue_name, 'no task, sleep 5s', $e->getCode(), $e->getMessage()]);
+                sleep(self::DEFAULT_WAIT_SECONDS);
             }
         }
 

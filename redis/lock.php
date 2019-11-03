@@ -31,6 +31,7 @@ class Lock extends BaseRedis {
      * 阻塞锁,轮询10次等待获取锁，获取失败返回false
      * @param $key
      * @return bool
+     * @throws Exception
      */
     public function blockLock($key) {
         $lock_ret = $this->mutexLock($key);
@@ -87,8 +88,8 @@ class Lock extends BaseRedis {
      * 模拟剩余最后一个产品,2000并发抢购同一个产品,检查是否出现超卖情况。
      * 20191014验证通过
      * @param $key
-     * @param $value
      * @return bool
+     * @throws Exception
      */
     public function doLock($key) {
         $num = $this->redis->get(self::REDIS_LOCK . 'num');
@@ -112,6 +113,7 @@ class Lock extends BaseRedis {
     /**
      * @param $key
      * @return bool
+     * @throws Exception
      */
     public function redisTransactionLock($key) {
         Log::getInstance()->debug(array('request'));

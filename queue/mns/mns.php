@@ -65,10 +65,13 @@ class Mns
             $create_request_obj = new CreateQueueRequest($queue_name);
             $ret = $this->client->createQueue($create_request_obj);
         } catch (MnsException $e) {
-            throw new MnsException($e->getMnsErrorCode(), $e->getMessage());
+            throw new MnsException($e->getCode(), $e->getMessage());
         }
 
-        return Fun::objToArray($ret);
+        return [
+            'status'     => $ret->getStatusCode(),
+            'is_success' => $ret->isSucceed(),
+        ];
     }
 
     /**
@@ -80,17 +83,20 @@ class Mns
      */
     public function push(string $queue_name, string $data)
     {
-        $queue = $this->client->getQueueRef($queue_name);
-
         try {
+            $queue = $this->client->getQueueRef($queue_name);
             $request = new SendMessageRequest($data);
             $ret = $queue->sendMessage($request);
         } catch (MnsException $e) {
-            Log::getInstance()->warning(['mns_push_error', $queue_name, json_encode($data), $e->getMnsErrorCode(), $e->getMessage()]);
-            throw new MnsException($e->getMnsErrorCode(), $e->getMessage());
+            Log::getInstance()->warning(['mns_push_error', $queue_name, json_encode($data), $e->getCode(), $e->getMessage()]);
+            throw new MnsException($e->getCode(), $e->getMessage());
         }
 
-        return Fun::objToArray($ret);
+        return [
+            'status'        => $ret->getStatusCode(),
+            'is_success'    => $ret->isSucceed(),
+            'message_id'    => $ret->getMessageId(),
+        ];
     }
 
     /**
@@ -109,11 +115,16 @@ class Mns
             $receipt_handle = $ret->getReceiptHandle();
             $this->deleteMsg($queue_name, $receipt_handle);
         } catch (MnsException $e) {
-            Log::getInstance()->warning(['mns_pop_error', $queue_name, $e->getMnsErrorCode(), $e->getMessage()]);
-            throw new MnsException($e->getMnsErrorCode(), $e->getMessage());
+            Log::getInstance()->warning(['mns_pop_error', $queue_name, $e->getCode(), $e->getMessage()]);
+            throw new MnsException($e->getCode(), $e->getMessage());
         }
 
-        return Fun::objToArray($ret);
+        return [
+            'body'          => $ret->getMessageBody(),
+            'status'        => $ret->getStatusCode(),
+            'is_success'    => $ret->isSucceed(),
+            'message_id'    => $ret->getMessageId(),
+        ];
     }
 
     /**
@@ -129,11 +140,15 @@ class Mns
             $queue = $this->client->getQueueRef($queue_name);
             $ret = $queue->deleteMessage($receipt_handle);
         } catch (MnsException $e) {
-            Log::getInstance()->warning(['mns_deleteMsg_error', $queue_name, $e->getMnsErrorCode(), $e->getMessage()]);
-            throw new MnsException($e->getMnsErrorCode(), $e->getMessage());
+            Log::getInstance()->warning(['mns_deleteMsg_error', $queue_name, $e->getCode(), $e->getMessage()]);
+            throw new MnsException($e->getCode(), $e->getMessage());
         }
 
-        return Fun::objToArray($ret);
+        return [
+            'status'        => $ret->getStatusCode(),
+            'is_success'    => $ret->isSucceed(),
+            'message_id'    => $ret->getMessageId(),
+        ];
     }
 
 }

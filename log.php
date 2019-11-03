@@ -96,7 +96,7 @@ class Log {
             $request_uri = $_SERVER['SCRIPT_NAME'] ? $_SERVER['SCRIPT_NAME'] : $_SERVER['SCRIPT_FILENAME'];
             $request_uri = strstr($request_uri, '.', true);
             $root_dir = substr(trim(self::$root_dir, '/'), 0, strpos(trim(self::$root_dir, '/'), '/'));
-            $dir_name = $dir_name ? "/" . $dir_name : trim(trim($request_uri, '/'), $root_dir);
+            $dir_name = $dir_name ? "/" . $dir_name : "/" . trim(trim($request_uri, '/'), $root_dir);
         } else {
             $request_uri = $_SERVER['REQUEST_URI'] ? $_SERVER['REQUEST_URI'] : $_SERVER['DOCUMENT_URI'];
             $dir_name = $dir_name ? "/" . $dir_name : strstr($request_uri, '.', true);
