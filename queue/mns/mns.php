@@ -1,10 +1,24 @@
 <?php
 /**
- * Created by PhpStorm.
- * Author: wulinzhu
- * Email: linzhu.wu@beebank.com
- * Date: 19/11/03 上午03:00
+ * Created by PhpStorm
+ * User: wulinzhu
+ * Date: 19/11/3 下午4:51
+ * Email: 18515831680@163.com
+ *
  * 阿里云mns服务
+ *
+ * $mns = new Mns();
+ *
+ * 创建队列：
+ * $mns->createQueue($queue_name);
+ * 入栈：
+ * $mns->push($queue_name, $data);
+ * 出栈：
+ * $data = $mns->pop($queue_name);
+ * if ($data) {
+ *      //执行业务代码
+ * }
+ *
  */
 
 use AliyunMNS\Client;
@@ -16,7 +30,8 @@ use AliyunMNS\Exception\MnsException;
 require_once dirname(dirname(__DIR__)) . "/fun.php";
 require_once dirname(dirname(__DIR__)) . "/ext/aliyun-mns-sdk/mns-autoloader.php";
 
-class Mns {
+class Mns
+{
 
     private $client = '';
     private $access_id = '';
@@ -27,7 +42,8 @@ class Mns {
      * Mns constructor.
      * @throws Exception
      */
-    public function __construct() {
+    public function __construct()
+    {
         $config = Conf::getConfig('mns/mns');
         $this->access_id = $config['access_id'];
         $this->access_key = $config['access_key'];
@@ -40,10 +56,11 @@ class Mns {
 
     /**
      * 创建队列
-     * @param $queue_name
+     * @param string $queue_name
      * @return array
      */
-    public function createQueue($queue_name) {
+    public function createQueue(string $queue_name)
+    {
         try {
             $create_request_obj = new CreateQueueRequest($queue_name);
             $ret = $this->client->createQueue($create_request_obj);
@@ -56,17 +73,20 @@ class Mns {
 
     /**
      * 压入队列
-     * @param $queue_name
-     * @param $data
+     * @param string $queue_name
+     * @param string $data
      * @return array
+     * @throws Exception
      */
-    public function push($queue_name, $data) {
+    public function push(string $queue_name, string $data)
+    {
         $queue = $this->client->getQueueRef($queue_name);
 
         try {
             $request = new SendMessageRequest($data);
             $ret = $queue->sendMessage($request);
         } catch (MnsException $e) {
+            Log::getInstance()->warning(['mns_push_error', $queue_name, json_encode($data), $e->getMnsErrorCode(), $e->getMessage()]);
             throw new MnsException($e->getMnsErrorCode(), $e->getMessage());
         }
 
@@ -75,10 +95,12 @@ class Mns {
 
     /**
      * 消费队列
-     * @param $queue_name
+     * @param string $queue_name
      * @return array
+     * @throws Exception
      */
-    public function pop($queue_name) {
+    public function pop(string $queue_name)
+    {
         try {
             //接受消息
             $queue = $this->client->getQueueRef($queue_name);
@@ -87,6 +109,7 @@ class Mns {
             $receipt_handle = $ret->getReceiptHandle();
             $this->deleteMsg($queue_name, $receipt_handle);
         } catch (MnsException $e) {
+            Log::getInstance()->warning(['mns_pop_error', $queue_name, $e->getMnsErrorCode(), $e->getMessage()]);
             throw new MnsException($e->getMnsErrorCode(), $e->getMessage());
         }
 
@@ -98,12 +121,15 @@ class Mns {
      * @param $queue_name
      * @param $receipt_handle
      * @return array
+     * @throws Exception
      */
-    public function deleteMsg($queue_name, $receipt_handle) {
+    private function deleteMsg($queue_name, $receipt_handle)
+    {
         try {
             $queue = $this->client->getQueueRef($queue_name);
             $ret = $queue->deleteMessage($receipt_handle);
         } catch (MnsException $e) {
+            Log::getInstance()->warning(['mns_deleteMsg_error', $queue_name, $e->getMnsErrorCode(), $e->getMessage()]);
             throw new MnsException($e->getMnsErrorCode(), $e->getMessage());
         }
 

@@ -9,6 +9,12 @@ header("content-type='text/html',charset='utf-8'");
 require_once __DIR__ . "/fun.php";
 ini_set('memory_limit', '512M');
 
+$mns = new Mns();
+$ret = $mns->push('wlz-mns-queue', 'test111');
+sleep(1);
+$ret2 = $mns->pop('wlz-mns-queue');
+dd($ret);
+
 $freq = new Frep();
 $freq->incr('test', Frep::FREQ_TYPE_HOUR);
 $ret = $freq->check('test', Frep::FREQ_TYPE_HOUR);

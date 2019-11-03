@@ -21,6 +21,7 @@ require_once "crypt/rsa.php";
 require_once "crypt/aes.php";
 require_once "crypt/cryptInterface.php";
 require_once "redis/freq.php";
+require_once "queue/mns/mns.php";
 
 class Fun
 {
