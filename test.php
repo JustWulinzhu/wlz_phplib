@@ -9,7 +9,13 @@ header("content-type='text/html',charset='utf-8'");
 require_once __DIR__ . "/fun.php";
 ini_set('memory_limit', '512M');
 
-$ret = (new \Queue\Redis\Redis())->push('test', 'xxx');die;
+$i = 0;
+while ($i < 10) {
+    (new \Queue\Redis\Redis())->push('test', json_encode([111, 222]));
+    $i++;
+}
+
+dd(111);
 
 $mns = new Mns();
 $ret = $mns->push('wlz-mns-queue', '111');

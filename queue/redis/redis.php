@@ -5,11 +5,12 @@
  * Email: linzhu.wu@beebank.com
  * Date: 18/12/14 下午5:26
  * redis队列简单封装,先进先出
- * 队列消费进程 /www/wlz_phplib/shell/pop.sh, 每秒执行一次,模仿长进程
+ * 队列监听消费进程, 启动脚本：php /www/wlz_phplib/queue/redis/task.php $queue_name &, 每秒执行一次,模仿长进程
  *
- * 压入队列 (new Queue())->push('key', 'value');
- * 弹出队列 (new Queue())->pop('key'); pop
- * 最大队列长度10000
+ * 压入队列 (new \Queue\Redis\Redis())->push('key', 'value');
+ * 弹出队列 (new \Queue\Redis\Redis())->pop('key');
+ * 最大队列默认长度10000
+ *
  */
 
 namespace Queue\Redis;
@@ -45,7 +46,7 @@ class Redis extends BaseRedis {
      * @return mixed
      * @throws \Exception
      */
-    public function push($key, $value) {
+    public function push($key, string $value) {
         if ($this->lLen($key) >= self::MAX_QUEUE_NUM) {
             throw new \Exception('队列已满');
         }

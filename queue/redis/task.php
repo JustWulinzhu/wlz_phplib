@@ -4,15 +4,14 @@
  * User: wulinzhu
  * Date: 19/11/4 下午5:51
  * Email: 18515831680@163.com
+ *
  * "redis队列消息监听"进程
  *
- * 启动脚本：php /www/wlz_phplib/queue/redis/taskRedis.php
+ * 启动脚本：php /www/wlz_phplib/queue/redis/task.php $queue_name &
  *
  */
 
 namespace Queue\Redis;
-
-use Queue\Redis\Redis;
 
 require_once dirname(dirname(__DIR__)) . "/fun.php";
 
@@ -35,9 +34,10 @@ class Task {
                 if (false === $ret) {
                     throw new \Exception('no messages');
                 }
-                \Log::getInstance()->debug([__METHOD__, $queue_name, json_encode($ret), 'success']);
+                \Log::getInstance()->debug([__METHOD__, $queue_name, $ret, 'success']);
 
                 //业务代码，如果业务代码执行异常可重新push进$queue_name队列
+                usleep(500000);
                 /**
                  * code...
                  */
