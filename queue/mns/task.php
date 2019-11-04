@@ -13,7 +13,7 @@
 
 namespace Queue\Mns;
 
-use \Queue\Mns\Mns as Mns;
+use \Queue\Mns\Mns;
 
 require_once dirname(dirname(__DIR__)) . "/fun.php";
 
@@ -28,14 +28,14 @@ class Task {
      * @throws \Exception
      */
     public function process($queue_name) {
-        $mns = new Mns();
+        $mns = new \Queue\Mns\Mns();
 
         while (true) {
             try {
                 $ret = $mns->pop($queue_name);
-                if (1 === $ret['is_success']) {
+                if (true === $ret['is_success']) {
                     //执行业务
-                    \Log::getInstance()->debug([__METHOD__, $queue_name, json_encode($ret), 'success']);
+                    \Log::getInstance()->debug([__METHOD__, $queue_name, $ret['body'], 'success']);
                 } else {
                     throw new \Exception($queue_name . ' pop failed', $ret['status']);
                 }

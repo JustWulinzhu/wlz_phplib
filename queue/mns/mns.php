@@ -7,7 +7,7 @@
  *
  * 阿里云mns服务
  *
- * $mns = new Mns();
+ * $mns = new \Queue\Mns\Mns();
  *
  * 创建队列：
  * $mns->createQueue($queue_name);
@@ -149,7 +149,6 @@ class Mns
         return [
             'status'        => $ret->getStatusCode(),
             'is_success'    => $ret->isSucceed(),
-            'message_id'    => $ret->getMessageId(),
         ];
     }
 

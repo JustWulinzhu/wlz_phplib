@@ -9,19 +9,11 @@ header("content-type='text/html',charset='utf-8'");
 require_once __DIR__ . "/fun.php";
 ini_set('memory_limit', '512M');
 
-$i = 0;
-while ($i < 10) {
-    (new \Queue\Redis\Redis())->push('test', json_encode([111, 222]));
-    $i++;
-}
-
-dd(111);
-
-$mns = new Mns();
+$mns = new \Queue\Mns\Mns();
 $ret = $mns->push('wlz-mns-queue', '111');
-sleep(1);
-$ret2 = $mns->pop('wlz-mns-queue');
-dd($ret2);
+//sleep(1);
+//$ret2 = $mns->pop('wlz-mns-queue');
+dd($ret);
 
 $freq = new Frep();
 $freq->incr('test', Frep::FREQ_TYPE_HOUR);
