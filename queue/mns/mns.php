@@ -21,6 +21,8 @@
  *
  */
 
+namespace Queue\Mns;
+
 use AliyunMNS\Client;
 use AliyunMNS\Requests\ListQueueRequest;
 use AliyunMNS\Requests\SendMessageRequest;
@@ -40,11 +42,11 @@ class Mns
 
     /**
      * Mns constructor.
-     * @throws Exception
+     * @throws \Exception
      */
     public function __construct()
     {
-        $config = Conf::getConfig('mns/mns');
+        $config = \Conf::getConfig('mns/mns');
         $this->access_id = $config['access_id'];
         $this->access_key = $config['access_key'];
         $this->end_point = $config['end_point'];
@@ -79,7 +81,6 @@ class Mns
      * @param string $queue_name
      * @param string $data
      * @return array
-     * @throws Exception
      */
     public function push(string $queue_name, string $data)
     {
@@ -88,7 +89,7 @@ class Mns
             $request = new SendMessageRequest($data);
             $ret = $queue->sendMessage($request);
         } catch (MnsException $e) {
-            Log::getInstance()->warning(['mns_push_error', $queue_name, json_encode($data), $e->getCode(), $e->getMessage()]);
+            \Log::getInstance()->warning(['mns_push_error', $queue_name, json_encode($data), $e->getCode(), $e->getMessage()]);
             throw new MnsException($e->getCode(), $e->getMessage());
         }
 
@@ -103,7 +104,7 @@ class Mns
      * 消费队列
      * @param string $queue_name
      * @return array
-     * @throws Exception
+     * @throws \Exception
      */
     public function pop(string $queue_name)
     {
@@ -115,7 +116,7 @@ class Mns
             $receipt_handle = $ret->getReceiptHandle();
             $this->deleteMsg($queue_name, $receipt_handle);
         } catch (MnsException $e) {
-            Log::getInstance()->warning(['mns_pop_error', $queue_name, $e->getCode(), $e->getMessage()]);
+            \Log::getInstance()->warning(['mns_pop_error', $queue_name, $e->getCode(), $e->getMessage()]);
             throw new MnsException($e->getCode(), $e->getMessage());
         }
 
@@ -132,7 +133,7 @@ class Mns
      * @param $queue_name
      * @param $receipt_handle
      * @return array
-     * @throws Exception
+     * @throws \Exception
      */
     private function deleteMsg($queue_name, $receipt_handle)
     {
@@ -140,7 +141,7 @@ class Mns
             $queue = $this->client->getQueueRef($queue_name);
             $ret = $queue->deleteMessage($receipt_handle);
         } catch (MnsException $e) {
-            Log::getInstance()->warning(['mns_deleteMsg_error', $queue_name, $e->getCode(), $e->getMessage()]);
+            \Log::getInstance()->warning(['mns_deleteMsg_error', $queue_name, $e->getCode(), $e->getMessage()]);
             throw new MnsException($e->getCode(), $e->getMessage());
         }
 

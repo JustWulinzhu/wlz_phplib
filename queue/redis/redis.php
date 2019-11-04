@@ -12,10 +12,14 @@
  * 最大队列长度10000
  */
 
-require_once dirname(__DIR__) . "/fun.php";
-require_once dirname(__DIR__) . "/redis/baseRedis.php";
+namespace Queue\Redis;
 
-class Queue extends BaseRedis {
+use Redis\BaseRedis;
+
+require_once dirname(dirname(__DIR__)) . "/fun.php";
+require_once dirname(dirname(__DIR__)) . "/redis/baseRedis.php";
+
+class Redis extends BaseRedis {
 
     const QUEUE = 'REDIS_QUEUE_';
 
@@ -25,11 +29,11 @@ class Queue extends BaseRedis {
      * 拼接key
      * @param $key
      * @return string
-     * @throws Exceptions
+     * @throws \Exception
      */
     private function getKey($key) {
         if (! is_string($key)) {
-            throw new Exceptions('键值必须为字符串');
+            throw new \Exception('键值必须为字符串');
         }
         return self::QUEUE . $key;
     }
@@ -38,13 +42,12 @@ class Queue extends BaseRedis {
      * 压入队列
      * @param $key
      * @param $value
-     * @return int
-     * @throws Exceptions
-     * @throws Exception
+     * @return mixed
+     * @throws \Exception
      */
     public function push($key, $value) {
         if ($this->lLen($key) >= self::MAX_QUEUE_NUM) {
-            throw new Exceptions('队列已满');
+            throw new \Exception('队列已满');
         }
         return $this->getInstance()->lPush($this->getKey($key), $value);
     }
@@ -52,8 +55,8 @@ class Queue extends BaseRedis {
     /**
      * 弹出队列
      * @param $key
-     * @return bool|string
-     * @throws Exception
+     * @return bool|mixed
+     * @throws \Exception
      */
     public function pop($key) {
         if (0 === $this->lLen($key)) {
@@ -65,9 +68,8 @@ class Queue extends BaseRedis {
     /**
      * 获取队列长度
      * @param $key
-     * @return int
-     * @throws Exceptions
-     * @throws Exception
+     * @return bool|int
+     * @throws \Exception
      */
     public function lLen($key) {
         return $this->getInstance()->lLen($this->getKey($key));

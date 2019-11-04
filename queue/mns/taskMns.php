@@ -7,11 +7,17 @@
  *
  * "mns消息监听"进程
  *
+ * 启动脚本：php /www/wlz_phplib/queue/mns/task.php $queue_name //$queue_name为队列名称
+ *
  */
+
+namespace Queue\Mns;
+
+use Queue\Mns\Mns as Mns;
 
 require_once dirname(dirname(__DIR__)) . "/fun.php";
 
-class Task {
+class TaskMns {
 
     const DEFAULT_WAIT_SECONDS = 5; //无消息默认等待时间
 
@@ -19,7 +25,7 @@ class Task {
      * 队列进程
      * @param $queue_name
      * @return bool
-     * @throws Exception
+     * @throws \Exception
      */
     public function process($queue_name) {
         $mns = new Mns();
@@ -29,12 +35,12 @@ class Task {
                 $ret = $mns->pop($queue_name);
                 if (1 === $ret['is_success']) {
                     //执行业务
-                    Log::getInstance()->debug([__METHOD__, $queue_name, json_encode($ret), 'success']);
+                    \Log::getInstance()->debug([__METHOD__, $queue_name, json_encode($ret), 'success']);
                 } else {
-                    throw new Exception($queue_name . ' pop failed', $ret['status']);
+                    throw new \Exception($queue_name . ' pop failed', $ret['status']);
                 }
             } catch (\Throwable $e) {
-                Log::getInstance()->debug([__METHOD__, $queue_name, 'no task, sleep 5s', $e->getCode(), $e->getMessage()]);
+                \Log::getInstance()->debug([__METHOD__, $queue_name, 'no task, sleep 5s', $e->getCode(), $e->getMessage()]);
                 sleep(self::DEFAULT_WAIT_SECONDS);
             }
         }
@@ -48,4 +54,4 @@ $queue_name = $argv[1];
 if (empty($queue_name)) {
     die('queue_name argument cannot be empty');
 }
-(new Task())->process($queue_name);
+(new TaskMns())->process($queue_name);

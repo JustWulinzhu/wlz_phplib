@@ -7,7 +7,7 @@
  */
 require_once dirname(dirname(__DIR__)) . "/fun.php";
 
-$queue = new Queue();
+$queue = new Redis();
 $data = $queue->pop('pic_upload');
 if ($data) {
     Log::getInstance()->debug(array('pop_data', $data));

@@ -10,7 +10,7 @@ require_once dirname(dirname(__DIR__)) . "/fun.php";
 class Upload {
 
     public function push() {
-        $queue = new Queue();
+        $queue = new Redis();
         $files = Fun::scanDir('/iphone/20190917-031758');
         foreach ($files as $file) {
             $ret = $queue->push('pic_upload', $file);

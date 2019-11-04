@@ -28,6 +28,10 @@
  *
  */
 
+namespace Redis;
+
+use Redis\BaseRedis;
+
 require_once dirname(__DIR__) . '/' . 'fun.php';
 
 class Frep extends BaseRedis
@@ -64,7 +68,7 @@ class Frep extends BaseRedis
 
     /**
      * Frep constructor.
-     * @throws Exception
+     * @throws \Exception
      */
     public function __construct()
     {
@@ -87,7 +91,6 @@ class Frep extends BaseRedis
      * @param string $hash_field
      * @param int $limit
      * @return bool
-     * @throws Exception
      */
     public function check($hash_key, $hash_field = self::FREQ_TYPE_MINUTE, $limit = self::DEFAULT_LIMIT)
     {
@@ -99,10 +102,9 @@ class Frep extends BaseRedis
     /**
      * 累加计数 默认每次加1
      * @param $hash_key
-     * @param $hash_field
+     * @param string $hash_field
      * @param int $value
      * @return int
-     * @throws Exception
      */
     public function incr($hash_key, $hash_field = self::FREQ_TYPE_MINUTE, $value = self::DEFAULT_ADD_NUM)
     {
@@ -126,20 +128,20 @@ class Frep extends BaseRedis
      * 检查是否是支持的频率类型
      * @param $hash_field
      * @return bool
-     * @throws Exception
+     * @throws \Exception
      */
     public static function checkFrepType($hash_field)
     {
         if (in_array($hash_field, self::$freq_type)) {
             return true;
         }
-        throw new Exception('不存在的频率类型！');
+        throw new \Exception('不存在的频率类型！');
     }
 
     /**
      * @param $freq_type
      * @return false|int
-     * @throws Exception
+     * @throws \Exception
      */
     public static function getTTL($freq_type)
     {
@@ -151,19 +153,19 @@ class Frep extends BaseRedis
                 $ttl = self::FREQ_TYPE_HOUR_TTL;
                 break;
             case self::FREQ_TYPE_DAY :
-                $ttl = Fun::getLeftSeconds();
+                $ttl = \Fun::getLeftSeconds();
                 break;
             case self::FREQ_TYPE_WEEK :
-                $ttl = Fun::getLeftSeconds('week');
+                $ttl = \Fun::getLeftSeconds('week');
                 break;
             case self::FREQ_TYPE_MONTH :
-                $ttl = Fun::getLeftSeconds('month');
+                $ttl = \Fun::getLeftSeconds('month');
                 break;
             case self::FREQ_TYPE_FOREVER :
                 $ttl = self::FREQ_TYPE_FOREVER_TTL;
                 break;
             default :
-                throw new Exception('freq_type_error');
+                throw new \Exception('freq_type_error');
         }
         return $ttl;
     }

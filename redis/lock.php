@@ -9,6 +9,10 @@
  * 参考文献: http://www.36nu.com/post/314
  */
 
+namespace Redis;
+
+use Redis\BaseRedis;
+
 require_once dirname(__DIR__) . '/' . 'fun.php';
 
 class Lock extends BaseRedis {
@@ -20,8 +24,8 @@ class Lock extends BaseRedis {
     const REDIS_LOCK = 'redis_lock_';
 
     /**
-     * Cache constructor.
-     * @throws Exception
+     * Lock constructor.
+     * @throws \Exception
      */
     public function __construct() {
         $this->redis = $this->getInstance();
@@ -31,7 +35,7 @@ class Lock extends BaseRedis {
      * 阻塞锁,轮询10次等待获取锁，获取失败返回false
      * @param $key
      * @return bool
-     * @throws Exception
+     * @throws \Exception
      */
     public function blockLock($key) {
         $lock_ret = $this->mutexLock($key);
@@ -44,7 +48,7 @@ class Lock extends BaseRedis {
                 if ($lock_ret) {
                     return true;
                 } else {
-                    Log::getInstance()->debug([__METHOD__, 'sleep', $key, $i]);
+                    \Log::getInstance()->debug([__METHOD__, 'sleep', $key, $i]);
                     sleep(5); //等待5秒再次尝试获取锁
                     $i++;
                 }
@@ -89,22 +93,22 @@ class Lock extends BaseRedis {
      * 20191014验证通过
      * @param $key
      * @return bool
-     * @throws Exception
+     * @throws \Exception
      */
     public function doLock($key) {
         $num = $this->redis->get(self::REDIS_LOCK . 'num');
         if ($num <= 0) {
-            Log::getInstance()->debug(array('无产品'));
+            \Log::getInstance()->debug(array('无产品'));
             return false;
         }
         $ret = $this->mutexLock($key);
         if ($ret) {
             $this->redis->decr(self::REDIS_LOCK . 'num');
-            Log::getInstance()->debug(array('success'));
+            \Log::getInstance()->debug(array('success'));
             $this->unlock($key);
             return true;
         } else {
-            Log::getInstance()->debug(array('fail'));
+            \Log::getInstance()->debug(array('fail'));
             $this->unlock($key);
             return false;
         }
@@ -113,18 +117,18 @@ class Lock extends BaseRedis {
     /**
      * @param $key
      * @return bool
-     * @throws Exception
+     * @throws \Exception
      */
     public function redisTransactionLock($key) {
-        Log::getInstance()->debug(array('request'));
+        \Log::getInstance()->debug(array('request'));
         $user_id = mt_rand(1, 9000000000);
         $this->redis->watch($key);
         $this->redis->multi();
         $this->redis->set($key, $user_id);
         $res = $this->redis->exec();
         if ($res) {
-            $mysql = new Db('prize');
-            $mysql2 = new Db('user_prize');
+            $mysql = new \Db('prize');
+            $mysql2 = new \Db('user_prize');
             $count = count($mysql->select());
             $left_count = count($mysql->select(array('status' => 0), 'id'));
             $now_prize_id = $count - $left_count + 1;
@@ -133,7 +137,7 @@ class Lock extends BaseRedis {
             if ($this->redis->exists($key)) {
                 $this->unlock($key);
             }
-            Log::getInstance()->debug(array('success', $now_prize_id));
+            \Log::getInstance()->debug(array('success', $now_prize_id));
             return true;
         }
         return false;
