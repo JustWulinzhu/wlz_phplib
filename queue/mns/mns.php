@@ -81,6 +81,7 @@ class Mns
      * @param string $queue_name
      * @param string $data
      * @return array
+     * @throws \Exception
      */
     public function push(string $queue_name, string $data)
     {

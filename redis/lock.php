@@ -11,7 +11,7 @@
 
 namespace Redis;
 
-use Redis\BaseRedis;
+use \Redis\BaseRedis;
 
 require_once dirname(__DIR__) . '/' . 'fun.php';
 

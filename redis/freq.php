@@ -30,7 +30,7 @@
 
 namespace Redis;
 
-use Redis\BaseRedis;
+use \Redis\BaseRedis;
 
 require_once dirname(__DIR__) . '/' . 'fun.php';
 
@@ -91,6 +91,7 @@ class Frep extends BaseRedis
      * @param string $hash_field
      * @param int $limit
      * @return bool
+     * @throws \Exception
      */
     public function check($hash_key, $hash_field = self::FREQ_TYPE_MINUTE, $limit = self::DEFAULT_LIMIT)
     {
@@ -105,6 +106,7 @@ class Frep extends BaseRedis
      * @param string $hash_field
      * @param int $value
      * @return int
+     * @throws \Exception
      */
     public function incr($hash_key, $hash_field = self::FREQ_TYPE_MINUTE, $value = self::DEFAULT_ADD_NUM)
     {
