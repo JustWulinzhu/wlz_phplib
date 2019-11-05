@@ -5,7 +5,7 @@
  * Date: 19/11/4 下午5:51
  * Email: 18515831680@163.com
  *
- * "redis队列消息监听"进程
+ * "redis消息队列监听"进程
  *
  * 启动脚本：php /www/wlz_phplib/queue/redis/task.php $queue_name &
  *

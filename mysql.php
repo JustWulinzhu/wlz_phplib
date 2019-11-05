@@ -12,6 +12,11 @@ class Db {
     private $mysql = null;
     private $table;
 
+    /**
+     * Db constructor.
+     * @param $table
+     * @throws Exception
+     */
     function __construct($table) {
         $conf = Conf::getConfig('db/db1');
         if (is_null($this->mysql)) {
@@ -56,7 +61,8 @@ class Db {
     /**
      * 通用插入方法
      * @param array $data
-     * @return bool
+     * @return array|bool
+     * @throws Exception
      */
     public function insert(array $data) {
         $arr = [];
@@ -76,9 +82,10 @@ class Db {
 
     /**
      * 通用update方法
-     * @param $data
-     * @param $condition
-     * @return int
+     * @param array $data
+     * @param array $condition
+     * @return false|int
+     * @throws Exception
      */
     public function update(array $data, array $condition) {
         $field_str = '';
@@ -136,9 +143,10 @@ class Db {
 
     /**
      * 通用sql查询
-     * @param $condition
+     * @param array $condition
      * @param string $field
      * @return array
+     * @throws Exception
      */
     public function select($condition = array(), $field = '*') {
         $condition_str = '';

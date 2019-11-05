@@ -8,7 +8,6 @@ require_once "log.php";
 require_once "ipc.php";
 require_once "mysql.php";
 require_once "curl.php";
-require_once "queue/redis/redis.php";
 require_once "exceptions.php";
 require_once "oss/oss.php";
 require_once "oss/files.php";
@@ -16,12 +15,14 @@ require_once "mail.php";
 require_once "config/conf.php";
 require_once "redis/baseRedis.php";
 require_once "redis/lock.php";
+require_once "redis/freq.php";
+require_once "queue/mns/mns.php";
+require_once "queue/redis/redis.php";
 require_once "url.php";
 require_once "crypt/rsa.php";
 require_once "crypt/aes.php";
 require_once "crypt/cryptInterface.php";
-require_once "redis/freq.php";
-require_once "queue/mns/mns.php";
+
 
 class Fun
 {

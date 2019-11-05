@@ -33,6 +33,7 @@ class Excel {
      * @param $file
      * @param int $sheet
      * @return array|bool
+     * @throws Exception
      */
     public function read($file, $sheet = 0) {
         if ($this->drive == self::DRIVE_IOFACTORY) return $this->readIoFactory($file, $sheet);

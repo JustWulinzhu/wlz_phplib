@@ -13,13 +13,14 @@ class Curl {
     const TIME_OUT = 90;
 
     /**
-     * request请求
+     * request请求 POST GET
      * @param $url
-     * @param array $data
      * @param string $method
+     * @param array $data
      * @param array $header
      * @param array $cookies
-     * @return mixed
+     * @return bool|mixed|string
+     * @throws Exception
      */
     public static function request($url, $method = 'GET', array $data = array(), $header = array(), $cookies = array()) {
         return (strtoupper($method) == 'GET') ? self::curlGet($url, $data) : self::curlPost($url, $data, $header, $cookies);
@@ -31,7 +32,8 @@ class Curl {
      * @param array $data
      * @param array $header
      * @param array $cookies
-     * @return mixed
+     * @return bool|string
+     * @throws Exception
      */
     private static function curlPost($url, array $data, $header = array(), $cookies = array()) {
         $curl = curl_init();
@@ -69,7 +71,8 @@ class Curl {
      * curl GET请求
      * @param $url
      * @param array $data
-     * @return mixed
+     * @return bool|string
+     * @throws Exception
      */
     private static function curlGet($url, $data = array()) {
         $curl = curl_init();

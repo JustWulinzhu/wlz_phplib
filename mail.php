@@ -23,6 +23,11 @@ class Mail {
     private $from;
     private $nickname;
 
+    /**
+     * Mail constructor.
+     * @param array $config
+     * @throws Exception
+     */
     public function __construct($config = array()) {
         if (empty($config)) {
             $config = Conf::getConfig('mail/mail');
