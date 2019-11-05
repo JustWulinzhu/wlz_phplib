@@ -44,30 +44,38 @@ foreach ($file_names_values as $file_name) {
     if (in_array($file_name, $namespaced_class)) { //采用命名空间方式的类
         $function_str =
             'function autoLoadApp'.ucfirst($file_name).'($class_name) {
-            $class_name = strtolower($class_name);
-            if (file_exists(str_replace("\\\", DIRECTORY_SEPARATOR, APP_ROOT_PATH . "\\\" . $class_name) . ".php")) {
-                require (str_replace("\\\", DIRECTORY_SEPARATOR, APP_ROOT_PATH . "\\\" . $class_name) . ".php");
-            }
-        }';
+                $class_name = strtolower($class_name);
+                if (file_exists(str_replace("\\\", DIRECTORY_SEPARATOR, APP_ROOT_PATH . "\\\" . $class_name) . ".php")) {
+                    require (str_replace("\\\", DIRECTORY_SEPARATOR, APP_ROOT_PATH . "\\\" . $class_name) . ".php");
+                }
+            }';
     } else { //未采用命名空间的类
         $function_str =
             'function autoLoadApp'.ucfirst($file_name).'($class_name) {
-            $class_name = strtolower($class_name);
-            if (file_exists(APP_ROOT_PATH . DIRECTORY_SEPARATOR . "' .$file_name. '/{$class_name}.php")) {
-                require (APP_ROOT_PATH . DIRECTORY_SEPARATOR . "' .$file_name. '/{$class_name}.php");
-            }
-        }';
+                $class_name = strtolower($class_name);
+                if (file_exists(APP_ROOT_PATH . DIRECTORY_SEPARATOR . "' .$file_name. '/{$class_name}.php")) {
+                    require (APP_ROOT_PATH . DIRECTORY_SEPARATOR . "' .$file_name. '/{$class_name}.php");
+                }
+            }';
     }
     eval($function_str);
     spl_autoload_register('autoLoadApp' . ucfirst($file_name));
 }
 
-//print_r(spl_autoload_functions());
+$uri = $_SERVER['REQUEST_URI'];
+$uri_arr = array_filter(explode('/', $uri));
+$uri_arr = array_map(function ($x) { return ucfirst($x); }, $uri_arr);
+$namespace = '';
+foreach ($uri_arr as $uri) {
+    $namespace .= $uri . '\\';
+}
+$obj = trim($namespace, '\\');
+try {
+    $obj = new $obj;
+} catch (\Throwable $e) {
+    die('404 Not Found.');
+}
+$ret = $obj->push('a', 'a');
+print_r($ret);
 
-//function autoLoadAppQueue($class_name) {
-//    $class_name = strtolower($class_name);
-//    if (file_exists(str_replace('\\', DIRECTORY_SEPARATOR, APP_ROOT_PATH .'\\'. $class_name) . '.php')) {
-//        $fileName = str_replace('\\', DIRECTORY_SEPARATOR, APP_ROOT_PATH .'\\'. $class_name) . '.php';
-//        require ($fileName);
-//    }
-//}
+//print_r(spl_autoload_functions());
