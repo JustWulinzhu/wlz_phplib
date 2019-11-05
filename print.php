@@ -14,7 +14,22 @@ function dd($arr = []) {
     die;
 }
 
+function ddd($arr = []) {
+    if (empty($arr)) die;
+    echo "<pre>";
+    print_r($arr);
+    echo "</pre>";
+}
+
 function pp($arr = []) {
+    if (empty($arr)) die;
+    echo "<pre>";
+    var_dump($arr);
+    echo "</pre>";
+    die;
+}
+
+function ppp($arr = []) {
     if (empty($arr)) die;
     echo "<pre>";
     var_dump($arr);
