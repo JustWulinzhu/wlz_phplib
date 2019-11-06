@@ -19,7 +19,7 @@ class Test {
     public function index() {
         $db = new Db('sl');
         $ret = $db->select(['id' => 1]);
-        dd($ret);
+        return $ret;
     }
 
 }

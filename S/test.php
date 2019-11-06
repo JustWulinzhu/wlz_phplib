@@ -6,7 +6,6 @@
  * Date: 18/12/14 下午5:13
  */
 header("content-type='text/html',charset='utf-8'");
-require_once __DIR__ . "/fun.php";
 ini_set('memory_limit', '512M');
 
 //$i = 0;
