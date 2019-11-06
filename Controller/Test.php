@@ -13,9 +13,12 @@ use S\Redis\Lock;
 use S\Redis\BaseRedis;
 use S\Queue\Redis\Redis;
 
-
 class Test {
 
+    /**
+     * @return array
+     * @throws \Exception
+     */
     public function index() {
         $db = new Db('sl');
         $ret = $db->select(['id' => 1]);

@@ -7,6 +7,8 @@
  *
  * php自动加载入口文件
  *
+ * git 默认不跟踪文件大小写，git config core.ignorecase false 可以开启git对文件大小写的跟踪
+ *
  */
 define("APP_ROOT_PATH", dirname(__DIR__)); //项目绝对路径
 require_once APP_ROOT_PATH . "/Ext/phpext/print.php";
