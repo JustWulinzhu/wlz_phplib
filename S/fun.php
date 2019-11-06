@@ -5,7 +5,7 @@ namespace S;
 
 header("content-type='text/html',charset='utf-8'");
 
-//require_once "print.php";
+require_once "print.php";
 //require_once "log.php";
 //require_once "ipc.php";
 //require_once "db.php";

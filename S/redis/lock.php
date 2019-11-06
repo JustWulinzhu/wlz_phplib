@@ -11,8 +11,9 @@
 
 namespace S\Redis;
 
-use S\Redis\BaseRedis;
+use S\Db;
 use S\Log;
+use S\Redis\BaseRedis;
 
 require_once dirname(__DIR__) . '/' . 'fun.php';
 
@@ -128,8 +129,8 @@ class Lock extends BaseRedis {
         $this->redis->set($key, $user_id);
         $res = $this->redis->exec();
         if ($res) {
-            $mysql = new \S\Db('prize');
-            $mysql2 = new \S\Db('user_prize');
+            $mysql = new Db('prize');
+            $mysql2 = new Db('user_prize');
             $count = count($mysql->select());
             $left_count = count($mysql->select(array('status' => 0), 'id'));
             $now_prize_id = $count - $left_count + 1;
