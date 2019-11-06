@@ -10,7 +10,7 @@
  */
 
 define("APP_ROOT_PATH", dirname(__DIR__)); //项目绝对路径
-require_once APP_ROOT_PATH . "/S/fun.php";
+require_once APP_ROOT_PATH . "/ext/phpext/print.php";
 
 function autoLoadApp($class_name) {
     if (file_exists(str_replace("\\", DIRECTORY_SEPARATOR, APP_ROOT_PATH . "\\" . $class_name) . ".php")) {
@@ -20,10 +20,13 @@ function autoLoadApp($class_name) {
 spl_autoload_register('autoLoadApp');
 
 $uri = $_SERVER['REQUEST_URI'];
-$uri = ucfirst(str_replace("/", '', $uri));
+$uri = array_values(array_filter(explode("/", $uri)));
 try {
-    $namespace = '\\S\\' . $uri;
-    new $namespace;
+    $class = ucfirst(current($uri));
+    $function = end($uri);
+    $namespace = '\\Controller\\' . $class;
+    $obj = new $namespace;
+    $obj->$function();
 } catch (\Throwable $e) {
     die('404 Not Found.');
 }
