@@ -9,7 +9,7 @@
  * 例: Conf::getConfig('mail/user.name'), 获取mail.php里面的user字段下面的name字段
  */
 
-require_once dirname(__DIR__) . "/fun.php";
+namespace Config;
 
 class Conf {
 
@@ -17,7 +17,7 @@ class Conf {
      * 引入配置文件
      * @param $file
      * @return mixed
-     * @throws Exception
+     * @throws \Exception
      */
     public static function getFileData($file) {
         $conf_file = explode("/", $file);
@@ -36,9 +36,9 @@ class Conf {
 
     /**
      * 获取配置
-     * @param $key
-     * @return array|mixed
-     * @throws Exception
+     * @param string $key
+     * @return mixed
+     * @throws \Exception
      */
     public static function getConfig($key = '') {
         $config = self::getFileData($key);
@@ -60,7 +60,7 @@ class Conf {
                 return $config;
             }
         }
-        throw new Exception("can not find config");
+        throw new \Exception("can not find config");
     }
 
 }
