@@ -22,8 +22,8 @@ spl_autoload_register('autoLoadApp');
 $uri = $_SERVER['REQUEST_URI'];
 $uri = ucfirst(str_replace("/", '', $uri));
 try {
-    $path = '\\S\\' . $uri;
-    $conf = new $path;
+    $namespace = '\\S\\' . $uri;
+    new $namespace;
 } catch (\Throwable $e) {
     die('404 Not Found.');
 }
