@@ -104,15 +104,18 @@ class Log {
         if (Fun::isCli()) {
             $request_uri = $_SERVER['SCRIPT_NAME'] ? $_SERVER['SCRIPT_NAME'] : $_SERVER['SCRIPT_FILENAME'];
             $request_uri = strstr($request_uri, '.', true);
-            $root_dir = substr(trim(self::$root_dir, '/'), 0, strpos(trim(self::$root_dir, '/'), '/'));
-            $dir_name = $dir_name ? "/" . $dir_name : "/" . trim(trim($request_uri, '/'), $root_dir);
+            $root_dir = substr(trim(self::$root_dir, DIRECTORY_SEPARATOR), 0, strpos(trim(self::$root_dir, DIRECTORY_SEPARATOR), DIRECTORY_SEPARATOR));
+            $dir_name = $dir_name ? DIRECTORY_SEPARATOR . $dir_name : DIRECTORY_SEPARATOR . trim(trim($request_uri, DIRECTORY_SEPARATOR), $root_dir);
         } else {
             $request_uri = $_SERVER['REQUEST_URI'] ? $_SERVER['REQUEST_URI'] : $_SERVER['DOCUMENT_URI'];
-            $dir_name = $dir_name ? "/" . $dir_name : strstr($request_uri, '.', true);
+            $dir_name = $dir_name ? DIRECTORY_SEPARATOR . $dir_name : $request_uri;
         }
-        $dir = self::$root_dir . $dir_name . "/" . date('Ym', time());
+        //日志目录
+        $dir = self::$root_dir . $dir_name . DIRECTORY_SEPARATOR . date('Ym', time());
+        //日志名称
         $file = self::$type . "." . date('Ymd', time()) . ".log";
-        $dir_file = $dir . '/' . $file;
+        //日志全路径
+        $dir_file = $dir . DIRECTORY_SEPARATOR . $file;
         if (! file_exists($dir)) { //创建文件需要www目录的写权限,chown -R www-data:root /www,解决办法:把www目录所属者改为对应php程序执行的用户(查看php执行用户ps aux)
             mkdir($dir, 0777, true);
         }

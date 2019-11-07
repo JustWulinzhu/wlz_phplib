@@ -8,8 +8,6 @@
 
 namespace S\Security;
 
-require_once dirname(__DIR__) . '/' . 'fun.php';
-
 class Referer {
 
     public function checkDomain() {

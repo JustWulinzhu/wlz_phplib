@@ -31,7 +31,7 @@ use AliyunMNS\Requests\SendMessageRequest;
 use AliyunMNS\Requests\CreateQueueRequest;
 use AliyunMNS\Exception\MnsException;
 
-require_once APP_ROOT_PATH . "/ext/aliyun-mns-sdk/mns-autoloader.php";
+require_once APP_ROOT_PATH . "/Ext/aliyun-mns-sdk/mns-autoloader.php";
 
 class Mns
 {

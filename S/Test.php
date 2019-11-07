@@ -15,7 +15,7 @@ ini_set('memory_limit', '512M');
 //}
 //die;
 
-$mns = new \Queue\Mns\Mns();
+$mns = new \S\Queue\Mns\Mns();
 $ret = $mns->push('wlz-mns-queue', '111');
 //sleep(1);
 //$ret2 = $mns->pop('wlz-mns-queue');

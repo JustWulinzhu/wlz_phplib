@@ -15,8 +15,6 @@ use S\Db;
 use S\Log;
 use S\Redis\BaseRedis;
 
-require_once dirname(__DIR__) . '/' . 'fun.php';
-
 class Lock extends BaseRedis {
 
     private $redis;

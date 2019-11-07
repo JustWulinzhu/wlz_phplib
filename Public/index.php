@@ -7,9 +7,8 @@
  *
  * php自动加载入口文件
  *
- * git 默认不跟踪文件大小写，git config core.ignorecase false 可以开启git对文件大小写的跟踪
- *
  */
+
 define("APP_ROOT_PATH", dirname(__DIR__)); //项目绝对路径
 require_once APP_ROOT_PATH . "/Ext/phpext/print.php";
 
@@ -30,6 +29,9 @@ $uri = $_SERVER['REQUEST_URI'];
 $uri = array_values(array_filter(explode("/", $uri)));
 try {
     $class = ucfirst(current($uri));
+    if (empty($class)) {
+        die('class Not Found.');
+    }
     $function = end($uri);
     $namespace = '\\Controller\\' . $class;
     $obj = new $namespace;

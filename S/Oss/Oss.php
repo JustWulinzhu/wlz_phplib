@@ -22,7 +22,7 @@
 
 namespace S\Oss;
 
-require_once dirname(__DIR__) . '/ext/aliyun-oss/autoload.php';
+require_once dirname(dirname(__DIR__)) . '/Ext/aliyun-oss/autoload.php';
 
 use S\Log;
 use Config\Conf;

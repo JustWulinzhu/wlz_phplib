@@ -3,15 +3,17 @@
 namespace Controller;
 
 use S\Db;
+use S\Queue\Mns\Mns;
 use S\Url;
 use S\Log;
 use S\Curl;
-use S\Crypt;
+use S\Crypt\Aes;
+use S\Crypt\Rsa;
 use S\Oss\Oss;
 use Config\Conf;
 use S\Redis\Lock;
-use S\Redis\BaseRedis;
-use S\Queue\Redis\Redis;
+use S\Redis\BaseRedis as BaseRedis;
+use S\Queue\Redis\Redis as QueueRedis;
 
 class Test {
 
@@ -20,10 +22,7 @@ class Test {
      * @throws \Exception
      */
     public function index() {
-        $db = new Db('sl');
-        $ret = $db->select(['id' => 1]);
-        dd($ret);
-        return $ret;
+
     }
 
 }

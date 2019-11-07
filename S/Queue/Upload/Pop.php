@@ -5,7 +5,6 @@
  * Email: linzhu.wu@beebank.com
  * Date: 19/9/24 下午4:29
  */
-require_once dirname(dirname(__DIR__)) . "/fun.php";
 
 $queue = new \S\Queue\Redis\Redis();
 $data = $queue->pop('pic_upload');
