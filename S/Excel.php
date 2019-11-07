@@ -10,9 +10,9 @@
 
 namespace S;
 
-require_once __DIR__ . '/ext/excel/PHPExcel.php';
-require_once __DIR__ . '/ext/excel/PHPExcel/IOFactory.php';
-require_once __DIR__ . '/ext/excel/PHPExcel/Reader/Excel5.php';
+require_once dirname(__DIR__) . '/Ext/excel/PHPExcel.php';
+require_once dirname(__DIR__) . '/Ext/excel/PHPExcel/IOFactory.php';
+require_once dirname(__DIR__) . '/Ext/excel/PHPExcel/Reader/Excel5.php';
 
 class Excel {
 
@@ -39,6 +39,7 @@ class Excel {
      * @param $file
      * @param int $sheet
      * @return array|bool
+     * @throws \Exception
      */
     public function read($file, $sheet = 0) {
         if ($this->drive == self::DRIVE_IOFACTORY) return $this->readIoFactory($file, $sheet);
