@@ -7,8 +7,6 @@
  *
  * "mns消息监听"进程
  *
- * 启动脚本：php /www/wlz_phplib/queue/mns/task.php $queue_name //$queue_name为队列名称
- *
  */
 
 namespace S\Queue\Mns;
@@ -48,9 +46,3 @@ class Task {
     }
 
 }
-
-$queue_name = $argv[1];
-if (empty($queue_name)) {
-    die('queue_name argument cannot be empty');
-}
-(new \S\Queue\Mns\Task())->process($queue_name);

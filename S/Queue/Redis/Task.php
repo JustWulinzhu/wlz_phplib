@@ -7,8 +7,6 @@
  *
  * "redis消息队列监听"进程
  *
- * 启动脚本：php /www/wlz_phplib/queue/redis/task.php $queue_name &
- *
  */
 
 namespace S\Queue\Redis;
@@ -51,9 +49,3 @@ class Task {
     }
 
 }
-
-$queue_name = $argv[1];
-if (empty($queue_name)) {
-    die('queue_name argument cannot be empty');
-}
-(new \S\Queue\Redis\Task())->process($queue_name);
