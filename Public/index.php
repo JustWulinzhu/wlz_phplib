@@ -11,7 +11,7 @@
  *
  */
 define("APP_ROOT_PATH", dirname(__DIR__)); //项目绝对路径
-require_once APP_ROOT_PATH . "/ext/phpext/print.php";
+require_once APP_ROOT_PATH . "/Ext/phpext/print.php";
 
 function autoLoadApp($class_name) {
     if (file_exists(str_replace("\\", DIRECTORY_SEPARATOR, APP_ROOT_PATH . "\\" . $class_name) . ".php")) {
