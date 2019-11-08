@@ -109,7 +109,9 @@ class Mail {
         }
 
         try {
-            return $mail->send();
+            if (false === $mail->send()) {
+                throw new \Exception($mail->ErrorInfo);
+            }
         } catch (\Exception $e) {
             Log::getInstance()->warning(array('mail send warning', $e->getCode(), $e->getMessage()));
             throw $e;
