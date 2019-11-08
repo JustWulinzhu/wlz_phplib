@@ -3,6 +3,7 @@
 namespace Controller;
 
 use S\Db;
+use S\Excel;
 use S\Url;
 use S\Log;
 use S\Curl;
@@ -22,7 +23,8 @@ class Test {
      * @throws \Exception
      */
     public function index() {
-
+        $ret = (new Excel())->read('/www/tmp/2019-04-15账务盒子汽车还HX数据.csv');
+        dd($ret);
     }
 
 }

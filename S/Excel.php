@@ -54,9 +54,9 @@ class Excel {
      * @throws \Exception
      */
     public function readPHPExcel($file, $sheet) {
-        $excel = new PHPExcel_Reader_Excel2007();
+        $excel = new \PHPExcel_Reader_Excel2007();
         if(! $excel->canRead($file)) {
-            $excel = new PHPExcel_Reader_Excel5();
+            $excel = new \PHPExcel_Reader_Excel5();
             if(! $excel->canRead($file)) {
                 throw new \Exception('文件不可读');
             }
@@ -83,8 +83,8 @@ class Excel {
      */
     public function readIoFactory($file, $sheet) {
         try {
-            $file_type = PHPExcel_IOFactory::identify($file);
-            $obj_reader = PHPExcel_IOFactory::createReader($file_type);
+            $file_type = \PHPExcel_IOFactory::identify($file);
+            $obj_reader = \PHPExcel_IOFactory::createReader($file_type);
             $obj_excel = $obj_reader->load($file);
         } catch (\Exception $e) {
             throw new \Exception('加载文件出错');

@@ -10,8 +10,8 @@ namespace S;
 use Config\Conf;
 use S\Log;
 
-require_once __DIR__ . "/ext/PHPMailer/src/PHPMailer.php";
-require_once __DIR__ . "/ext/PHPMailer/src/SMTP.php";
+require_once dirname(__DIR__) . "/Ext/PHPMailer/src/PHPMailer.php";
+require_once dirname(__DIR__) . "/Ext/PHPMailer/src/SMTP.php";
 
 class Mail {
 
