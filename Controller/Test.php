@@ -4,6 +4,7 @@ namespace Controller;
 
 use S\Db;
 use S\Excel;
+use S\Fun;
 use S\Mail;
 use S\Url;
 use S\Log;
@@ -20,11 +21,11 @@ use S\Queue\Redis\Redis as QueueRedis;
 class Test {
 
     /**
+     * @param null $arr
      * @throws \Exception
-     * @throws \PHPMailer\PHPMailer\Exception
      */
-    public function index() {
-        Log::getInstance()->error(['error_log_test']);
+    public function index($arr = null) {
+        Log::getInstance()->debug(['params', json_encode($arr)]);
     }
 
 }

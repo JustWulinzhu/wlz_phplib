@@ -7,14 +7,30 @@
  *
  * php cgi模式入口文件
  *
+ * 默认Controller/xxx.php为请求接收地址
+ *
+ * demo:
+ * 请求地址：myhost/index/index?name=xxx&age=18
+ * 请求会指到Controller下面的Index.php里面的index方法，index方法参数即为请求参数name=xxx&age=18
+ *
  */
 
 define("APP_ROOT_PATH", dirname(__DIR__)); //项目绝对路径
 require_once APP_ROOT_PATH . "/Ext/phpext/print.php";
 require_once APP_ROOT_PATH . "/Public/Autoload.php";
 
-$uri = $_SERVER['REQUEST_URI'];
-$uri = array_values(array_filter(explode("/", $uri)));
+//请求uri
+$uri_arr = parse_url($_SERVER['REQUEST_URI']);
+$uri = array_values(array_filter(explode("/", $uri_arr['path'])));
+
+//请求参数
+$params = explode("&", $uri_arr['query']);
+$request_params = [];
+foreach ($params as $param) {
+    $value = explode("=", $param);
+    $request_params[current($value)] = end($value);
+}
+
 try {
     $class = ucfirst(current($uri));
     if (empty($class)) {
@@ -23,7 +39,7 @@ try {
     $function = end($uri);
     $namespace = '\\Controller\\' . $class;
     $obj = new $namespace;
-    $obj->$function();
+    $obj->$function($request_params);
 } catch (\Throwable $e) {
     die($e->getMessage());
 }
