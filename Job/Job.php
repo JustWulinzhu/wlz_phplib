@@ -13,6 +13,7 @@ define("APP_ROOT_PATH", dirname(__DIR__));
 define("APP_JOB_PATH", __DIR__);
 require_once APP_ROOT_PATH . "/Ext/phpext/print.php";
 require_once APP_ROOT_PATH . "/Public/Autoload.php";
+ini_set('memory_limit', '512M');
 
 if (count($argv) <= 1) die('no jobs input.');
 
