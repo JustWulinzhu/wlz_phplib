@@ -11,6 +11,8 @@
 
 namespace Job\Daemon;
 
+use S\Log;
+
 class RedisQueue
 {
 
@@ -21,7 +23,10 @@ class RedisQueue
     public function exec($argv = null)
     {
         $redis_task = new \S\Queue\Redis\Task();
-        $redis_task->process($argv);
+        $ret = $redis_task->process($argv);
+        if ($ret) {
+            Log::getInstance()->debug(['task end', date('Ymd H:i:s', time())]);
+        }
     }
 
 }
