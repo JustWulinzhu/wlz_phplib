@@ -89,7 +89,9 @@ class Log {
         self::$type = self::LOG_TYPE_ERROR;
         $log_ret = $this->log($data, $dir_name);
 
-//        (new mail(Conf::getConfig('mail/exception')))->send('18515831680@163.com', '异常报警', json_encode($data));
+        try {
+            (new Mail(Conf::getConfig('mail/exception')))->send('18515831680@163.com', '异常报警', json_encode($data));
+        } catch (\Exception $e) {}
         return $log_ret;
     }
 

@@ -20,13 +20,11 @@ use S\Queue\Redis\Redis as QueueRedis;
 class Test {
 
     /**
-     * @return array
      * @throws \Exception
+     * @throws \PHPMailer\PHPMailer\Exception
      */
     public function index() {
-        $mail = new Mail(Conf::getConfig('mail/exception'));
-        $ret = $mail->send('18515831680@163.com', '异常报警', '邮件报警系统');
-        dd($ret);
+        Log::getInstance()->error(['error_log_test']);
     }
 
 }

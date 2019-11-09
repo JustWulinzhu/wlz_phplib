@@ -5,6 +5,7 @@
  * Email: linzhu.wu@beebank.com
  * Date: 19/9/2 上午12:05
  */
+
 return array(
     'mail' => array(
         'from_title' => '武林柱邮件系统',
@@ -14,7 +15,7 @@ return array(
         'port' => 465,
         'charset' => 'UTF-8',
         'smtp_username' => '599075133@qq.com',
-        'smtp_password' => 'edtkcqfvusnmbeaf', //IMAP，qq邮箱系统设置生成
+        'smtp_password' => 'njudjiowlmzubbhb', //IMAP，qq邮箱系统设置生成
         'from' => '599075133@qq.com',
         'nickname' => '',
     ),
@@ -26,7 +27,7 @@ return array(
         'port' => 465,
         'charset' => 'UTF-8',
         'smtp_username' => '599075133@qq.com',
-        'smtp_password' => 'edtkcqfvusnmbeaf', //POP3，qq邮箱系统设置生成
+        'smtp_password' => 'njudjiowlmzubbhb', //IMAP，qq邮箱系统设置生成
         'from' => '599075133@qq.com',
         'nickname' => '',
     ),

@@ -2,7 +2,9 @@
 /**
  * 邮件系统: 发送方配置为qq邮箱
  * 支持批量发送,附件发送,批量附件发送
- * (new Mail())->send('xxx@163.com', '标题', '内容', '附件绝对路径');
+ *
+ * 例: (new Mail())->send('xxx@163.com', '标题', '内容', '附件绝对路径');
+ *
  */
 
 namespace S;
@@ -109,9 +111,10 @@ class Mail {
         }
 
         try {
-            if (false === $mail->send()) {
+            if (false === ($ret = $mail->send())) {
                 throw new \Exception($mail->ErrorInfo);
             }
+            return $ret;
         } catch (\Exception $e) {
             Log::getInstance()->warning(array('mail send warning', $e->getCode(), $e->getMessage()));
             throw $e;
