@@ -109,7 +109,7 @@ class Log {
             $root_dir = substr(trim(self::$root_dir, DIRECTORY_SEPARATOR), 0, strpos(trim(self::$root_dir, DIRECTORY_SEPARATOR), DIRECTORY_SEPARATOR));
             $dir_name = $dir_name ? DIRECTORY_SEPARATOR . $dir_name : DIRECTORY_SEPARATOR . trim(trim($request_uri, DIRECTORY_SEPARATOR), $root_dir);
         } else {
-            $request_uri = $_SERVER['REQUEST_URI'] ? $_SERVER['REQUEST_URI'] : $_SERVER['DOCUMENT_URI'];
+            $request_uri = parse_url($_SERVER['REQUEST_URI'])['path'];
             $dir_name = $dir_name ? DIRECTORY_SEPARATOR . $dir_name : $request_uri;
         }
         //日志目录

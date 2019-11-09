@@ -24,7 +24,7 @@ $uri_arr = parse_url($_SERVER['REQUEST_URI']);
 $uri = array_values(array_filter(explode("/", $uri_arr['path'])));
 
 //请求参数
-$params = explode("&", $uri_arr['query']);
+$params = array_filter(explode("&", isset($uri_arr['query']) ? $uri_arr['query'] : ''));
 $request_params = [];
 foreach ($params as $param) {
     $value = explode("=", $param);
