@@ -25,7 +25,7 @@ class Test {
      * @throws \Exception
      */
     public function index($arr = null) {
-        Log::getInstance()->debug(['params', json_encode($arr)]);
+
     }
 
 }

@@ -15,7 +15,7 @@ require_once APP_ROOT_PATH . "/Ext/phpext/print.php";
 require_once APP_ROOT_PATH . "/Public/Autoload.php";
 ini_set('memory_limit', '512M');
 
-if (count($argv) <= 1) die('no jobs input.');
+if (count($argv) <= 1) die('404 Not Found.');
 
 $params = [];
 foreach ($argv as $key => $param) {
