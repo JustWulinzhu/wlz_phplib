@@ -33,7 +33,7 @@ foreach ($params as $param) {
 
 try {
     if (count($uri) > 2) {
-        throw new Exception('404 Not Found .');
+        throw new Exception('404 Not Found.');
     }
     $class = ucfirst(current($uri));
     if (empty($class)) {
