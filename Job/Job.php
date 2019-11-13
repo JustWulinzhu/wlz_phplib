@@ -19,19 +19,16 @@ if (count($argv) <= 1) die('404 Not Found.');
 
 $params = [];
 foreach ($argv as $key => $param) {
-    if ($key > 1) {
-        $params[] = $param;
-    }
+    if ($key > 1) $params[] = $param;
 }
 
 $path = $argv[1];
 $path = array_map(function ($x) {return ucfirst($x); }, explode("_", $path));
-$path = implode("/", $path) . '.php';
-$file_path = APP_JOB_PATH . DIRECTORY_SEPARATOR . $path;
+$path = str_replace("/", "\\", implode("/", $path));
+$class = "\\Job\\" . $path;
 
-$argv = $params;
-
-if (! file_exists($file_path)) {
-    die("file " . '"' . "$file_path" . '"' . " Not Found.");
+try {
+    (new $class)->exec($params);
+} catch (\Throwable $e) {
+    die($e->getMessage());
 }
-require $file_path;

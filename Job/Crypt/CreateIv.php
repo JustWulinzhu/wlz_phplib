@@ -9,7 +9,7 @@
 
 namespace Job\Crypt;
 
-class CreateIv {
+class CreateIv implements \Job\Base {
 
     /**
      * @param null $argv
@@ -26,5 +26,3 @@ class CreateIv {
     }
 
 }
-
-(new CreateIv())->exec();
