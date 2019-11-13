@@ -5,7 +5,7 @@
  * Date: 19/11/7 下午6:45
  * Email: 18515831680@163.com
  *
- * 启动脚本：php /www/wlz_phplib/Job/Job.php Daemon_RedisQueue &
+ * 启动脚本：php /www/wlz_phplib/Job/Job.php Daemon_RedisQueue test &
  *
  */
 
