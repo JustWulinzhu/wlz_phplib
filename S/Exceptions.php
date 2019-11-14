@@ -19,7 +19,7 @@ class Exceptions extends \Exception {
      */
     public function __construct($message, $code = 0) {
         //记录抛错文件及代码行数
-        Log::getInstance()->error(array($message, $code, $this->getFile(), $this->getLine()), 'exceptions');
+        Log::getInstance()->error(array("exception_msg: " . $message, "exception_code: " . $code, $this->getFile(), $this->getLine()), 'exceptions');
 
         parent::__construct($message, $code);
     }

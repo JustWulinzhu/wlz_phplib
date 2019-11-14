@@ -16,7 +16,7 @@
  */
 
 define("APP_ROOT_PATH", dirname(__DIR__)); //项目绝对路径
-require_once APP_ROOT_PATH . "/Ext/phpext/print.php";
+require_once APP_ROOT_PATH . "/Ext/phpext/F.php";
 require_once APP_ROOT_PATH . "/Public/Autoload.php";
 
 //请求uri
@@ -33,16 +33,21 @@ foreach ($params as $param) {
 
 try {
     if (count($uri) > 2) {
-        throw new Exception('404 Not Found.');
+        throw new Exception('404 Not Found.', 404);
     }
     $class = ucfirst(current($uri));
     if (empty($class)) {
-        die('class Not Found.');
+        throw new Exception('404 Not Found.', 404);
     }
     $function = end($uri);
     $namespace = '\\Controller\\' . $class;
     $obj = new $namespace;
-    $obj->$function($request_params);
+    $ret = $obj->$function($request_params);
+    outputJson($ret);
 } catch (\Throwable $e) {
-    die($e->getMessage());
+    if ($e->getCode() == 404) {
+        outputJson([], $e->getCode(), $e->getMessage());
+        exit();
+    }
+    throw $e;
 }
