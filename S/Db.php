@@ -112,9 +112,11 @@ class Db {
      * 原生sql查询
      * @param $sql
      * @return array
+     * @throws \Exception
      */
     public function query($sql) {
         $result = $this->mysql->query($sql, \PDO::FETCH_ASSOC);
+        Log::getInstance()->debug(array($sql), 'sql');
         return self::formatQueryData($result);
     }
 
@@ -137,6 +139,7 @@ class Db {
      * 查询一条记录
      * @param $sql
      * @return array|mixed
+     * @throws \Exception
      */
     public function queryoneSql($sql) {
         $ret = $this->query($sql);
@@ -168,9 +171,33 @@ class Db {
         } else {
             $sql = "select " . $field_str . " from " . $this->table;
         }
-        Log::getInstance()->debug(array($sql), 'sql');
 
         return $this->query($sql);
+    }
+
+    /**
+     * 大数据量分段查询，默认每次查10000条数据
+     * @param $sql
+     * @param int $limit
+     * @return array
+     * @throws \Exception
+     */
+    public function queryByLimit($sql, $limit = 10000) {
+        $data = [];
+        $start = 0;
+        $flag = true;
+        while ($flag) {
+            $sql .= " limit {$start}, {$limit}";
+            $ret = $this->query($sql);
+            $data = array_merge($data, $ret);
+
+            $start .= $limit;
+            if (empty($ret) || count($ret) < $limit) {
+                $flag = false;
+            }
+        }
+
+        return $data;
     }
 
 }

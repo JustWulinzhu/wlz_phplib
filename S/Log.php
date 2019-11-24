@@ -5,6 +5,12 @@
  * Email: linzhu.wu@beebank.com
  * Date: 18/8/1 下午4:01
  * 日志类
+ *
+ * example:
+ * Log::getInstance()->debug(['user_info', json_encode($user_info)]);
+ * Log::getInstance()->warning(['user_info', json_encode($user_info)]);
+ * Log::getInstance()->error(['user_info', json_encode($user_info)]);
+ *
  */
 
 namespace S;
@@ -118,34 +124,21 @@ class Log {
         $file = self::$type . "." . date('Ymd', time()) . ".log";
         //日志全路径
         $dir_file = $dir . DIRECTORY_SEPARATOR . $file;
-        if (! file_exists($dir)) { //创建文件需要www目录的写权限,chown -R www-data:root /www,解决办法:把www目录所属者改为对应php程序执行的用户(查看php执行用户ps aux)
+        if (! file_exists($dir)) { //创建目录, 需要www目录的写权限,chown -R www-data:root /www,解决办法:把www目录所属者改为对应php程序执行的用户(查看php执行用户ps aux)
             mkdir($dir, 0777, true);
         }
-        if (! file_exists($dir_file)) {
+        if (! file_exists($dir_file)) { //创建文件
             touch($dir_file);
             chmod($dir_file, 0777);
         }
         $data_str = implode(" | ", $data);
         $content = "[ " . $dir_file . " ] | " . date('Y-m-d H:i:s', time()) . " | " . (isset($_SERVER['SERVER_ADDR']) ? $_SERVER['SERVER_ADDR'] : '') . ' | ' . (isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '') . ' | ' . $data_str . "\n";
         $res = file_put_contents($dir_file, $content, FILE_APPEND);
-        $res = $res ? $res : $this->write($dir_file, $content);
+        $res = $res ? $res : \S\Fun::fWrite($dir_file, $content);
         if (! $res) {
             throw new \Exception('日志写入失败');
         }
         return $res;
-    }
-
-    /**
-     * 写入文件fopen方式
-     * @param $file
-     * @param $content
-     * @return bool
-     */
-    private function write($file, $content) {
-        $file = fopen($file, 'a+');
-        $res = fwrite($file, $content);
-        fclose($file);
-        return $res ? true : false;
     }
 
 }
