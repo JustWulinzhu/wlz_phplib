@@ -50,7 +50,6 @@ class Master implements \Job\Base
             throw new \Exception('sid error');
         }
 
-
         // 修改当前进程的工作目录,由于子进程会继承父进程的工作目录,修改工作目录以释放对父进程工作目录的占用。
         chdir("/");
 
@@ -59,16 +58,9 @@ class Master implements \Job\Base
          * 这种情况，我们再次创建一个子进程，并退出当前进程，这样运行的进程就不再是会话组长。
          */
 
-        if (defined('STDIN')) {
-            fclose(STDIN);
-        }
-
-        if (defined('STDOUT')) {
-            fclose(STDOUT);
-        }
-        if (defined('STDERR')) {
-            fclose(STDERR);
-        }
+        if (defined('STDIN'))   fclose(STDIN);
+        if (defined('STDOUT'))  fclose(STDOUT);
+        if (defined('STDERR'))  fclose(STDERR);
 
         $pid = pcntl_fork();
         Log::getInstance()->debug(['second pid', $pid]);
