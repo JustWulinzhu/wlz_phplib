@@ -9,6 +9,10 @@
  *
  */
 
+if (! \S\Fun::isCli()) {
+    die("cli mod only...");
+}
+
 define("APP_ROOT_PATH", dirname(__DIR__));
 define("APP_JOB_PATH", __DIR__);
 require_once APP_ROOT_PATH . "/Ext/phpext/F.php";
