@@ -9,16 +9,13 @@
  *
  */
 
-if (! \S\Fun::isCli()) {
-    die("cli mod only...");
-}
-
 define("APP_ROOT_PATH", dirname(__DIR__));
 define("APP_JOB_PATH", __DIR__);
 require_once APP_ROOT_PATH . "/Ext/phpext/F.php";
 require_once APP_ROOT_PATH . "/Public/Autoload.php";
 ini_set('memory_limit', '512M');
 
+if (! \S\Fun::isCli()) die("cli mod only...");
 if (count($argv) <= 1) die('404 Not Found.');
 
 $params = [];
