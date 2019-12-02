@@ -22,7 +22,6 @@ class Master implements \Job\Base
      * @throws \Exception
      */
     public function exec($argv = null) {
-        Log::getInstance()->debug(['start']);
         $ppid = posix_getpid(); //当前进程pid
         Log::getInstance()->debug(['current pid', $ppid]);
         $pid = pcntl_fork(); //在当前进程中创建子进程
@@ -62,15 +61,18 @@ class Master implements \Job\Base
         if (defined('STDOUT'))  fclose(STDOUT);
         if (defined('STDERR'))  fclose(STDERR);
 
-        for ($i = 0; $i < 5; $i++) {
+        for ($i = 0; $i < 5; ++$i) {
             $pid = pcntl_fork();
-            Log::getInstance()->debug(['second pid', $pid]);
             if ($pid == -1) {
                 throw new \Exception('第二次创建进程失败');
             }
             if ($pid > 0) {
-                pcntl_wait($status);
-                Log::getInstance()->debug(['第二次次父进程退出']);
+                pcntl_wait($status, WNOHANG);
+            } else {
+                while (true) {
+                    (new Test())->exec();
+                    sleep(1);
+                }
             }
         }
 
