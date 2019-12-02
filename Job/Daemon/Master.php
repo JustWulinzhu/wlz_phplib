@@ -62,20 +62,16 @@ class Master implements \Job\Base
         if (defined('STDOUT'))  fclose(STDOUT);
         if (defined('STDERR'))  fclose(STDERR);
 
-        $pid = pcntl_fork();
-        Log::getInstance()->debug(['second pid', $pid]);
-        if ($pid == -1) {
-            throw new \Exception('第二次创建进程失败');
-        }
-        if ($pid > 0) {
-            Log::getInstance()->debug(['第二次次父进程退出']);
-            exit();
-        }
-
-        //业务代码
-        while (true) {
-            Log::getInstance()->debug(['test']);
-            sleep(1);
+        for ($i = 0; $i < 5; $i++) {
+            $pid = pcntl_fork();
+            Log::getInstance()->debug(['second pid', $pid]);
+            if ($pid == -1) {
+                throw new \Exception('第二次创建进程失败');
+            }
+            if ($pid > 0) {
+                pcntl_wait($status);
+                Log::getInstance()->debug(['第二次次父进程退出']);
+            }
         }
 
     }
