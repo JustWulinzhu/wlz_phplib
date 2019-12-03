@@ -2,11 +2,11 @@
 /**
  * Created by PhpStorm
  * User: wulinzhu
- * Date: 19/11/15 下午4:37
+ * Date: 19/12/03 下午4:37
  * Email: 18515831680@163.com
  */
 
-namespace Job\Daemon;
+namespace S\Daemon;
 
 use S\Fun;
 use S\Log;
@@ -18,7 +18,7 @@ class Thread
     const DAEMON_PID = "/www/tmp/daemon/pid";
 
     private $pids = [];
-    public static $sleep_seconds = 5;
+    public static $sleep_seconds = 5; //默认等待时间5s
 
     /**
      * @throws \Exception
@@ -36,14 +36,12 @@ class Thread
             throw new \Exception('第一次创建进程失败');
         }
         if ($pid > 0) { //父进程
-            Log::getInstance()->debug(['第一次父进程退出']);
             exit();
         }
 
         //创建一个新的会话,使新进程成为一个新会话的“领导者”,脱离原来的控制终端
-        //说白了就是和之前在终端执行的php jobs.php脱离关系，新建了一个进程,不受终端的管理
+        //说白了就是和之前在终端执行的php jobs.php脱离关系,新建了一个进程,不受终端的管理
         $sid = posix_setsid();
-        Log::getInstance()->debug(['sid', $sid]);
         if ($sid == -1) {
             throw new \Exception('sid error');
         }
@@ -52,8 +50,8 @@ class Thread
         chdir("/");
 
         /**
-         * 通过上一步，我们创建了一个新的会话组长，进程组长，且脱离了终端，但是会话组长可以申请重新打开一个终端，为了避免
-         * 这种情况，我们再次创建一个子进程，并退出当前进程，这样运行的进程就不再是会话组长。
+         * 通过上一步, 我们创建了一个新的会话组长, 进程组长, 且脱离了终端, 但是会话组长可以申请重新打开一个终端, 为了避免
+         * 这种情况, 我们再次创建一个子进程, 并退出当前进程, 这样运行的进程就不再是会话组长
          */
 
         if (defined('STDIN'))   fclose(STDIN);
@@ -83,11 +81,11 @@ class Thread
                 if ($pid > 0) {
                     pcntl_wait($status, WNOHANG);
                 } else {
-                    $this->setPid(getmypid());
+                    $this->setPid(posix_getpid());
 
                     while (true) {
                         $obj->exec();
-                        if ($obj::$sleep_seconds) {
+                        if (isset($obj::$sleep_seconds)) {
                             sleep($obj::$sleep_seconds);
                         } else {
                             sleep(self::$sleep_seconds);
@@ -99,18 +97,26 @@ class Thread
     }
 
     /**
-     * kill -9 所有进程
+     * kill -9所有进程
      * @return bool
+     * @throws \Exception
      */
     public function killAll() {
         $pids = $this->getPid();
         foreach ($pids as $pid) {
             posix_kill($pid, SIGKILL);
         }
-        $file_name = self::DAEMON_PID . DIRECTORY_SEPARATOR . "pids.txt";
-        if (file_exists($file_name)) {
-            unlink($file_name);
+        //删除pid文件
+        $pid_path = self::DAEMON_PID . DIRECTORY_SEPARATOR . "pids.txt";
+        if (file_exists($pid_path)) {
+            unlink($pid_path);
         }
+        //删除进程配置文件
+        $files = Fun::scanDir(self::DAEMON_CONFIG);
+        foreach ($files as $file) {
+            unlink(self::DAEMON_CONFIG . DIRECTORY_SEPARATOR . $file);
+        }
+
         return true;
     }
 
@@ -125,9 +131,7 @@ class Thread
             mkdir(self::DAEMON_PID, 0777, true);
         }
         $file_name = self::DAEMON_PID . DIRECTORY_SEPARATOR . "pids.txt";
-        if (file_exists($file_name)) {
-            unlink($file_name);
-        }
+
         return file_put_contents($file_name, $content, FILE_APPEND);
     }
 
@@ -142,6 +146,7 @@ class Thread
             $pids = explode("\n", $pids);
             return array_filter($pids);
         }
+
         return [];
     }
 

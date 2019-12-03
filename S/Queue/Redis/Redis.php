@@ -5,7 +5,6 @@
  * Email: linzhu.wu@beebank.com
  * Date: 18/12/14 下午5:26
  * redis队列简单封装,先进先出
- * 队列监听消费进程, 启动脚本：php /www/wlz_phplib/queue/redis/task.php $queue_name &
  *
  * 压入队列 (new \Queue\Redis\Redis())->push('key', 'value');
  * 弹出队列 (new \Queue\Redis\Redis())->pop('key');

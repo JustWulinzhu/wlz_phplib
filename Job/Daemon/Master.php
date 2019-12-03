@@ -2,13 +2,11 @@
 /**
  * Created by PhpStorm
  * User: wulinzhu
- * Date: 19/11/15 下午4:37
+ * Date: 19/12/03 下午4:37
  * Email: 18515831680@163.com
  */
 
 namespace Job\Daemon;
-
-use S\Log;
 
 class Master implements \Job\Base
 {
@@ -18,18 +16,18 @@ class Master implements \Job\Base
      * @return mixed|void
      * @throws \Exception
      */
-    public function exec($argv) {
+    public function exec($argv = null) {
         $action = $argv[0];
 
-        $thread = new \Job\Daemon\Thread();
+        $thread = new \S\Daemon\Thread();
         switch ($action) {
             case "start" :
                 $this->_setConfig();
                 $thread->run();
                 break;
             case "reload" :
-                $this->_setConfig();
                 $thread->killAll();
+                $this->_setConfig();
                 $thread->run();
                 break;
             case "stop" :
@@ -41,9 +39,8 @@ class Master implements \Job\Base
     }
 
     private function _setConfig() {
-        $thread = new \Job\Daemon\Thread();
-        $thread->setDaemonConfig("\\Job\\Daemon\\Test", 3);
-        $thread->setDaemonConfig("\\Job\\Daemon\\Test2", 2);
+        $thread = new \S\Daemon\Thread();
+        $thread->setDaemonConfig("\\Job\\Daemon\\Queue\\Redis", 3);
     }
 
 }

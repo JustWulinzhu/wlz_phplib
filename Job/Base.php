@@ -19,6 +19,6 @@ interface Base {
      * @param $argv
      * @return mixed
      */
-    public function exec($argv);
+    public function exec($argv = null);
 
 }

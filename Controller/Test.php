@@ -7,6 +7,7 @@ use S\Excel;
 use S\Exceptions;
 use S\Fun;
 use S\Mail;
+use S\Queue\Redis\Redis;
 use S\Url;
 use S\Log;
 use S\Curl;
@@ -23,10 +24,13 @@ class Test {
 
     /**
      * @param null $arr
+     * @return mixed
      * @throws \Exception
      */
     public function index($arr = null) {
-
+        $a = new Redis();
+        $ret = $a->push('test', '武林柱是个大帅哥');
+        return $ret;
     }
 
 }
