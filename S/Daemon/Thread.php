@@ -85,14 +85,12 @@ class Thread
 
                     while (true) {
                         //设置进程别名
-                        cli_set_process_title("/usr/local/php/bin/php /www/wlz_phplib/Job/Job.php {$namespace}");
+                        cli_set_process_title("php /www/wlz_phplib/Job/Job.php {$namespace}");
                         //执行脚本
                         $obj->exec();
                         //设置睡眠时间
                         if (isset($obj::$sleep_seconds)) {
                             sleep($obj::$sleep_seconds);
-                        } else {
-                            sleep(self::$sleep_seconds);
                         }
                     }
                 }

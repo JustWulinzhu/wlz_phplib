@@ -7,7 +7,7 @@
  * 生成aes加密所需iv参数，固定长度16字节
  */
 
-namespace Job\Crypt;
+namespace Job\Jobs\Crypt;
 
 class CreateIv implements \Job\Base {
 
