@@ -11,6 +11,11 @@ namespace Job\Daemon;
 class Master implements \Job\Base
 {
 
+    private function _setConfig() {
+        $thread = new \S\Daemon\Thread();
+        $thread->setDaemonConfig("\\Job\\Daemon\\Queue\\Redis", 3);
+    }
+
     /**
      * @param $argv
      * @return mixed|void
@@ -36,11 +41,6 @@ class Master implements \Job\Base
             default:
                 throw new \Exception('action error');
         }
-    }
-
-    private function _setConfig() {
-        $thread = new \S\Daemon\Thread();
-        $thread->setDaemonConfig("\\Job\\Daemon\\Queue\\Redis", 3);
     }
 
 }

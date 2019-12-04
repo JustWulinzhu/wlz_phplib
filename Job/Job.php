@@ -6,6 +6,8 @@
  * Email: 18515831680@163.com
  *
  * Cli模式入口文件（脚本执行入口文件）
+ * 内存使用512M
+ * 开启错误输出
  *
  */
 
@@ -14,6 +16,7 @@ define("APP_JOB_PATH", __DIR__);
 require_once APP_ROOT_PATH . "/Ext/phpext/F.php";
 require_once APP_ROOT_PATH . "/Public/Autoload.php";
 ini_set('memory_limit', '512M');
+ini_set("display_errors", 'on');
 
 if (! \S\Fun::isCli()) die("cli mod only...");
 if (count($argv) <= 1) die('404 Not Found.');

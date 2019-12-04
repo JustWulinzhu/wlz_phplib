@@ -21,7 +21,7 @@ class Redis implements \Job\Base
             self::$sleep_seconds = 0;
             Log::getInstance()->debug(['redis_pop', $data]);
         } else {
-            self::$sleep_seconds = 10;
+            self::$sleep_seconds = 5;
             Log::getInstance()->debug(['redis_pop_empty']);
         }
 

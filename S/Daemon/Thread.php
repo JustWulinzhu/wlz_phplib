@@ -9,7 +9,6 @@
 namespace S\Daemon;
 
 use S\Fun;
-use S\Log;
 
 class Thread
 {
@@ -72,6 +71,7 @@ class Thread
 
         foreach ($process_arr as $process) {
             $obj = new $process['namespace'];
+            $namespace = trim(str_replace("\\", "_", $process['namespace']), "Job_");
 
             for ($i = 0; $i < $process['process_num']; ++$i) {
                 $pid = pcntl_fork();
@@ -84,7 +84,11 @@ class Thread
                     $this->setPid(posix_getpid());
 
                     while (true) {
+                        //设置进程别名
+                        cli_set_process_title("/usr/local/php/bin/php /www/wlz_phplib/Job/Job.php {$namespace}");
+                        //执行脚本
                         $obj->exec();
+                        //设置睡眠时间
                         if (isset($obj::$sleep_seconds)) {
                             sleep($obj::$sleep_seconds);
                         } else {
