@@ -2,15 +2,15 @@
 
 namespace Job\Jobs\Swoole;
 
-class Server {
+class Server implements \Job\Base {
 
     private $server;
 
     /**
      * SwooleServer constructor.
      */
-    public function exec() {
-        $this->server = new swoole_server("0.0.0.0", 9501);
+    public function exec($argv = null) {
+        $this->server = new \swoole_server("0.0.0.0", 9501);
         $this->server->set(array(
             'worker_num'        => 8,
             'task_worker_num'   => 2, //设置启动task进程
