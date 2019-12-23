@@ -39,7 +39,7 @@ try {
     if (empty($class)) {
         throw new Exception('404 Not Found.', 404);
     }
-    $function = end($uri);
+    $function = (1 == count($uri)) ? 'index' : end($uri);
     $namespace = '\\Controller\\' . $class;
     $obj = new $namespace;
     $ret = $obj->$function($request_params);

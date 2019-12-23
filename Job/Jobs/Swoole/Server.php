@@ -7,7 +7,8 @@ class Server implements \Job\Base {
     private $server;
 
     /**
-     * SwooleServer constructor.
+     * @param null $argv
+     * @return mixed|void
      */
     public function exec($argv = null) {
         $this->server = new \swoole_server("0.0.0.0", 9501);
@@ -16,7 +17,9 @@ class Server implements \Job\Base {
             'task_worker_num'   => 2, //设置启动task进程
         ));
 
-        $this->server->on('Start', 'onStart');
+        $this->server->on('Start', function () {
+            echo 11;
+        });
         $this->server->on('Connect', 'onConnect');
         $this->server->on('Receive', 'onReceive');
         $this->server->on('Close', 'onClose');

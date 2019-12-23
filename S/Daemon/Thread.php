@@ -85,6 +85,7 @@ class Thread
 
                     while (true) {
                         //设置进程别名
+                        $namespace = strtoupper($namespace);
                         cli_set_process_title("php /www/wlz_phplib/Job/Job.php {$namespace}");
                         //执行脚本
                         $obj->exec();
