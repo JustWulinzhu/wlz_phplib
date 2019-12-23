@@ -4,6 +4,8 @@
  * User: wulinzhu
  * Date: 19/12/03 下午4:37
  * Email: 18515831680@163.com
+ *
+ * daemon核心类
  */
 
 namespace S\Daemon;

@@ -1,5 +1,5 @@
 <?php
-//公共函数库
+//工具类
 
 namespace S;
 
@@ -236,23 +236,15 @@ class Fun
      * @return bool|string
      */
     public static function getClientType() {
+        $http_user_agent = strtolower($_SERVER['HTTP_USER_AGENT']);
         if (
-            strpos($_SERVER['HTTP_USER_AGENT'], 'iPhone')
-            || strpos($_SERVER['HTTP_USER_AGENT'], 'iPad')
-            || strpos($_SERVER['HTTP_USER_AGENT'], 'iOS')
-            || $_SERVER['HTTP_USER_AGENT'] == 'iPhone'
-            || $_SERVER['HTTP_USER_AGENT'] == 'iPad'
-            || $_SERVER['HTTP_USER_AGENT'] == 'iOS'
+            strpos($http_user_agent, 'iPhone')
+            || strpos($http_user_agent, 'iPad')
+            || strpos($http_user_agent, 'iOS')
         )
         {
             return 'iOS';
-        } else if (
-            strpos($_SERVER['HTTP_USER_AGENT'], 'Android')
-            || strpos($_SERVER['HTTP_USER_AGENT'], 'android')
-            || $_SERVER['HTTP_USER_AGENT'] == 'android'
-            || $_SERVER['HTTP_USER_AGENT'] == 'Android'
-        )
-        {
+        } else if (strpos($http_user_agent, 'android')) {
             return 'android';
         } else {
             return false;
