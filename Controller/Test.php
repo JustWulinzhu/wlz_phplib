@@ -28,9 +28,8 @@ class Test {
      * @throws \Exception
      */
     public function index($arr = null) {
-        $a = new Redis();
-        $ret = $a->push('test', '武林柱是个大帅哥');
-        return $ret;
+        $oss = new \S\Oss\Files();
+        $oss->uploadTest('test');
     }
 
 }

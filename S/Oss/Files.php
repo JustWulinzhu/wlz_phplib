@@ -31,6 +31,15 @@ class Files {
         return $file_path;
     }
 
+    public function uploadTest($dir, $call_back_url = '') {
+        $file_path = $dir . '/' . date('Ym', time()) . '/' . $_FILES['file']['name'];
+        $file_tmp_name = $_FILES['file']['tmp_name'];
+
+        $oss = new Oss();
+        $oss->uploadFile($oss::BUCKET, $file_path, $file_tmp_name, $call_back_url);
+        return $file_path;
+    }
+
     /**
      * 文件下载
      * @param $file_path
