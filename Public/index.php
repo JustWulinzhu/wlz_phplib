@@ -15,9 +15,9 @@
  *
  */
 
-require_once "Init.php";
-require_once APP_ROOT_PATH . "/Ext/phpext/F.php";
+require_once APP_ROOT_PATH . "/Public/Init.php";
 require_once APP_ROOT_PATH . "/Public/Autoload.php";
+require_once APP_ROOT_PATH . "/Ext/phpext/F.php";
 
 //请求uri
 $uri_arr = parse_url($_SERVER['REQUEST_URI']);
