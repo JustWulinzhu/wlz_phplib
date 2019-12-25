@@ -10,6 +10,7 @@ namespace S\Oss;
 
 use S\Fun;
 use S\Curl;
+use S\Http;
 use S\Log;
 
 class Pic {
@@ -30,7 +31,7 @@ class Pic {
         foreach ($files as $file) {
             if (in_array(Fun::getExtendName($file), $this->pic)) {
                 $ret = Curl::request(
-                    'http://39.105.182.40/wlz_phplib/oss/files.php?upload=1',
+                    APP_HOST . '/test/index',
                     'POST',
                     array('file' => new \CURLFile(self::FILE_ROOT_DIR . $file))
                 );
@@ -41,5 +42,3 @@ class Pic {
     }
 
 }
-
-(new Pic())->upload('/iphone/20190917-031758');

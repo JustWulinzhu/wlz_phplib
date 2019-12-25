@@ -28,8 +28,7 @@ class Test {
      * @throws \Exception
      */
     public function index($arr = null) {
-        $oss = new \S\Oss\Files();
-        $oss->uploadTest('test');
+       Log::getInstance()->debug(['test']);
     }
 
 }

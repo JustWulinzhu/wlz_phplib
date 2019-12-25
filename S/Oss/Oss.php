@@ -5,7 +5,7 @@
  * Email: linzhu.wu@beebank.com
  * Date: 19/4/4 下午5:35
  *
- * 阿里云oss文件系统类
+ * 阿里云oss核心类
  * oss帮助文档: https://help.aliyun.com/product/31815.html?spm=a2c4g.11186623.6.540.4f283554PXvZb1
  *
  * 默认bucket私有属性,只有授权access_key_id可以访问,需要通过 put和get来上传和获取文件

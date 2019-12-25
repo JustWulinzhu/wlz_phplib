@@ -15,7 +15,7 @@
  *
  */
 
-define("APP_ROOT_PATH", dirname(__DIR__)); //项目绝对路径
+require_once "Init.php";
 require_once APP_ROOT_PATH . "/Ext/phpext/F.php";
 require_once APP_ROOT_PATH . "/Public/Autoload.php";
 
