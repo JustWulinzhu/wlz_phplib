@@ -24,11 +24,12 @@ class Test {
 
     /**
      * @param null $arr
-     * @return mixed
+     * @return bool
      * @throws \Exception
      */
     public function index($arr = null) {
        Log::getInstance()->debug(['test']);
+       return true;
     }
 
 }
