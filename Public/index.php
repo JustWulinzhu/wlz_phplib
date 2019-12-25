@@ -15,7 +15,7 @@
  *
  */
 
-require_once APP_ROOT_PATH . "/Public/Init.php";
+require_once dirname(__DIR__) . "/Public/Init.php";
 require_once APP_ROOT_PATH . "/Public/Autoload.php";
 require_once APP_ROOT_PATH . "/Ext/phpext/F.php";
 

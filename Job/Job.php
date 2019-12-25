@@ -11,7 +11,7 @@
  *
  */
 
-require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . "Public/Init.php";
+require_once dirname(__DIR__) . "/Public/Init.php";
 require_once APP_ROOT_PATH . "/Ext/phpext/F.php";
 require_once APP_ROOT_PATH . "/Public/Autoload.php";
 ini_set('memory_limit', '512M');
