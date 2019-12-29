@@ -13,12 +13,13 @@ class File
 
     /**
      * 文件上传
+     * @param null $arr
      * @return string
      * @throws \S\Exceptions
      */
-    public function upload() {
-        $path = '';
-        $dir = '';
+    public function upload($arr = null) {
+        $path = $arr['path'];
+        $dir = $arr['dir'];
 
         $oss = new \S\Oss\Files();
         $ret = $oss->uploadLocal($path, $dir);

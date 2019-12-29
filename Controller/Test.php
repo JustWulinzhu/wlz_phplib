@@ -28,8 +28,8 @@ class Test {
      * @throws \Exception
      */
     public function index($arr = null) {
-       Log::getInstance()->debug(['test']);
-       return true;
+        $excel = new Excel(Excel::DRIVE_IOFACTORY);
+        $data = $excel->read('/tmp/年会参会人员名单及电话.xlsx', 1);
     }
 
 }

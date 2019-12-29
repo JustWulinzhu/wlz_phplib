@@ -4,8 +4,14 @@
  * Author: wulinzhu
  * Email: linzhu.wu@beebank.com
  * Date: 19/4/18 下午5:10
- * excel类
+ * excel核心类
+ *
+ * 读取excel demo:
+ * @file :文件绝对路径
+ * @sheet :sheet数
+ *
  * (new Excel())->read($file, $sheet);
+ *
  */
 
 namespace S;
@@ -16,6 +22,7 @@ require_once dirname(__DIR__) . '/Ext/excel/PHPExcel/Reader/Excel5.php';
 
 class Excel {
 
+    //excel文件驱动
     const DRIVE_IOFACTORY = 'IOFactory';
     const DRIVE_PHP_EXCEL = 'PHPExcel';
 
@@ -28,7 +35,7 @@ class Excel {
      */
     public function __construct($drive = self::DRIVE_IOFACTORY) {
         $this->drive = $drive;
-        Log::getInstance()->debug(array('excel_drive', $this->drive));
+        Log::getInstance()->debug(array('excel_driver', $this->drive));
         if (! in_array($drive, array(self::DRIVE_IOFACTORY, self::DRIVE_PHP_EXCEL))) {
             throw new \Exception('不存在的excel驱动');
         }
@@ -53,7 +60,7 @@ class Excel {
      * @return array
      * @throws \Exception
      */
-    public function readPHPExcel($file, $sheet) {
+    private function readPHPExcel($file, $sheet) {
         $excel = new \PHPExcel_Reader_Excel2007();
         if(! $excel->canRead($file)) {
             $excel = new \PHPExcel_Reader_Excel5();
@@ -81,7 +88,7 @@ class Excel {
      * @return array
      * @throws \Exception
      */
-    public function readIoFactory($file, $sheet) {
+    private function readIoFactory($file, $sheet) {
         try {
             $file_type = \PHPExcel_IOFactory::identify($file);
             $obj_reader = \PHPExcel_IOFactory::createReader($file_type);
@@ -94,9 +101,10 @@ class Excel {
         $highest_row = $sheet->getHighestRow();
         $highest_column = $sheet->getHighestColumn();
 
-        $data = array();
+        $data = [];
         for ($row = 1; $row <= $highest_row; $row++) {
-            $data[] = $sheet->rangeToArray('A' . $row . ':' . $highest_column . $row, null, true, false);
+            $row_data = $sheet->rangeToArray('A' . $row . ':' . $highest_column . $row, null, true, false);
+            $data = array_merge($data, $row_data);
         }
         Log::getInstance()->debug(array('excel_data', json_encode($data)));
         return $data;
