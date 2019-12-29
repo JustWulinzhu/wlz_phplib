@@ -46,12 +46,46 @@ class Excel {
      * @param $file
      * @param int $sheet
      * @return array|bool
-     * @throws \Exception
+     * @throws Exceptions
      */
     public function read($file, $sheet = 0) {
+        if (! file_exists($file)) {
+            throw new \S\Exceptions('file not exist.');
+        }
+
         if ($this->drive == self::DRIVE_IOFACTORY) return $this->readIoFactory($file, $sheet);
         if ($this->drive == self::DRIVE_PHP_EXCEL) return $this->readPHPExcel($file, $sheet);
+
         return false;
+    }
+
+    /**
+     * @param $file
+     * @param $sheet
+     * @return array
+     * @throws \Exception
+     */
+    private function readIoFactory($file, $sheet) {
+        try {
+            $file_type = \PHPExcel_IOFactory::identify($file);
+            $obj_reader = \PHPExcel_IOFactory::createReader($file_type);
+            $obj_excel = $obj_reader->load($file);
+        } catch (\Exception $e) {
+            throw new \Exception('加载文件出错' . $e->getMessage(), $e->getCode());
+        }
+
+        $sheet = $obj_excel->getSheet($sheet);
+        $highest_row = $sheet->getHighestRow();
+        $highest_column = $sheet->getHighestColumn();
+
+        $data = [];
+        for ($row = 1; $row <= $highest_row; $row++) {
+            $row_data = $sheet->rangeToArray('A' . $row . ':' . $highest_column . $row, null, true, false);
+            $data = array_merge($data, $row_data);
+        }
+        Log::getInstance()->debug(array('excel_data', json_encode($data)));
+
+        return $data;
     }
 
     /**
@@ -79,34 +113,7 @@ class Excel {
             $data[] = $row_data[0];
         }
         Log::getInstance()->debug(array('excel_data', json_encode($data)));
-        return $data;
-    }
 
-    /**
-     * @param $file
-     * @param $sheet
-     * @return array
-     * @throws \Exception
-     */
-    private function readIoFactory($file, $sheet) {
-        try {
-            $file_type = \PHPExcel_IOFactory::identify($file);
-            $obj_reader = \PHPExcel_IOFactory::createReader($file_type);
-            $obj_excel = $obj_reader->load($file);
-        } catch (\Exception $e) {
-            throw new \Exception('加载文件出错');
-        }
-
-        $sheet = $obj_excel->getSheet($sheet);
-        $highest_row = $sheet->getHighestRow();
-        $highest_column = $sheet->getHighestColumn();
-
-        $data = [];
-        for ($row = 1; $row <= $highest_row; $row++) {
-            $row_data = $sheet->rangeToArray('A' . $row . ':' . $highest_column . $row, null, true, false);
-            $data = array_merge($data, $row_data);
-        }
-        Log::getInstance()->debug(array('excel_data', json_encode($data)));
         return $data;
     }
 

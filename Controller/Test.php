@@ -28,8 +28,9 @@ class Test {
      * @throws \Exception
      */
     public function index($arr = null) {
-        $excel = new Excel(Excel::DRIVE_IOFACTORY);
-        $data = $excel->read('/tmp/年会参会人员名单及电话.xlsx', 1);
+        $excel = new Excel(Excel::DRIVE_PHP_EXCEL);
+        $data = $excel->read('/tmp/hz.xlsx', 2);
+        dd($data);
     }
 
 }
