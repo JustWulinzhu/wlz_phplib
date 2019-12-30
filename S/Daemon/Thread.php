@@ -11,6 +11,7 @@
 namespace S\Daemon;
 
 use S\Fun;
+use S\Log;
 
 class Thread
 {
@@ -90,7 +91,11 @@ class Thread
                         $namespace = strtoupper($namespace);
                         cli_set_process_title("php /www/wlz_phplib/Job/Job.php {$namespace}");
                         //执行脚本
-                        $obj->exec();
+                        try {
+                            $obj->exec();
+                        } catch (\Exception $e) {
+                            Log::getInstance()->error(['exec error', $process['namespace'], $e->getCode(), $e->getMessage()]);
+                        }
                         //设置睡眠时间
                         if (isset($obj::$sleep_seconds)) {
                             sleep($obj::$sleep_seconds);
