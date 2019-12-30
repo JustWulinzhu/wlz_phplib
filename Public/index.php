@@ -33,11 +33,13 @@ foreach ($params as $param) {
 
 try {
     if (count($uri) > 2) {
-        throw new Exception('404 Not Found.', 404);
+        header(\S\Fun::http(404));
+        exit();
     }
     $class = ucfirst(current($uri));
     if (empty($class)) {
-        throw new Exception('404 Not Found.', 404);
+        header(\S\Fun::http(404));
+        exit();
     }
     $function = (1 == count($uri)) ? 'index' : end($uri);
     $namespace = '\\Controller\\' . $class;

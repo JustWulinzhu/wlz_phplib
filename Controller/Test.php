@@ -28,9 +28,9 @@ class Test {
      * @throws \Exception
      */
     public function index($arr = null) {
-        $excel = new Excel(Excel::DRIVE_PHP_EXCEL);
-        $data = $excel->read('/tmp/hz.xlsx', 2);
-        dd($data);
+        $ret = \S\Crypt\Aes::encrypt('武林柱');
+        $ret = \S\Crypt\Aes::decrypt($ret);
+        return $ret;
     }
 
 }

@@ -128,23 +128,6 @@ class Fun
     }
 
     /**
-     * 处理坐标数据
-     * @param $str
-     * @return array|string
-     */
-    public static function pointFormat($str) {
-        $data = [];
-        $arr = explode("\n", $str); //以换行符分割成数组
-        foreach ($arr as $v) {
-            $s = explode(" ", $v);
-            $data[] = current($s);
-            $data[] = end($s);
-        }
-        $data = implode(',' . "\n", $data); //以, 和 换行符 分割数组为字符串
-        return $data;
-    }
-
-    /**
      * byte字节转M
      * @param $size
      * @return string
