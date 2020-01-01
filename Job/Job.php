@@ -28,7 +28,7 @@ foreach ($argv as $key => $param) {
 $path = $argv[1];
 $path = array_map(function ($x) {return ucfirst($x); }, explode("_", $path));
 $path = str_replace("/", "\\", implode("/", $path));
-$class = "\\Job\\" . $path;
+$class = "\\" . $path;
 
 try {
     (new $class)->exec($params);

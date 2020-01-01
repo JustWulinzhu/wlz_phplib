@@ -28,7 +28,7 @@ class Master implements \Job\Base
      * @throws \Exception
      */
     public function exec($argv = null) {
-        $action = $argv[0];
+        $action = isset($argv[0]) ? $argv[0] : '';
 
         $thread = new \S\Daemon\Thread();
         switch ($action) {
@@ -45,7 +45,7 @@ class Master implements \Job\Base
                 $thread->killAll();
                 break;
             default:
-                throw new \Exception('action error');
+                throw new \Exception('action can not be empty');
         }
     }
 

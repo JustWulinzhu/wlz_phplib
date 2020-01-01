@@ -28,9 +28,12 @@ class Test {
      * @throws \Exception
      */
     public function index($arr = null) {
-        $ret = \S\Crypt\Aes::encrypt('武林柱');
-        $ret = \S\Crypt\Aes::decrypt($ret);
-        return $ret;
+        $redis = new \S\Queue\Redis\Redis();
+        try {
+            return $redis->push('test', '武林柱');
+        } catch (\Exception $e) {
+            dd($e->getMessage());
+        }
     }
 
 }

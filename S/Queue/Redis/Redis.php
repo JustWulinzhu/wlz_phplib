@@ -14,6 +14,7 @@
 
 namespace S\Queue\Redis;
 
+use S\Exceptions;
 use \S\Redis\BaseRedis;
 
 class Redis extends BaseRedis {
