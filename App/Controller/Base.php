@@ -24,9 +24,4 @@ class Base {
         $this->smarty = new \Smarty();
     }
 
-    public function __destruct()
-    {
-        exit();
-    }
-
 }
