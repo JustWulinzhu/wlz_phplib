@@ -9,6 +9,9 @@
  *
  */
 
-define("APP_ROOT_PATH", dirname(__DIR__)); //项目绝对路径
-define("APP_JOB_PATH", __DIR__); //项目脚本路径
-define("APP_HOST", 'http://39.105.182.40'); //项目host
+//项目绝对路径
+define("APP_ROOT_PATH", dirname(__DIR__));
+//项目脚本路径
+define("APP_JOB_PATH", __DIR__);
+//项目host
+define("APP_HOST", 'http://39.105.182.40');

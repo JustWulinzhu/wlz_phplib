@@ -6,7 +6,7 @@
  * Email: 18515831680@163.com
  */
 
-namespace Controller;
+namespace App\Controller;
 
 class File
 {

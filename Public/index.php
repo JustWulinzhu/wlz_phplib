@@ -18,6 +18,7 @@
 require_once dirname(__DIR__) . "/Public/Init.php";
 require_once APP_ROOT_PATH . "/Public/Autoload.php";
 require_once APP_ROOT_PATH . "/Ext/phpext/F.php";
+require_once APP_ROOT_PATH . "/Smarty/Smarty.class.php";
 
 //请求uri
 $uri_arr = parse_url($_SERVER['REQUEST_URI']);
@@ -42,7 +43,7 @@ try {
         exit();
     }
     $function = (1 == count($uri)) ? 'index' : end($uri);
-    $namespace = '\\Controller\\' . $class;
+    $namespace = '\\App\\Controller\\' . $class;
     $obj = new $namespace;
     $ret = $obj->$function($request_params);
     outputJson($ret);
