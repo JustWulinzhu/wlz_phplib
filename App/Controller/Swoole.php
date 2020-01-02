@@ -14,7 +14,6 @@ class Swoole extends \App\Controller\Base {
      * @param $arr
      */
     public function index($arr) {
-        $this->smarty->assign('data', ['a' => '1']);
         $this->smarty->display("index.html");
     }
 

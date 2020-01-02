@@ -9,7 +9,7 @@
  *
  */
 
-namespace Job\Jobs\Swoole\WebSocket;
+namespace Job\Jobs\Swoole\Websocket;
 
 class Server implements \Job\Base {
 

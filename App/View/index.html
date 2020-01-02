@@ -2,17 +2,20 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Swoole Test</title>
 </head>
+
 <body>
-<div id="msg"></div>
-<input type="text" id="text">
-<input type="submit" value="发送数据" onclick="song()">
+    <div id="msg"></div>
+    <input type="text" id="text">
+    <input type="submit" value="发送数据" onclick="song()">
 </body>
+
 <script>
 
     var msg = document.getElementById("msg");
-    var wsServer = 'ws://192.168.1.253:9502';
+    console.log(msg);
+    var wsServer = 'ws://39.105.182.40:9502';
     //调用websocket对象建立连接：
     //参数：ws/wss(加密)：//ip:port （字符串）
     var websocket = new WebSocket(wsServer);
@@ -50,6 +53,4 @@
     //    };
 
 </script>
-{print_r($data)}
-
 </html>
