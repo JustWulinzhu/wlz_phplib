@@ -46,3 +46,21 @@ function outputJson($data = [], $code = 200, $msg = '成功') {
     }
     echo json_encode($arr);
 }
+
+function S() {
+    $conf = \Config\Conf::getConfig('smarty');
+
+    $smarty = new \Smarty();
+    //自定义模板目录
+    $smarty->template_dir = $conf['template_dir'];
+    //自定义编译目录
+    $smarty->compile_dir = $conf['compile_dir'];
+    //自定义变量目录
+    $smarty->config_dir = $conf['config_dir'];
+    //缓存目录
+    $smarty->cache_dir = $conf['cache_dir'];
+    //是否缓存
+    $smarty->caching = $conf['caching'];
+
+    return $smarty;
+}

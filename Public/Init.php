@@ -15,3 +15,8 @@ define("APP_ROOT_PATH", dirname(__DIR__));
 define("APP_JOB_PATH", __DIR__);
 //项目host
 define("APP_HOST", 'http://39.105.182.40');
+
+//顺序不可变
+require_once APP_ROOT_PATH . "/Public/Autoload.php";
+require_once APP_ROOT_PATH . "/Ext/Smarty/Smarty.class.php";
+require_once APP_ROOT_PATH . "/Ext/phpext/F.php";

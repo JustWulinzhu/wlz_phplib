@@ -12,8 +12,6 @@
  */
 
 require_once dirname(__DIR__) . "/Public/Init.php";
-require_once APP_ROOT_PATH . "/Ext/phpext/F.php";
-require_once APP_ROOT_PATH . "/Public/Autoload.php";
 ini_set('memory_limit', '512M');
 ini_set("display_errors", 'on');
 

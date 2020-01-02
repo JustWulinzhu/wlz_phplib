@@ -12,9 +12,11 @@ class Swoole extends \App\Controller\Base {
 
     /**
      * @param $arr
+     * @throws \SmartyException
      */
     public function index($arr) {
-        $this->smarty->display("index.html");
+        S()->display("index.html");
+        //$this->smarty->display("index.html");
     }
 
 }
