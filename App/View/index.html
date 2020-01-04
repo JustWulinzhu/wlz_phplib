@@ -14,7 +14,6 @@
 <script>
 
     var msg = document.getElementById("msg");
-    console.log(msg);
     var wsServer = 'ws://39.105.182.40:9502';
     //调用websocket对象建立连接：
     //参数：ws/wss(加密)：//ip:port （字符串）
@@ -37,15 +36,15 @@
         //向服务器发送数据
         websocket.send(text);
     }
-    //监听连接关闭
-    //    websocket.onclose = function (evt) {
-    //        console.log("Disconnected");
-    //    };
+
+    //onclose 监听连接关闭
+    websocket.onclose = function (evt) {
+        msg.innerHTML += '断开连接' + '<br>';
+    };
 
     //onmessage 监听服务器数据推送
     websocket.onmessage = function (evt) {
-        msg.innerHTML += evt.data +'<br>';
-//        console.log('Retrieved data from server: ' + evt.data);
+        msg.innerHTML += evt.data + '<br>';
     };
     //监听连接错误信息
     //    websocket.onerror = function (evt, e) {

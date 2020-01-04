@@ -16,20 +16,26 @@ class Server implements \Job\Base {
     private $server;
 
     public function exec($argv = null) {
-        $this->server = new \swoole_websocket_server("127.0.0.1", 9502);
+        $this->server = new \swoole_websocket_server("0.0.0.0", 9502);
+
+        //监听客户端连接
         $this->server->on('open', function($server, $req) {
-            echo "connection open: {$req->fd}\n";
+            \S\Log::getInstance()->debug(['Client id ' . $req->fd]);
         });
 
+        //监听客户端消息
         $this->server->on('message', function($server, $frame) {
-            echo "received message: {$frame->data}\n";
-            $server->push($frame->fd, json_encode(["hello", "world"]));
+            foreach ($server->connections as $fd) {
+                $server->push($fd, $frame->data);
+            }
         });
 
+        //监听swoole服务关闭
         $this->server->on('close', function($server, $fd) {
-            echo "connection close: {$fd}\n";
+            \S\Log::getInstance()->debug(['Server closed ' . $fd]);
         });
 
+        //启动服务
         $this->server->start();
     }
 

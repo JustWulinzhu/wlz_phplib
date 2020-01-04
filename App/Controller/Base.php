@@ -31,7 +31,9 @@ class Base {
     public function initSmarty() {
         $conf = \Config\Conf::getConfig('smarty');
 
-        $this->smarty = new \Smarty();
+        if (! $this->smarty instanceof \Smarty) {
+            $this->smarty = new \Smarty();
+        }
         //自定义模板目录
         $this->smarty->template_dir = $conf['template_dir'];
         //自定义编译目录
