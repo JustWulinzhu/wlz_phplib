@@ -11,6 +11,8 @@
 
 namespace Job\Jobs\Swoole\Websocket;
 
+use S\Log;
+
 class Server implements \Job\Base {
 
     private $server;
@@ -26,6 +28,7 @@ class Server implements \Job\Base {
         //监听客户端消息
         $this->server->on('message', function($server, $frame) {
             foreach ($server->connections as $fd) {
+                Log::getInstance()->debug(['message', $fd, $frame->data]);
                 $server->push($fd, $frame->data);
             }
         });

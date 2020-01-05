@@ -6,9 +6,12 @@
 </head>
 
 <body>
-    <div id="msg"></div>
-    <input type="text" id="text">
-    <input type="submit" value="发送数据" onclick="song()">
+
+<textarea id="content" rows="3" style="width: 200px;"></textarea>
+<br/>
+<input type="submit" value="发送" style="height: 40px;width: 80px;display: inline-block;" onclick="send()">
+<div id="msg"></div>
+
 </body>
 
 <script>
@@ -30,9 +33,9 @@
         msg.innerHTML = websocket.readyState;
     };
 
-    function song(){
-        var text = document.getElementById('text').value;
-        document.getElementById('text').value = '';
+    function send(){
+        var text = document.getElementById('content').value;
+        document.getElementById('content').value = '';
         //向服务器发送数据
         websocket.send(text);
     }
