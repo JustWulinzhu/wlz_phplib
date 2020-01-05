@@ -20,6 +20,12 @@ class Server implements \Job\Base {
     public function exec($argv = null) {
         $this->server = new \swoole_websocket_server("0.0.0.0", 9502);
 
+        //进程配置
+        $this->server->set([
+            'worker_num' => 5, //启动进程数
+            'daemonize' => true, //是否为守护进程
+        ]);
+
         //监听客户端连接
         $this->server->on('open', function($server, $req) {
             Log::getInstance()->debug(['Client id ' . $req->fd]);
