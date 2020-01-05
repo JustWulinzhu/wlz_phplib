@@ -22,7 +22,7 @@ class Server implements \Job\Base {
 
         //监听客户端连接
         $this->server->on('open', function($server, $req) {
-            \S\Log::getInstance()->debug(['Client id ' . $req->fd]);
+            Log::getInstance()->debug(['Client id ' . $req->fd]);
         });
 
         //监听客户端消息
@@ -35,7 +35,7 @@ class Server implements \Job\Base {
 
         //监听swoole服务关闭
         $this->server->on('close', function($server, $fd) {
-            \S\Log::getInstance()->debug(['Server closed ' . $fd]);
+            Log::getInstance()->debug(['Server closed ' . $fd]);
         });
 
         //启动服务
