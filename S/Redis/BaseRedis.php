@@ -23,7 +23,7 @@ class BaseRedis {
      */
     public function getInstance() {
         $conf = Conf::getConfig('redis/db1');
-        if (is_null($this->redis)) {
+        if (is_null($this->redis) || ! $this->redis instanceof \Redis) {
             $this->redis = new \Redis();
             try {
                 $this->redis->connect($conf['host'], $conf['port']);

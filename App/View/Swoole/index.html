@@ -8,7 +8,6 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 	<script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
-	<!--	<link rel="stylesheet" href={$css_path} media="screen" type="text/css" />-->
 
 	<style>
 		@import 'http://fonts.googleapis.com/css?family=Noto+Sans';
@@ -216,61 +215,36 @@
 			text-decoration:none;
 			color: rgba(255, 255, 255, 0.35);
 		}
+		.msg {
+
+		}
 	</style>
 
 	<script>
 
-		$(document).ready(function(){
+		$(document).ready(function() {
 
-			var content = $("#content").val();
-			console.log(content);
+			var wsServer = 'ws://39.105.182.40:9502';
+			var websocket = new WebSocket(wsServer);
 
+			websocket.onopen = function (evt) {
+				$("#msg").append(websocket.readyState);
+			};
 
-			$("#submit").click(function(){
-				console.log(content);
-				console.log($("#content").text())
+			$("#submit").click(function() {
+				var content = $("#content").val();
+
+				//向服务器发送数据
+				websocket.send(content);
 			});
+
+			websocket.onmessage = function (evt) {
+				console.log(evt);
+				$(".chat-thread").append("<li class='msg'>" + evt.data + "</li>");
+			};
 
 		});
 
-
-		// var msg = document.getElementById("msg");
-		// var wsServer = 'ws://39.105.182.40:9502';
-		// //调用websocket对象建立连接：
-		// //参数：ws/wss(加密)：//ip:port （字符串）
-		// var websocket = new WebSocket(wsServer);
-		// //onopen监听连接打开
-		// websocket.onopen = function (evt) {
-		// 	//websocket.readyState 属性：
-		// 	/*
-		// 	CONNECTING    0    The connection is not yet open.
-		// 	OPEN    1    The connection is open and ready to communicate.
-		// 	CLOSING    2    The connection is in the process of closing.
-		// 	CLOSED    3    The connection is closed or couldn't be opened.
-		// 	*/
-		// 	msg.innerHTML = websocket.readyState;
-		// };
-		//
-		// function send(){
-		// 	var text = document.getElementById('text').value;
-		// 	document.getElementById('text').value = '';
-		// 	//向服务器发送数据
-		// 	websocket.send(text);
-		// }
-		//
-		// //onclose 监听连接关闭
-		// websocket.onclose = function (evt) {
-		// 	msg.innerHTML += '断开连接' + '<br>';
-		// };
-		//
-		// //onmessage 监听服务器数据推送
-		// websocket.onmessage = function (evt) {
-		// 	msg.innerHTML += evt.data + '<br>';
-		// };
-		// //监听连接错误信息
-		// //    websocket.onerror = function (evt, e) {
-		// //        console.log('Error occured: ' + evt.data);
-		// //    };
 	</script>
 
 </head>
@@ -279,27 +253,14 @@
 
 <div id="convo">
 	<ul class="chat-thread">
-		<li>Are we meeting today?</li>
-		<li>yes, what time suits you?</li>
-		<li>I was thinking after lunch, I have a meeting in the morning</li>
-		<li>Are we meeting today?</li>
-		<li>yes, what time suits you?</li>
-		<li>I was thinking after lunch, I have a meeting in the morning</li>
-		<li>Are we meeting today?</li>
-		<li>yes, what time suits you?</li>
-		<li>I was thinking after lunch, I have a meeting in the morning</li>
-		<li>Are we meeting today?</li>
-		<li>yes, what time suits you?</li>
-		<li>I was thinking after lunch, I have a meeting in the morning</li>
+
 	</ul>
 	<br/>
 
 	<div class="form-group">
-<!--		<textarea id="content"   class="form-control"  style="width:642px;margin-left: auto; margin-right: auto"></textarea>-->
-		<input type="text" id="content" style="margin-left:319px;width: 642px; margin-right:auto;">
-		<input type="submit" class="btn btn-lg btn-primary" style="margin-left:319px;width: 642px; margin-right:auto;" value="发送" id="submit">
+		<textarea id="content" rows="3" class="form-control" style="width:642px;margin-left: auto; margin-right: auto"></textarea>
+		<input id="submit" type="submit" class="btn btn-lg btn-primary" style="margin-left:319px;width: 642px; margin-right:auto;" value="发送">
 	</div>
-	<div id="msg"></div>
 </div>
 
 </body>

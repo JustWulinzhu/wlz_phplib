@@ -28,12 +28,9 @@ class Test {
      * @throws \Exception
      */
     public function index($arr = null) {
-        $redis = new \S\Queue\Redis\Redis();
-        try {
-            return $redis->push('test', '武林柱');
-        } catch (\Exception $e) {
-            dd($e->getMessage());
-        }
+        $ret = Rsa::encrypt("各位儿子们，爸爸来了");
+        $ret = Rsa::decrypt($ret);
+        dd($ret);
     }
 
 }
