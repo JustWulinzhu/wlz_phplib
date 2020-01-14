@@ -10,14 +10,19 @@
  *
  * 默认bucket私有属性,只有授权access_key_id可以访问,需要通过 put和get来上传和获取文件
  *
- * $bucket 阿里云oss bucket,采用默认bucket,可以在阿里云控制台新增
- * $name 上传到oss上面的文件名称
- * $file 要上传到oss的本地文件,绝对路径
- * $local_file 下载到本地的文件名称,绝对路径
+ * @bucket
+ *      阿里云oss bucket,采用默认bucket,可以在阿里云控制台新增
+ * @name
+ *      上传到oss上面的文件名称
+ * @file
+ *      要上传到oss的本地文件,绝对路径
+ * @local_file
+ *      下载到本地的文件名称,绝对路径
  *
  * demo
  * 上传 (new Oss())->uploadFile('bucket', 'uploaded_file_name', 'local_file_name');
  * 下载 (new Oss())->get('bucket', 'uploaded_file_name', 'local_file_name');
+ *
  */
 
 namespace S\Oss;
@@ -32,6 +37,8 @@ use OSS\Core\OssException;
 class Oss {
 
     const BUCKET = 'private-wulinzhu-test';
+
+    const PART_SIZE = 5242880; //分片上传默认大小，5M
 
     private static $oss_client = null;
     private static $oss_conf = array();
@@ -102,6 +109,77 @@ class Oss {
             throw new \Exception($e->getCode(), $e->getMessage());
         }
         return true;
+    }
+
+    /**
+     * 阿里云oss分片上传
+     * @param $bucket
+     * @param string $name oss存储路径
+     * @param string $local_file 本地文件绝对路径
+     * @param int $part_size 分片文件大小，单位B
+     * @return null
+     * @throws OssException
+     * @throws \Exception
+     */
+    public function partUpload($bucket, $local_file, $name, $part_size = self::PART_SIZE) {
+        try {
+            $upload_id = self::getOssInstance()->initiateMultipartUpload($bucket, $name);
+            Log::getInstance()->debug(['upload_id', $upload_id]);
+        } catch (OssException $e) {
+            Log::getInstance()->debug(['init part upload error', $e->getMessage(), $e->getCode()]);
+            throw new OssException($e->getMessage());
+        }
+
+        $file_size = filesize($local_file);
+        $pieces = self::getOssInstance()->generateMultiuploadParts($file_size, $part_size);
+        Log::getInstance()->debug(['pieces', json_encode($pieces)]);
+
+        $response_upload_part = [];
+        $upload_position = 0;
+        $is_check_md5 = true;
+        foreach ($pieces as $i => $piece) {
+            $from_pos = $upload_position + (integer)$piece[OssClient::OSS_SEEK_TO];
+            $to_pos = (integer)$piece[OssClient::OSS_LENGTH] + $from_pos - 1;
+            $up_options = array(
+                OssClient::OSS_FILE_UPLOAD  => $local_file,
+                OssClient::OSS_PART_NUM     => ($i + 1),
+                OssClient::OSS_SEEK_TO      => $from_pos,
+                OssClient::OSS_LENGTH       => $to_pos - $from_pos + 1,
+                OssClient::OSS_CHECK_MD5    => $is_check_md5,
+            );
+            if ($is_check_md5) { //MD5校验
+                $content_md5 = \OSS\Core\OssUtil::getMd5SumForFile($local_file, $from_pos, $to_pos);
+                $up_options[OssClient::OSS_CONTENT_MD5] = $content_md5;
+            }
+            try {
+                //上传分片
+                $response_upload_part[] = self::getOssInstance()->uploadPart($bucket, $name, $upload_id, $up_options);
+            } catch(OssException $e) {
+                Log::getInstance()->error(['uploadPart', $e->getMessage(), $e->getCode()]);
+                throw new OssException($e->getMessage());
+            }
+        }
+        Log::getInstance()->debug(['response_upload_part', json_encode($response_upload_part)]);
+
+        $upload_parts = array();
+        foreach ($response_upload_part as $i => $e_tag) {
+            $upload_parts[] = array(
+                'PartNumber' => ($i + 1),
+                'ETag' => $e_tag,
+            );
+        }
+
+        try { //完成上传
+            //在执行该操作时，需要提供所有有效的$uploadParts。OSS收到提交的$uploadParts后，会逐一验证每个分片的有效性。
+            //当所有的数据分片验证通过后，OSS将把这些分片组合成一个完整的文件。
+            $ret = self::getOssInstance()->completeMultipartUpload($bucket, $name, $upload_id, $upload_parts);
+            Log::getInstance()->debug(['part upload ret', json_encode($ret)]);
+        }  catch(OssException $e) {
+            Log::getInstance()->error(['complete upload error', $e->getMessage(), $e->getCode()]);
+            throw new OssException($e->getMessage());
+        }
+
+        return $ret;
     }
 
     /**

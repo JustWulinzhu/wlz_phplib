@@ -8,7 +8,7 @@
 
 namespace App\Controller;
 
-class File
+class File extends \App\Controller\Base
 {
 
     /**

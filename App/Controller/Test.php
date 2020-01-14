@@ -7,6 +7,7 @@ use S\Excel;
 use S\Exceptions;
 use S\Fun;
 use S\Mail;
+use S\Oss\Files;
 use S\Queue\Redis\Redis;
 use S\Url;
 use S\Log;
@@ -28,9 +29,8 @@ class Test {
      * @throws \Exception
      */
     public function index($arr = null) {
-        $ret = Rsa::encrypt("各位儿子们，爸爸来了");
-        $ret = Rsa::decrypt($ret);
-        dd($ret);
+        $ret = (new Files())->partUpload('/usr/local/mysql-5.6.45-linux-glibc2.12-x86_64.tar.gz', 'test');
+        return $ret;
     }
 
 }

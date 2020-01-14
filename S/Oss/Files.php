@@ -15,6 +15,16 @@ use S\Oss\Oss;
 class Files {
 
     /**
+     * 获取存储路径
+     * @param $dir
+     * @param $local_file_path
+     * @return string
+     */
+    private static function getDefaultFileStoragePath($dir, $local_file_path) {
+        return $dir . DIRECTORY_SEPARATOR . date('Ym', time()) . DIRECTORY_SEPARATOR . pathinfo($local_file_path)['basename'];
+    }
+
+    /**
      * * 文件上传,返回oss文件存储路径
      * 可采用模拟文件上传方式,demo :
      * Http::request('http://localhost/wlz_phplib/oss/files.php', 'POST', array('file' => new \CURLFile('/Users/wulinzhu/Documents/gou.png')));
@@ -24,7 +34,7 @@ class Files {
      * @throws \Exception
      */
     public function upload($dir, $call_back_url = '') {
-        $file_path = $dir . DIRECTORY_SEPARATOR . date('Ym', time()) . DIRECTORY_SEPARATOR . $_FILES['file']['name'];
+        $file_path = self::getDefaultFileStoragePath($dir, $_FILES['file']['name']);
         $file_tmp_name = $_FILES['file']['tmp_name'];
 
         $oss = new Oss();
@@ -34,21 +44,42 @@ class Files {
 
     /**
      * 本地上传
-     * @param $upload_file_path
+     * @param $local_file_path
      * @param $dir
      * @param string $call_back_url
      * @return string
      * @throws Exceptions
      * @throws \Exception
      */
-    public function uploadLocal($upload_file_path, $dir, $call_back_url = '') {
+    public function uploadLocal($local_file_path, $dir, $call_back_url = '') {
         if (! file_exists($dir)) {
             throw new \S\Exceptions('文件不存在。');
         }
-        $file_path = $dir . DIRECTORY_SEPARATOR . date('Ym', time()) . DIRECTORY_SEPARATOR . pathinfo($upload_file_path)['basename'];
+        $file_path = self::getDefaultFileStoragePath($dir, $local_file_path);
 
         $oss = new Oss();
-        $oss->uploadFile(\S\Oss\Oss::BUCKET, $file_path, $upload_file_path, $call_back_url);
+        $oss->uploadFile(\S\Oss\Oss::BUCKET, $file_path, $local_file_path, $call_back_url);
+        return $file_path;
+    }
+
+    /**
+     * 分片上传
+     * @param $local_file_path
+     * @param $dir
+     * @param int $part_size
+     * @return string
+     * @throws Exceptions
+     * @throws \OSS\Core\OssException
+     */
+    public function partUpload($local_file_path, $dir, $part_size = 5242880) {
+        if (! file_exists($local_file_path)) {
+            throw new \S\Exceptions('文件不存在！');
+        }
+
+        $file_path = self::getDefaultFileStoragePath($dir, $local_file_path);
+
+        $oss = new Oss();
+        $oss->partUpload(\S\Oss\Oss::BUCKET, $local_file_path, $file_path, $part_size);
         return $file_path;
     }
 
