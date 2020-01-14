@@ -153,7 +153,9 @@ class Oss {
             }
             try {
                 //上传分片
-                $response_upload_part[] = self::getOssInstance()->uploadPart($bucket, $name, $upload_id, $up_options);
+                $upload_part_ret = self::getOssInstance()->uploadPart($bucket, $name, $upload_id, $up_options);
+                Log::getInstance()->error(['upload part ret', $upload_part_ret]);
+                $response_upload_part[] = $upload_part_ret;
             } catch(OssException $e) {
                 Log::getInstance()->error(['uploadPart', $e->getMessage(), $e->getCode()]);
                 throw new OssException($e->getMessage());
