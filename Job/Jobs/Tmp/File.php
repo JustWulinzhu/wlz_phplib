@@ -22,8 +22,8 @@ class File implements \Job\Base
      */
     public function exec($argv = null)
     {
-        $ret = (new Files())->partUpload('/usr/local/mysql-5.6.45-linux-glibc2.12-x86_64.tar.gz', 'test');
-        dd($ret);
+        $file = new Files();
+        return $file->partUpload('/usr/local/libzip.tar.gz', 'test');
     }
 
 }

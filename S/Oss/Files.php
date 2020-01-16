@@ -10,9 +10,13 @@
 namespace S\Oss;
 
 use S\Exceptions;
+use S\Log;
 use S\Oss\Oss;
 
 class Files {
+
+    const DEFAULT_PART_SIZE = 5242880;
+    const QUEUE_LARGE_FILE_UPLOAD_KEY = 'LARGE_FILE_UPLOAD';
 
     /**
      * 获取存储路径
@@ -67,20 +71,27 @@ class Files {
      * @param $local_file_path
      * @param $dir
      * @param int $part_size
-     * @return string
+     * @return bool|string
      * @throws Exceptions
-     * @throws \OSS\Core\OssException
+     * @throws \Exception
      */
-    public function partUpload($local_file_path, $dir, $part_size = 5242880) {
+    public function partUpload($local_file_path, $dir, $part_size = self::DEFAULT_PART_SIZE) {
         if (! file_exists($local_file_path)) {
             throw new \S\Exceptions('文件不存在！');
         }
 
         $file_path = self::getDefaultFileStoragePath($dir, $local_file_path);
 
-        $oss = new Oss();
-        $oss->partUpload(\S\Oss\Oss::BUCKET, $local_file_path, $file_path, $part_size);
-        return $file_path;
+        $data = [
+            'bucket' => \S\Oss\Oss::BUCKET,
+            'local_file_path' => $local_file_path,
+            'file_path' => $file_path,
+            'part_size' => $part_size,
+        ];
+        $queue = new \S\Queue\Redis\Redis();
+        Log::getInstance()->debug(['large file upload push data', json_encode($data)]);
+        $ret = $queue->push(self::QUEUE_LARGE_FILE_UPLOAD_KEY, json_encode($data));
+        return $ret ? $file_path : false;
     }
 
     /**

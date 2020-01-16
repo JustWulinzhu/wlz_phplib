@@ -29,8 +29,7 @@ class Test {
      * @throws \Exception
      */
     public function index($arr = null) {
-        $ret = (new Files())->partUpload('/usr/local/mysql-5.6.45-linux-glibc2.12-x86_64.tar.gz', 'test');
-        return $ret;
+
     }
 
 }

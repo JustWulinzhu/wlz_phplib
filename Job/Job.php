@@ -29,7 +29,8 @@ $path = str_replace("/", "\\", implode("/", $path));
 $class = "\\" . $path;
 
 try {
-    (new $class)->exec($params);
+    $ret = (new $class)->exec($params);
+    print_r($ret);
 } catch (\Throwable $e) {
     die($e->getMessage());
 }

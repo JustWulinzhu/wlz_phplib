@@ -38,8 +38,6 @@ class Oss {
 
     const BUCKET = 'private-wulinzhu-test';
 
-    const PART_SIZE = 5242880; //分片上传默认大小，5M
-
     private static $oss_client = null;
     private static $oss_conf = array();
 
@@ -121,7 +119,7 @@ class Oss {
      * @throws OssException
      * @throws \Exception
      */
-    public function partUpload($bucket, $local_file, $name, $part_size = self::PART_SIZE) {
+    public function partUpload($bucket, $local_file, $name, $part_size) {
         try {
             $upload_id = self::getOssInstance()->initiateMultipartUpload($bucket, $name);
             Log::getInstance()->debug(['upload_id', $upload_id]);
@@ -173,8 +171,8 @@ class Oss {
         }
 
         try { //完成上传
-            //在执行该操作时，需要提供所有有效的$uploadParts。OSS收到提交的$uploadParts后，会逐一验证每个分片的有效性。
-            //当所有的数据分片验证通过后，OSS将把这些分片组合成一个完整的文件。
+            //在执行该操作时，需要提供所有有效的$uploadParts。OSS收到提交的$uploadParts后，会逐一验证每个分片的有效性
+            //当所有的数据分片验证通过后，OSS将把这些分片组合成一个完整的文件
             $ret = self::getOssInstance()->completeMultipartUpload($bucket, $name, $upload_id, $upload_parts);
             Log::getInstance()->debug(['part upload ret', json_encode($ret)]);
         }  catch(OssException $e) {

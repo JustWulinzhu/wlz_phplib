@@ -19,7 +19,8 @@ class Master implements \Job\Base
 
     private function _setConfig() {
         $thread = new \S\Daemon\Thread();
-        $thread->setDaemonConfig("\\Job\\Daemon\\Queue\\Redis", 10);
+        $thread->setDaemonConfig("\\Job\\Daemon\\Queue\\Redis", 2);
+        $thread->setDaemonConfig("\\Job\\Daemon\\Queue\\File", 2);
     }
 
     /**
