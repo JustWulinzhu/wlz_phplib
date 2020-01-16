@@ -132,7 +132,7 @@ class Oss {
 
         $file_size = filesize($local_file);
         $pieces = self::getOssInstance()->generateMultiuploadParts($file_size, $part_size);
-        Log::getInstance()->debug(['pieces', json_encode($pieces)]);
+        Log::getInstance()->debug(['pieces', count($pieces), json_encode($pieces)]);
 
         $response_upload_part = [];
         $upload_position = 0;
@@ -153,15 +153,16 @@ class Oss {
             }
             try {
                 //上传分片
+                Log::getInstance()->debug(['upload part start', $i, $bucket, $name, $upload_id, json_encode($up_options)]);
                 $upload_part_ret = self::getOssInstance()->uploadPart($bucket, $name, $upload_id, $up_options);
-                Log::getInstance()->error(['upload part ret', $upload_part_ret]);
+                Log::getInstance()->debug(['upload part ret', $i, $upload_part_ret]);
                 $response_upload_part[] = $upload_part_ret;
             } catch(OssException $e) {
-                Log::getInstance()->error(['uploadPart', $e->getMessage(), $e->getCode()]);
+                Log::getInstance()->error(['upload part error', $e->getMessage(), $e->getCode()]);
                 throw new OssException($e->getMessage());
             }
         }
-        Log::getInstance()->debug(['response_upload_part', json_encode($response_upload_part)]);
+        Log::getInstance()->debug(['response upload part', json_encode($response_upload_part)]);
 
         $upload_parts = array();
         foreach ($response_upload_part as $i => $e_tag) {
