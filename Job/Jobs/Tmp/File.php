@@ -4,6 +4,9 @@
  * User: wulinzhu
  * Date: 20/1/14 下午6:11
  * Email: 18515831680@163.com
+ *
+ * 大文件上传
+ *
  */
 
 namespace Job\Jobs\Tmp;
@@ -23,7 +26,7 @@ class File implements \Job\Base
     public function exec($argv = null)
     {
         $file = new Files();
-        return $file->partUpload('/usr/local/libzip.tar.gz', 'test');
+        return $file->partUpload('/usr/local/mysql-5.7.27-linux-glibc2.12-i686.tar.gz', 'test');
     }
 
 }

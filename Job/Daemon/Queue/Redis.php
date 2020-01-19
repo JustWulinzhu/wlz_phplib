@@ -7,7 +7,7 @@ use S\Log;
 class Redis implements \Job\Base
 {
 
-    public static $sleep_seconds = 0;
+    public static $sleep_seconds;
 
     /**
      * @param $argv

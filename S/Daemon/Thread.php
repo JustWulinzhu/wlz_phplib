@@ -99,6 +99,8 @@ class Thread
                         //设置睡眠时间
                         if (isset($obj::$sleep_seconds)) {
                             sleep($obj::$sleep_seconds);
+                        } else {
+                            sleep(self::$sleep_seconds);
                         }
                     }
                 }
