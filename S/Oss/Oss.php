@@ -155,7 +155,7 @@ class Oss {
                 $upload_part_ret = self::getOssInstance()->uploadPart($bucket, $name, $upload_id, $up_options);
                 Log::getInstance()->debug(['upload part end', $i, $upload_part_ret]);
                 $response_upload_part[] = $upload_part_ret;
-            } catch(OssException $e) {
+            } catch (OssException $e) {
                 Log::getInstance()->error(['upload part error', $e->getMessage(), $e->getCode()]);
                 throw new OssException($e->getMessage());
             }
@@ -175,7 +175,7 @@ class Oss {
             //当所有的数据分片验证通过后，OSS将把这些分片组合成一个完整的文件
             $ret = self::getOssInstance()->completeMultipartUpload($bucket, $name, $upload_id, $upload_parts);
             Log::getInstance()->debug(['complete ret', json_encode($ret)]);
-        } catch(OssException $e) {
+        } catch (OssException $e) {
             Log::getInstance()->error(['complete upload error', $e->getMessage(), $e->getCode()]);
             throw new OssException($e->getMessage());
         }

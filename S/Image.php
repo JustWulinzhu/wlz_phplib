@@ -161,7 +161,7 @@ class Image {
     }
 
     /**
-     *  修改图片尺寸
+     * 修改图片尺寸
      * @param $image_binary 图片二进制文件流
      * @param $x 长
      * @param $y 宽

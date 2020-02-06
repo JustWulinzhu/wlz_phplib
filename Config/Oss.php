@@ -5,6 +5,7 @@
  * Email: linzhu.wu@beebank.com
  * Date: 19/9/2 上午10:45
  */
+
 return array(
     'oss' => array(
         'access_key_id' => 'LTAI7zgKaWGUoXg6',
