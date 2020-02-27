@@ -133,12 +133,11 @@ class Log {
         }
         $data_str = implode(" | ", $data);
         $content = "[ " . $dir_file . " ] | " . date('Y-m-d H:i:s', time()) . " | " . (isset($_SERVER['SERVER_ADDR']) ? $_SERVER['SERVER_ADDR'] : '') . ' | ' . (isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '') . ' | ' . $data_str . "\n";
-        $res = file_put_contents($dir_file, $content, FILE_APPEND);
-        $res = $res ? $res : \S\Fun::fWrite($dir_file, $content);
-        if (! $res) {
+        if (! \S\Fun::write($dir_file, $content)) {
             throw new \Exception('日志写入失败');
         }
-        return $res;
+
+        return true;
     }
 
 }

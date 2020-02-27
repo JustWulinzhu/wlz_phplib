@@ -4,6 +4,7 @@
  * Author: wulinzhu
  * Email: linzhu.wu@beebank.com
  * Date: 19/4/18 下午5:10
+ *
  * excel核心类
  *
  * 读取excel demo:
@@ -14,11 +15,11 @@
  *
  */
 
-namespace S;
+namespace S\Office;
 
-require_once dirname(__DIR__) . '/Ext/excel/PHPExcel.php';
-require_once dirname(__DIR__) . '/Ext/excel/PHPExcel/IOFactory.php';
-require_once dirname(__DIR__) . '/Ext/excel/PHPExcel/Reader/Excel5.php';
+require_once dirname(dirname(__DIR__)) . '/Ext/excel/PHPExcel.php';
+require_once dirname(dirname(__DIR__)) . '/Ext/excel/PHPExcel/IOFactory.php';
+require_once dirname(dirname(__DIR__)) . '/Ext/excel/PHPExcel/Reader/Excel5.php';
 
 class Excel {
 
@@ -35,7 +36,7 @@ class Excel {
      */
     public function __construct($drive = self::DRIVE_IOFACTORY) {
         $this->drive = $drive;
-        Log::getInstance()->debug(array('excel_driver', $this->drive));
+        \S\Log::getInstance()->debug(array('excel_driver', $this->drive));
         if (! in_array($drive, array(self::DRIVE_IOFACTORY, self::DRIVE_PHP_EXCEL))) {
             throw new \Exception('不存在的excel驱动');
         }
@@ -46,7 +47,7 @@ class Excel {
      * @param $file
      * @param int $sheet
      * @return array|bool
-     * @throws Exceptions
+     * @throws \S\Exceptions
      */
     public function read($file, $sheet = 0) {
         if (! file_exists($file)) {
@@ -83,7 +84,7 @@ class Excel {
             $row_data = $sheet->rangeToArray('A' . $row . ':' . $highest_column . $row, null, true, false);
             $data = array_merge($data, $row_data);
         }
-        Log::getInstance()->debug(array('excel_data', json_encode($data)));
+        \S\Log::getInstance()->debug(array('excel_data', json_encode($data)));
 
         return $data;
     }
@@ -112,7 +113,7 @@ class Excel {
             $row_data = $sheet->rangeToArray('A' . $row . ':' . $highest_column . $row, null, true, false);
             $data[] = $row_data[0];
         }
-        Log::getInstance()->debug(array('excel_data', json_encode($data)));
+        \S\Log::getInstance()->debug(array('excel_data', json_encode($data)));
 
         return $data;
     }

@@ -6,6 +6,7 @@
  * Email: 18515831680@163.com
  *
  * daemon核心类
+ *
  */
 
 namespace S\Daemon;
