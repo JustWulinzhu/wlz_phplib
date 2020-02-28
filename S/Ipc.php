@@ -2,7 +2,7 @@
 /**
  * Created by PhpStorm.
  * Author: wulinzhu
- * Email: linzhu.wu@beebank.com
+ * Email: 18515831680@163.com
  * Date: 18/8/27 下午5:37
  * 进程间缓存,进程结束缓存随之失效,适合同一次进程间对某些变量的频繁操作
  */

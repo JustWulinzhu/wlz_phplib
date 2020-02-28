@@ -2,7 +2,7 @@
 /**
  * Created by PhpStorm.
  * Author: wulinzhu
- * Email: linzhu.wu@beebank.com
+ * Email: 18515831680@163.com
  * Date: 19/4/6 上午12:47
  * 文件上传下载类,调用文件系统类 $oss = new Oss();
  */

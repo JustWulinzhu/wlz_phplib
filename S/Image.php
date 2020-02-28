@@ -2,7 +2,7 @@
 /**
  * Created by PhpStorm.
  * Author: wulinzhu
- * Email: linzhu.wu@beebank.com
+ * Email: 18515831680@163.com
  * Date: 19/4/3 下午6:03
  * 图片流处理, 展示、压缩等
  * 可采用阿里云OSS图片处理模块

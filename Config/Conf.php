@@ -2,7 +2,7 @@
 /**
  * Created by PhpStorm.
  * Author: wulinzhu
- * Email: linzhu.wu@beebank.com
+ * Email: 18515831680@163.com
  * Date: 19/9/2 上午12:10
  * 获取配置文件类
  * 命名配置文件方式: 在config目录下面创建php文件, 直接返回数组, key=>value方式定义配置内容, 支持多维形式

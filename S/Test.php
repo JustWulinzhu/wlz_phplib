@@ -2,7 +2,7 @@
 /**
  * Created by PhpStorm.
  * Author: wulinzhu
- * Email: linzhu.wu@beebank.com
+ * Email: 18515831680@163.com
  * Date: 18/12/14 下午5:13
  */
 header("content-type='text/html',charset='utf-8'");

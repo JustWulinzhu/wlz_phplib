@@ -2,7 +2,7 @@
 /**
  * Created by PhpStorm.
  * Author: wulinzhu
- * Email: linzhu.wu@beebank.com
+ * Email: 18515831680@163.com
  * Date: 18/8/23 上午10:18
  * 接口权限验证类,这个只提供了参数验证的方法,正式环境还需要对请求时间进行验证,超过一定秒数返回请求超时
  * 一般属于接口请求第一步,可设置成基类,每个控制器需要去继承他,执行权限验证
