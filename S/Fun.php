@@ -315,9 +315,10 @@ class Fun
         $file_arr = array();
         while (! feof($file)) { //feof判断是否到达文件末尾
             $line = fgets($file); // 逐行读取文件
-            $file_arr[] = $line;
+            $file_arr[] = trim($line);
         }
         fclose($file);
+
         return $file_arr;
     }
 
