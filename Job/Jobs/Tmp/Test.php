@@ -6,6 +6,7 @@
  * Email: 18515831680@163.com
  *
  * 测试脚本
+ * php /www/wlz_phplib/Job/Job.php Job_Jobs_Tmp_Test
  *
  */
 

@@ -10,6 +10,8 @@
  * 2. 根据配置信息启动相应数量的子进程进行业务处理
  * 3. 一旦发现配置信息发生改变，杀死之前的进程重写创建
  *
+ * 执行command: php /www/wlz_phplib/Job/Job.php Job_Daemon_Master start|stop|reload
+ *
  */
 
 namespace Job\Daemon;
