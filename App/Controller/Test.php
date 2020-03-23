@@ -29,7 +29,7 @@ class Test {
      * @throws \Exception
      */
     public function index($arr = null) {
-        Log::getInstance()->debug(array('测试'));
+        (new \S\Office\PowerPoint())->create();
     }
 
 }
