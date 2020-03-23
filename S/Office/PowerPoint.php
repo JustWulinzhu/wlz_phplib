@@ -6,6 +6,8 @@
  * Email: 18515831680@163.com
  *
  * PPT核心类
+ * 注意：需要引入PHPPresentation Common两个文件夹，github：https://github.com/PHPOffice
+ * 官方文档：https://phppresentation.readthedocs.io/en/latest/styles.html#font
  *
  */
 
