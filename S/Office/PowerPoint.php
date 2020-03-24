@@ -42,6 +42,7 @@ class PowerPoint {
 
     /**
      * 生成PPT前置操作，组装数据结构
+     * 规则不定，根据文件内容随时调整添加
      * @return array
      */
     private function beforeCreate() {
