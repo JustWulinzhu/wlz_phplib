@@ -17,6 +17,7 @@ use PhpOffice\PhpPresentation\PhpPresentation;
 use PhpOffice\PhpPresentation\Style\Alignment;
 use PhpOffice\PhpPresentation\Style\Bullet;
 use PhpOffice\PhpPresentation\Style\Color;
+use S\Fun;
 use S\Log;
 
 require_once dirname(dirname(__DIR__)) . '/Ext/PHPPresentation/src/PhpPresentation/Autoloader.php';
@@ -43,16 +44,13 @@ class PowerPoint {
     /**
      * 生成PPT前置操作，组装数据结构
      * 规则不定，根据文件内容随时调整添加
+     * @param $file_data
      * @return array
      */
-    private function beforeCreate() {
-        $word = new \S\Office\Word();
-        //读取word文件内容
-        $word_data = $word->read();
-
+    public function beforeCreate($file_data) {
         //按照层级关系拆分数据并组装数组
         $keys = [];
-        foreach ($word_data as $key => $value) {
+        foreach ($file_data as $key => $value) {
             if (in_array(mb_substr($value, 0, 1), $this->chinese_num)) {
                 $keys[] = $key;
             }
@@ -61,9 +59,9 @@ class PowerPoint {
         $data = [];
         for ($i = 0; $i < count($keys); $i++) {
             if (! isset($keys[$i + 1])) { //防止超出数组长度
-                $data[] = array_slice($word_data, $keys[$i]);
+                $data[] = array_slice($file_data, $keys[$i]);
             } else {
-                $data[] = array_slice($word_data, $keys[$i], $keys[$i + 1] - $keys[$i]);
+                $data[] = array_slice($file_data, $keys[$i], $keys[$i + 1] - $keys[$i]);
             }
         }
         //array转string
@@ -81,13 +79,11 @@ class PowerPoint {
 
     /**
      * 生成PPT
-     * @return mixed
-     * @throws \S\Exceptions
+     * @param array $data
+     * @return bool
      * @throws \Exception
      */
-    public function create() {
-        $data = $this->beforeCreate();
-
+    public function create(array $data) {
         //删除首页
         $this->PPT->removeSlideByIndex(0);
 
@@ -103,6 +99,28 @@ class PowerPoint {
         $ppt_writer->save(self::DEFAULT_FILE_PATH . DIRECTORY_SEPARATOR . $file_name);
 
         return true;
+    }
+
+    /**
+     * txt、doc、docx生成ppt
+     * @param $file
+     * @return bool
+     * @throws \S\Exceptions
+     * @throws \Exception
+     */
+    private function TransToPPT($file) {
+        $ext_name = Fun::getExtendName($file);
+        //读取文件内容
+        if ($ext_name == 'txt') {
+            $file_data = Fun::readFile($file);
+        } else if ($ext_name == 'doc' || $ext_name == 'docx') {
+            $file_data = (new \S\Office\Word())->read($file);
+        } else {
+            throw new \S\Exceptions('文件类型错误，只支持txt和word');
+        }
+
+        $file_data = $this->beforeCreate($file_data);
+        return $this->create($file_data);
     }
 
     /**
