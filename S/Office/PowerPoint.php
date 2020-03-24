@@ -31,10 +31,51 @@ class PowerPoint {
     const DEFAULT_FILE_PATH = '/www/tmp/file/ppt';
 
     private $PPT;
+    private $chinese_num = [
+        '一', '二', '三', '四', '五', '六', '七', '八', '九', '十',
+    ];
 
     public function __construct() {
         //新建立一个PHPPowerPoint对象
         $this->PPT = new PhpPresentation();
+    }
+
+    /**
+     * 生成PPT前置操作，组装数据结构
+     * @return array
+     */
+    private function beforeCreate() {
+        $word = new \S\Office\Word();
+        //读取word文件内容
+        $word_data = $word->read();
+
+        //按照层级关系拆分数据并组装数组
+        $keys = [];
+        foreach ($word_data as $key => $value) {
+            if (in_array(mb_substr($value, 0, 1), $this->chinese_num)) {
+                $keys[] = $key;
+            }
+        }
+        //分段取出
+        $data = [];
+        for ($i = 0; $i < count($keys); $i++) {
+            if (! isset($keys[$i + 1])) { //防止超出数组长度
+                $data[] = array_slice($word_data, $keys[$i]);
+            } else {
+                $data[] = array_slice($word_data, $keys[$i], $keys[$i + 1] - $keys[$i]);
+            }
+        }
+        //array转string
+        $ret = [];
+        foreach ($data as $value) {
+            $str = '';
+            foreach ($value as $item) {
+                $str .= $item . "\n";
+            }
+            $ret[] = $str;
+        }
+
+        return $ret;
     }
 
     /**
@@ -44,11 +85,13 @@ class PowerPoint {
      * @throws \Exception
      */
     public function create() {
+        $data = $this->beforeCreate();
+
         //删除首页
         $this->PPT->removeSlideByIndex(0);
 
-        for ($i = 0; $i < 5; $i++) {
-            $this->addText();
+        foreach ($data as $value) {
+            $this->addText($value);
         }
 
         //创建PPT，使用PowerPoint2007格式
@@ -75,7 +118,7 @@ class PowerPoint {
      * @return bool
      * @throws \Exception
      */
-    public function addText($height = 90, $width = 850, $offsetX = 60, $OffsetY = 60, $content = '欢迎使用武林柱PowerPoint生成类，有问题请联系微信！', $font_style = 'Calibri', $is_bold = false, $size = 18, $color = 'FF000000') {
+    public function addText($content = '欢迎使用武林柱PowerPoint生成类，有问题请联系微信！', $height = 300, $width = 810, $offsetX = 70, $OffsetY = 80, $font_style = 'Calibri', $is_bold = false, $size = 18, $color = 'FF000000') {
         $slide = $this->PPT->createSlide();
 
         //设置一个文本框
@@ -90,7 +133,7 @@ class PowerPoint {
         $shape->setOffsetY($OffsetY);
         //设置文本布局位置为水平居中, 垂直居中
         $shape->getActiveParagraph()->getAlignment()->setHorizontal( \PhpOffice\PhpPresentation\Style\Alignment::HORIZONTAL_GENERAL );
-        $shape->getActiveParagraph()->getAlignment()->setVertical( \PhpOffice\PhpPresentation\Style\Alignment::VERTICAL_CENTER );
+        $shape->getActiveParagraph()->getAlignment()->setVertical( \PhpOffice\PhpPresentation\Style\Alignment::VERTICAL_BASE );
 
         //设置文本框文本内容. 在中文环境下测试没中文问题. 如果在 e 文环境. 注意要指定支持中文的字体. 否则可能出乱码了.
         $text = $shape->createTextRun($content);

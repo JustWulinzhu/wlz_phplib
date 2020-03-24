@@ -29,7 +29,7 @@ class Test {
      * @throws \Exception
      */
     public function index($arr = null) {
-        $ret = (new \S\Office\Word())->read();
+        $ret = (new \S\Office\PowerPoint())->create();
         dd($ret);
     }
 

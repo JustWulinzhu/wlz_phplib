@@ -307,17 +307,21 @@ class Fun
      * @return array
      * @throws \Exception
      */
-    public static function getFileContents($file) {
+    public static function readFile($file) {
         if (! file_exists($file)) {
             throw new \Exception('文件不存在');
         }
         $file = fopen($file, 'r');
+
         $file_arr = array();
         while (! feof($file)) { //feof判断是否到达文件末尾
             $line = fgets($file); // 逐行读取文件
             $file_arr[] = trim($line);
         }
         fclose($file);
+
+        $file_arr = array_filter($file_arr);
+        $file_arr = array_values($file_arr);
 
         return $file_arr;
     }
@@ -484,6 +488,37 @@ class Fun
                 throw new \Exception('错误的时间单位');
         }
         return $seconds;
+    }
+
+    /**
+     * 0-100内的数字中文转换
+     * @param $num
+     * @return mixed|string
+     * @throws Exceptions
+     */
+    public static function numTrans($num) {
+        if (! is_numeric($num)) {
+            throw new \S\Exceptions("数字格式错误");
+        }
+        if ($num > 99) {
+            throw new \S\Exceptions("数字超出范围，只能输入100以下的数字");
+        }
+
+        $chinese_num_data = ['一', '二', '三', '四', '五', '六', '七', '八', '九', '十'];
+
+        if ($num % 10 == 0) {
+            $chinese_num = $chinese_num_data[substr($num, 0, 1) - 1] . end($chinese_num_data);
+        } else {
+            if ($num <= 10) {
+                $chinese_num = $chinese_num_data[$num - 1];
+            } else if ($num > 10 && $num < 20) {
+                $chinese_num = end($chinese_num_data) . $chinese_num_data[substr($num, -1) - 1];
+            } else {
+                $chinese_num = $chinese_num_data[substr($num, 0, 1) - 1] . end($chinese_num_data) . $chinese_num_data[substr($num, -1) - 1];
+            }
+        }
+
+        return $chinese_num;
     }
     
 }

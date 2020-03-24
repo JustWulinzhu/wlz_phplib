@@ -7,6 +7,8 @@
  *
  * Word核心类
  *
+ * 英文文档：https://buildmedia.readthedocs.org/media/pdf/phpword/develop/phpword.pdf
+ *
  */
 
 namespace S\Office;
