@@ -17,6 +17,8 @@
 
 require_once dirname(__DIR__) . "/Public/Init.php";
 
+ini_set('memory_limit', '1024M');
+
 //请求uri
 $uri_arr = parse_url($_SERVER['REQUEST_URI']);
 $uri = array_values(array_filter(explode("/", $uri_arr['path'])));

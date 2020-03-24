@@ -6,7 +6,7 @@
  * Email: 18515831680@163.com
  *
  * PPT核心类
- * 注意：需要引入PHPPresentation Common两个文件夹，github：https://github.com/PHPOffice
+ * 注意：需要引入PHPPresentation Common两个库，github：https://github.com/PHPOffice
  * 官方文档：https://phppresentation.readthedocs.io/en/latest/styles.html#font
  *
  */
@@ -88,7 +88,7 @@ class PowerPoint {
         $shape->setOffsetX($offsetX);
         //设置文本框相对于左上角Y位置, 单位像素
         $shape->setOffsetY($OffsetY);
-        //设置文本布局位置为水平居中, 垂直居中.
+        //设置文本布局位置为水平居中, 垂直居中
         $shape->getActiveParagraph()->getAlignment()->setHorizontal( \PhpOffice\PhpPresentation\Style\Alignment::HORIZONTAL_GENERAL );
         $shape->getActiveParagraph()->getAlignment()->setVertical( \PhpOffice\PhpPresentation\Style\Alignment::VERTICAL_CENTER );
 

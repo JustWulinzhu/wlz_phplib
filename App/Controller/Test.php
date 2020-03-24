@@ -29,7 +29,8 @@ class Test {
      * @throws \Exception
      */
     public function index($arr = null) {
-        (new \S\Office\Word())->read();
+        $ret = (new \S\Office\Word())->read();
+        dd($ret);
     }
 
 }
