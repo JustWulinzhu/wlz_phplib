@@ -24,8 +24,8 @@ class Toppt extends \App\Controller\Base
     }
 
     /**
-     * @return bool
      * @throws \S\Exceptions
+     * @throws \Exception
      */
     public function doUpload()
     {
@@ -39,6 +39,7 @@ class Toppt extends \App\Controller\Base
 
             $new_file_path = (new \S\Office\PowerPoint())->TransToPPT($file_path, $new_file_name);
         }
+        Log::getInstance()->debug(['create PPT', $file_name, $new_file_path]);
         \S\Oss\Files::setHeader($new_file_name);
 
         exit(file_get_contents($new_file_path));

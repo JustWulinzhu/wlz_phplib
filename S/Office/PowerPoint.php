@@ -149,7 +149,7 @@ class PowerPoint {
      * @return bool
      * @throws \Exception
      */
-    public function addText($content = '欢迎使用武林柱PowerPoint生成类，有问题请联系微信！', $height = 300, $width = 810, $offsetX = 70, $OffsetY = 80, $font_style = 'Calibri', $is_bold = false, $size = 18, $color = 'FF000000') {
+    public function addText($content = '欢迎使用武林柱PowerPoint生成类，有问题请联系微信！', $height = 300, $width = 810, $offsetX = 70, $OffsetY = 80, $font_style = '方正兰亭黑简体', $is_bold = false, $size = 24, $color = 'FF000000') {
         $slide = $this->PPT->createSlide();
 
         //设置一个文本框
