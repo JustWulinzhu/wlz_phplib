@@ -49,32 +49,23 @@ class PowerPoint {
      */
     public function beforeCreate($file_data) {
         //按照层级关系拆分数据并组装数组
-        $keys = [];
-        foreach ($file_data as $key => $value) {
-            if (in_array(mb_substr($value, 0, 1), $this->chinese_num)) {
-                $keys[] = $key;
-            }
-        }
+        $first_keys = self::getSliceKey($file_data, $this->chinese_num);
         //分段取出
-        $data = [];
-        for ($i = 0; $i < count($keys); $i++) {
-            if (! isset($keys[$i + 1])) { //防止超出数组长度
-                $data[] = array_slice($file_data, $keys[$i]);
-            } else {
-                $data[] = array_slice($file_data, $keys[$i], $keys[$i + 1] - $keys[$i]);
+        $first_data = self::getSliceData($file_data, $first_keys);
+
+        //二维数据做相同的处理，按照层级关系拆分数据并组装数组，然后分段取出
+        $second_datas = [];
+        foreach ($first_data as $value) {
+            $second_keys = self::getSliceKey($value, Fun::getNum());
+            $second_data = self::getSliceData($value, $second_keys);
+            foreach ($second_data as $key => &$s) {
+                $second_data[$key] = self::arrayToString($s);
             }
-        }
-        //array转string
-        $ret = [];
-        foreach ($data as $value) {
-            $str = '';
-            foreach ($value as $item) {
-                $str .= $item . "\n";
-            }
-            $ret[] = $str;
+
+            $second_datas[] = $second_data;
         }
 
-        return $ret;
+        return $second_datas;
     }
 
     /**
@@ -87,9 +78,7 @@ class PowerPoint {
         //删除首页
         $this->PPT->removeSlideByIndex(0);
 
-        foreach ($data as $value) {
-            $this->addText($value);
-        }
+        $this->recuAddText($data);
 
         //创建PPT，使用PowerPoint2007格式
         $ppt_writer = \PhpOffice\PhpPresentation\IOFactory::createWriter($this->PPT, 'PowerPoint2007');
@@ -102,25 +91,20 @@ class PowerPoint {
     }
 
     /**
-     * txt、doc、docx生成ppt
-     * @param $file
+     * 递归创建文本框
+     * @param array $data
      * @return bool
-     * @throws \S\Exceptions
      * @throws \Exception
      */
-    private function TransToPPT($file) {
-        $ext_name = Fun::getExtendName($file);
-        //读取文件内容
-        if ($ext_name == 'txt') {
-            $file_data = Fun::readFile($file);
-        } else if ($ext_name == 'doc' || $ext_name == 'docx') {
-            $file_data = (new \S\Office\Word())->read($file);
-        } else {
-            throw new \S\Exceptions('文件类型错误，只支持txt和word');
+    private function recuAddText(array $data) {
+        foreach ($data as $value) {
+            if (is_array($value)) {
+                $value = self::recuAddText($value);
+            }
+            $this->addText($value);
         }
 
-        $file_data = $this->beforeCreate($file_data);
-        return $this->create($file_data);
+        return true;
     }
 
     /**
@@ -205,6 +189,77 @@ class PowerPoint {
         $shape->getShadow()->setDistance(10);
 
         return true;
+    }
+
+    /**
+     * txt、doc、docx生成ppt
+     * @param $file
+     * @return bool
+     * @throws \S\Exceptions
+     * @throws \Exception
+     */
+    public function TransToPPT($file) {
+        $ext_name = Fun::getExtendName($file);
+        //读取文件内容
+        if ($ext_name == 'txt') {
+            $file_data = Fun::readFile($file);
+        } else if ($ext_name == 'doc' || $ext_name == 'docx') {
+            $file_data = (new \S\Office\Word())->read($file);
+        } else {
+            throw new \S\Exceptions('文件类型错误，只支持txt和word');
+        }
+
+        $file_data = $this->beforeCreate($file_data);
+        return $this->create($file_data);
+    }
+
+    /**
+     * 按照层级关系拆分数据取得对应key
+     * @param $data
+     * @param $rule
+     * @return array
+     */
+    private static function getSliceKey($data, $rule) {
+        $keys = [];
+        foreach ($data as $key => $value) {
+            if (in_array(mb_substr($value, 0, 1), $rule)) {
+                $keys[] = $key;
+            }
+        }
+
+        return $keys;
+    }
+
+    /**
+     * 取得分段后的数据
+     * @param $data
+     * @param $keys
+     * @return array
+     */
+    private static function getSliceData($data, $keys) {
+        $ret = [];
+        for ($i = 0; $i < count($keys); $i++) {
+            if (! isset($keys[$i + 1])) { //防止超出数组长度
+                $ret[] = array_slice($data, $keys[$i]);
+            } else {
+                $ret[] = array_slice($data, $keys[$i], $keys[$i + 1] - $keys[$i]);
+            }
+        }
+
+        return $ret;
+    }
+
+    /**
+     * 按照规则数组转字符串
+     * @param $array
+     * @return string
+     */
+    private static function arrayToString($array) {
+        $str = '';
+        foreach ($array as $item) {
+            $str .= $item . "\n";
+        }
+        return $str;
     }
 
 }

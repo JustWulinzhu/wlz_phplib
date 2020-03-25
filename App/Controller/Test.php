@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use S\Db;
-use S\Excel;
+use S\Office\Excel;
 use S\Exceptions;
 use S\Fun;
 use S\Mail;
@@ -25,11 +25,10 @@ class Test {
 
     /**
      * @param null $arr
-     * @return bool
-     * @throws \Exception
+     * @throws Exceptions
      */
     public function index($arr = null) {
-        $ret = (new \S\Office\PowerPoint())->create();
+        $ret = (new \S\Office\PowerPoint())->TransToPPT("/www/tmp/file/z.txt");
         dd($ret);
     }
 

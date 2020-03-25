@@ -55,6 +55,7 @@ class Fun
             503 => "HTTP/1.1 503 Service Unavailable",
             504 => "HTTP/1.1 504 Gateway Time-out"
         );
+
         return $http[$code];
     }
 
@@ -79,6 +80,7 @@ class Fun
         foreach ($data as $k => $v) {
             $result_arr[$k] = $arr[$k];
         }
+
         return $result_arr;
     }
 
@@ -100,6 +102,7 @@ class Fun
                 }
             }
         }
+
         return $data;
     }
 
@@ -124,6 +127,7 @@ class Fun
                 }
             }
         }
+
         return false;
     }
 
@@ -152,6 +156,7 @@ class Fun
                 $headers[str_replace(' ', '-', ucwords(strtolower(str_replace('_', ' ', substr($name, 5)))))] = $value;
             }
         }
+
         return $headers;
     }
 
@@ -211,6 +216,7 @@ class Fun
         if (strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessage')) {
             return 'MicroMessage';
         }
+
         return false;
     }
 
@@ -284,6 +290,7 @@ class Fun
         for ($i = $length - 1; $i >= 0; $i--) {
             $new_str .= $str{$i};
         }
+
         return $new_str;
     }
 
@@ -347,6 +354,7 @@ class Fun
             }
         }
         closedir($resource);
+
         return $files;
     }
 
@@ -366,6 +374,7 @@ class Fun
                 $data[] = $item;
             }
         }
+
         return $data;
     }
 
@@ -461,6 +470,7 @@ class Fun
             $char = $charArr[$key] . $char;
             $num = floor(($num - $key) / $len);
         } while ($num > 0);
+
         return $char;
     }
 
@@ -519,6 +529,19 @@ class Fun
         }
 
         return $chinese_num;
+    }
+
+    /**
+     * 获取1000以下数字
+     * @return array
+     */
+    public static function getNum() {
+        $data = [];
+        for ($i = 1; $i <= 1000; $i++) {
+            $data[] = $i;
+        }
+
+        return $data;
     }
     
 }
