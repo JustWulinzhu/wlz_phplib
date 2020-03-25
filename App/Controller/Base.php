@@ -28,7 +28,7 @@ class Base {
      * 初始化smarty
      * @throws \Exception
      */
-    public function initSmarty() {
+    private function initSmarty() {
         $conf = \Config\Conf::getConfig('smarty');
 
         if (! $this->smarty instanceof \Smarty) {

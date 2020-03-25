@@ -44,7 +44,7 @@ function outputJson($data = [], $code = 200, $msg = '成功') {
     if (200 != $code) {
         unset($arr['data']);
     }
-    echo json_encode($arr);
+    exit(json_encode($arr));
 }
 
 function S() {

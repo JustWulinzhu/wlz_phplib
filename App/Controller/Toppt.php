@@ -8,6 +8,7 @@
 
 namespace App\Controller;
 
+use S\Exceptions;
 use S\Log;
 
 class Toppt extends \App\Controller\Base
@@ -20,6 +21,7 @@ class Toppt extends \App\Controller\Base
      */
     public function index($arr)
     {
+        $this->smarty->assign("APP_HOST", APP_HOST);
         $this->smarty->display("Toppt/Index.html");
     }
 
@@ -29,6 +31,10 @@ class Toppt extends \App\Controller\Base
      */
     public function doUpload()
     {
+        Log::getInstance()->debug(["params", json_encode($_FILES)]);
+        if (empty($_FILES['file']['name']) || 0 === $_FILES['file']['size']) {
+            exit("<script>alert('请选择要上传的文件！');history.back();</script>");
+        }
         $file_name = $_FILES['file']['name'];
         $new_file_name = pathinfo($file_name)['filename'] . '.ppt';
 
@@ -40,8 +46,8 @@ class Toppt extends \App\Controller\Base
             $new_file_path = (new \S\Office\PowerPoint())->TransToPPT($file_path, $new_file_name);
         }
         Log::getInstance()->debug(['create PPT', $file_name, $new_file_path]);
-        \S\Oss\Files::setHeader($new_file_name);
 
+        \S\Oss\Files::setHeader($new_file_name);
         exit(file_get_contents($new_file_path));
     }
 

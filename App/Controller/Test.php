@@ -25,11 +25,12 @@ class Test {
 
     /**
      * @param null $arr
+     * @return bool
      * @throws Exceptions
      */
     public function index($arr = null) {
         $ret = (new \S\Office\PowerPoint())->TransToPPT("/www/tmp/file/z.txt");
-        dd($ret);
+        return $ret;
     }
 
 }
