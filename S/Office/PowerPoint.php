@@ -42,6 +42,29 @@ class PowerPoint {
     }
 
     /**
+     * txt、doc、docx生成ppt
+     * @param $file
+     * @param string $new_file_name
+     * @return bool
+     * @throws \S\Exceptions
+     * @throws \Exception
+     */
+    public function TransToPPT($file, $new_file_name = '') {
+        $ext_name = Fun::getExtendName($file);
+        //读取文件内容
+        if ($ext_name == 'txt') {
+            $file_data = Fun::readFile($file);
+        } else if ($ext_name == 'doc' || $ext_name == 'docx') {
+            $file_data = (new \S\Office\Word())->read($file);
+        } else {
+            throw new \S\Exceptions('文件类型错误，只支持txt和word');
+        }
+
+        $file_data = $this->beforeCreate($file_data);
+        return $this->create($file_data, $new_file_name);
+    }
+
+    /**
      * 生成PPT前置操作，组装数据结构
      * 规则不定，根据文件内容随时调整添加
      * @param $file_data
@@ -69,12 +92,13 @@ class PowerPoint {
     }
 
     /**
-     * 生成PPT
+     * 生成PPT, 返回生成的文件路径
      * @param array $data
-     * @return bool
+     * @param $new_file_name
+     * @return string
      * @throws \Exception
      */
-    public function create(array $data) {
+    public function create(array $data, $new_file_name) {
         //删除首页
         $this->PPT->removeSlideByIndex(0);
 
@@ -83,11 +107,15 @@ class PowerPoint {
         //创建PPT，使用PowerPoint2007格式
         $ppt_writer = \PhpOffice\PhpPresentation\IOFactory::createWriter($this->PPT, 'PowerPoint2007');
         //文件名称
-        $file_name = date('Ymd-His', time()) . '-' . substr(md5(microtime(true)), 0, 8) . '.ppt';
+        $file_name = $new_file_name ? $new_file_name : date('Ymd-His', time()) . '-' . substr(md5(microtime(true)), 0, 8) . '.ppt';
+        //文件路径
+        $file_path = self::DEFAULT_FILE_PATH . DIRECTORY_SEPARATOR . $file_name;
         //保存文件
-        $ppt_writer->save(self::DEFAULT_FILE_PATH . DIRECTORY_SEPARATOR . $file_name);
+        $ppt_writer->save($file_path);
+        //修改文件权限
+        chmod($file_path, 0777);
 
-        return true;
+        return $file_path;
     }
 
     /**
@@ -189,28 +217,6 @@ class PowerPoint {
         $shape->getShadow()->setDistance(10);
 
         return true;
-    }
-
-    /**
-     * txt、doc、docx生成ppt
-     * @param $file
-     * @return bool
-     * @throws \S\Exceptions
-     * @throws \Exception
-     */
-    public function TransToPPT($file) {
-        $ext_name = Fun::getExtendName($file);
-        //读取文件内容
-        if ($ext_name == 'txt') {
-            $file_data = Fun::readFile($file);
-        } else if ($ext_name == 'doc' || $ext_name == 'docx') {
-            $file_data = (new \S\Office\Word())->read($file);
-        } else {
-            throw new \S\Exceptions('文件类型错误，只支持txt和word');
-        }
-
-        $file_data = $this->beforeCreate($file_data);
-        return $this->create($file_data);
     }
 
     /**

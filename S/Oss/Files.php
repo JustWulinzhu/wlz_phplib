@@ -115,13 +115,22 @@ class Files {
     public function output($file_path) {
         $file_name = pathinfo($file_path)['basename'];
         $ret = $this->download($file_path);
+        self::setHeader($file_name);
 
+        exit($ret);
+    }
+
+    /**
+     * @param $file_name
+     * @return bool
+     */
+    public static function setHeader($file_name) {
         header("Content-Type: application/octet-stream");
         header("Content-Disposition: attachment; filename={$file_name}");
         header("Pragma: no-cache");
         header("Expires: 0");
 
-        exit($ret);
+        return true;
     }
 
 }
