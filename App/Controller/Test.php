@@ -5,7 +5,7 @@ namespace App\Controller;
 use S\Db;
 use S\Office\Excel;
 use S\Exceptions;
-use S\Fun;
+use \S\Tools;
 use S\Mail;
 use S\Oss\Files;
 use S\Queue\Redis\Redis;

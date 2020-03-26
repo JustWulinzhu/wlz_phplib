@@ -82,7 +82,7 @@ class Socket {
 
 $socket = new Socket();
 
-if (Fun::isCli()) {
+if (Tools::isCli()) {
     if ($argv[1] == 'server') {
         $socket->server();
     } else {

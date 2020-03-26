@@ -49,7 +49,7 @@ dd($ret);
 //    Log::getInstance()->debug(array($ret));
 //}
 
-//dd(Fun::numTransform(62*15018571+1));
+//dd(Tools::numTransform(62*15018571+1));
 
 //$ret = (new Files())->download('ptotos/My Girl.zip', '/tmp/My Girl.zip');
 //die;
@@ -115,13 +115,13 @@ dd($ret);
 //$a = '9999999999999.990';
 //echo $a/10000;die;
 
-//dd(Fun::bcDivNumber($a));
+//dd(Tools::bcDivNumber($a));
 
 //echo openssl_encrypt('111', 'DES-ECB', '1');die;
 
 
 //$arr = array('name' => 'test', 'info' => array('a' => 'aaa', 'b' => (object)array('bbb', 'ccc' => (object)array('ccc'))));
-//$ret = Fun::objToArray($arr);
+//$ret = Tools::objToArray($arr);
 //dd($ret);
 
 //$year = date('Y', time());
@@ -133,14 +133,14 @@ dd($ret);
 //dd($value);die;
 
 //$arr = [111,[111]];
-//$ret = Fun::isArrayMultiDimension($arr);
+//$ret = Tools::isArrayMultiDimension($arr);
 //var_dump($ret);die;
 
 //$xml = '';
 //$obj = simplexml_load_string($xml);
 //$xmljson= json_encode($objectxml );//将对象转换个JSON
 //$xmlarray=json_decode($xmljson,true);//将json转换成数组
-//$arr = Fun::xmlToArray($xml);
+//$arr = Tools::xmlToArray($xml);
 //dd($xmlarray);
 
 //$str = '1年';

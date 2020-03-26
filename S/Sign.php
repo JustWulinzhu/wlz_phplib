@@ -13,7 +13,7 @@
 
 namespace S;
 
-use S\Fun;
+use \S\Tools;
 
 class Sign {
 
@@ -49,11 +49,11 @@ class Sign {
      * @return bool|false|string
      */
     public static function tokenAuth($time, $token, array $param) {
-        $timestamp_arr = Fun::getContentsByFile(self::TIMESTAMP_FILE);
+        $timestamp_arr = Tools::getContentsByFile(self::TIMESTAMP_FILE);
         if ($timestamp_arr && in_array($time, $timestamp_arr)) {
             return false;
         }
-        \S\Fun::write(self::TIMESTAMP_FILE, $time . "\n");
+        \S\Tools::write(self::TIMESTAMP_FILE, $time . "\n");
         $param_str = '';
         if (!empty($param)) {
             ksort($param);

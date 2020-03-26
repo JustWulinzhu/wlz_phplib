@@ -31,7 +31,7 @@
 namespace S\Redis;
 
 use \S\Redis\BaseRedis;
-use \S\Fun;
+use \S\Tools;
 
 class Frep extends BaseRedis
 {
@@ -154,13 +154,13 @@ class Frep extends BaseRedis
                 $ttl = self::FREQ_TYPE_HOUR_TTL;
                 break;
             case self::FREQ_TYPE_DAY :
-                $ttl = Fun::getLeftSeconds();
+                $ttl = Tools::getLeftSeconds();
                 break;
             case self::FREQ_TYPE_WEEK :
-                $ttl = Fun::getLeftSeconds('week');
+                $ttl = Tools::getLeftSeconds('week');
                 break;
             case self::FREQ_TYPE_MONTH :
-                $ttl = Fun::getLeftSeconds('month');
+                $ttl = Tools::getLeftSeconds('month');
                 break;
             case self::FREQ_TYPE_FOREVER :
                 $ttl = self::FREQ_TYPE_FOREVER_TTL;

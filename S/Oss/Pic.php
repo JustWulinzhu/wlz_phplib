@@ -8,7 +8,7 @@
 
 namespace S\Oss;
 
-use S\Fun;
+use \S\Tools;
 use S\Curl;
 use S\Http;
 use S\Log;
@@ -26,10 +26,10 @@ class Pic {
      * @throws \Exception
      */
     public function upload($path) {
-        $files = Fun::scanDir($path);
+        $files = Tools::scanDir($path);
 
         foreach ($files as $file) {
-            if (in_array(Fun::getExtendName($file), $this->pic)) {
+            if (in_array(Tools::getExtendName($file), $this->pic)) {
                 $ret = Curl::request(
                     APP_HOST . '/test/index',
                     'POST',

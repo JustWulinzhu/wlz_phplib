@@ -37,7 +37,7 @@ class Url {
             $data = array(
                 'key' => self::$num_start,
                 'url' => $url,
-                'short_url' => Fun::numTransform(self::$num_start),
+                'short_url' => Tools::numTransform(self::$num_start),
             );
             if (! $db->insert($data)) {
                 $db->rollBack();
@@ -48,7 +48,7 @@ class Url {
             $data = array(
                 'key' => $ret['key'] + 1,
                 'url' => $url,
-                'short_url' => Fun::numTransform($ret['key'] + 1),
+                'short_url' => Tools::numTransform($ret['key'] + 1),
             );
             if (! $db->insert($data)) {
                 throw new \Exception(__FUNCTION__ . '-' . __LINE__ . ' 数据插入失败 !');

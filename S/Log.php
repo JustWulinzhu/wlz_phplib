@@ -109,7 +109,7 @@ class Log {
      * @throws \Exception
      */
     private function log(array $data, $dir_name = '') {
-        if (Fun::isCli()) {
+        if (Tools::isCli()) {
             $request_uri = $_SERVER['SCRIPT_NAME'] ? $_SERVER['SCRIPT_NAME'] : $_SERVER['SCRIPT_FILENAME'];
             $request_uri = strstr($request_uri, '.', true);
             $root_dir = substr(trim(self::$root_dir, DIRECTORY_SEPARATOR), 0, strpos(trim(self::$root_dir, DIRECTORY_SEPARATOR), DIRECTORY_SEPARATOR));
@@ -133,7 +133,7 @@ class Log {
         }
         $data_str = implode(" | ", $data);
         $content = "[ " . $dir_file . " ] | " . date('Y-m-d H:i:s', time()) . " | " . (isset($_SERVER['SERVER_ADDR']) ? $_SERVER['SERVER_ADDR'] : '') . ' | ' . (isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '') . ' | ' . $data_str . "\n";
-        if (! \S\Fun::write($dir_file, $content)) {
+        if (! \S\Tools::write($dir_file, $content)) {
             throw new \Exception('日志写入失败');
         }
 

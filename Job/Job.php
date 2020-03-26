@@ -15,7 +15,7 @@ require_once dirname(__DIR__) . "/Public/Init.php";
 ini_set('memory_limit', '512M');
 ini_set("display_errors", 'on');
 
-if (! \S\Fun::isCli()) die("cli mod only...");
+if (! \S\Tools::isCli()) die("cli mod only...");
 if (count($argv) <= 1) die('404 Not Found.');
 
 $params = [];

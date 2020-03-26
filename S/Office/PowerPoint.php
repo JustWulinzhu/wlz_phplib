@@ -9,6 +9,8 @@
  * 注意：需要引入PHPPresentation Common两个库，github：https://github.com/PHPOffice
  * 官方文档：https://phppresentation.readthedocs.io/en/latest/styles.html#font
  *
+ * demo: (new \S\Office\PowerPoint())->create();
+ *
  */
 
 namespace S\Office;
@@ -17,7 +19,7 @@ use PhpOffice\PhpPresentation\PhpPresentation;
 use PhpOffice\PhpPresentation\Style\Alignment;
 use PhpOffice\PhpPresentation\Style\Bullet;
 use PhpOffice\PhpPresentation\Style\Color;
-use S\Fun;
+use \S\Tools;
 use S\Log;
 
 require_once dirname(dirname(__DIR__)) . '/Ext/PHPPresentation/src/PhpPresentation/Autoloader.php';
@@ -32,9 +34,6 @@ class PowerPoint {
     const DEFAULT_FILE_PATH = '/www/tmp/file/ppt';
 
     private $PPT;
-    private $chinese_num = [
-        '一', '二', '三', '四', '五', '六', '七', '八', '九', '十',
-    ];
 
     public function __construct() {
         //新建立一个PHPPowerPoint对象
@@ -42,68 +41,26 @@ class PowerPoint {
     }
 
     /**
-     * txt、doc、docx生成ppt
-     * @param $file
-     * @param string $new_file_name
-     * @return bool
-     * @throws \S\Exceptions
-     * @throws \Exception
-     */
-    public function TransToPPT($file, $new_file_name = '') {
-        $ext_name = Fun::getExtendName($file);
-        //读取文件内容
-        if ($ext_name == 'txt') {
-            $file_data = Fun::readFile($file);
-        } else if ($ext_name == 'doc' || $ext_name == 'docx') {
-            $file_data = (new \S\Office\Word())->read($file);
-        } else {
-            throw new \S\Exceptions('文件类型错误，只支持txt和word');
-        }
-
-        $file_data = $this->beforeCreate($file_data);
-        return $this->create($file_data, $new_file_name);
-    }
-
-    /**
-     * 生成PPT前置操作，组装数据结构
-     * 规则不定，根据文件内容随时调整添加
-     * @param $file_data
-     * @return array
-     */
-    public function beforeCreate($file_data) {
-        //按照层级关系拆分数据并组装数组
-        $first_keys = self::getSliceKey($file_data, $this->chinese_num);
-        //分段取出
-        $first_data = self::getSliceData($file_data, $first_keys);
-
-        //二维数据做相同的处理，按照层级关系拆分数据并组装数组，然后分段取出
-        $second_datas = [];
-        foreach ($first_data as $value) {
-            $second_keys = self::getSliceKey($value, Fun::getNum());
-            $second_data = self::getSliceData($value, $second_keys);
-            foreach ($second_data as $key => &$s) {
-                $second_data[$key] = self::arrayToString($s);
-            }
-
-            $second_datas[] = $second_data;
-        }
-
-        return $second_datas;
-    }
-
-    /**
      * 生成PPT, 返回生成的文件路径
-     * @param array $data
+     * @param array $data 格式要求：二维数组，里层每一个数组元素为一页ppt，格式为string
      * @param $new_file_name
      * @return string
      * @throws \Exception
      */
     public function create(array $data, $new_file_name) {
+        if (1 != Tools::getArrayDim($data)) {
+            throw new \S\Exceptions("生成ppt的数据结构错误（需为一维数组）");
+        }
+
         //删除首页
         $this->PPT->removeSlideByIndex(0);
-
-        $this->recuAddText($data);
-
+        //循环创建文本
+        foreach ($data as $page) {
+            if (! is_string($page)) {
+                throw new \S\Exceptions('生成ppt数组元素需为字符串类型！');
+            }
+            $this->addText($page);
+        }
         //创建PPT，使用PowerPoint2007格式
         $ppt_writer = \PhpOffice\PhpPresentation\IOFactory::createWriter($this->PPT, 'PowerPoint2007');
         //文件名称
@@ -112,36 +69,19 @@ class PowerPoint {
         $file_path = self::DEFAULT_FILE_PATH . DIRECTORY_SEPARATOR . $file_name;
         //保存文件
         $ppt_writer->save($file_path);
-        //修改文件权限
         chmod($file_path, 0777);
 
         return $file_path;
     }
 
     /**
-     * 递归创建文本框
-     * @param array $data
-     * @return bool
-     * @throws \Exception
-     */
-    private function recuAddText(array $data) {
-        foreach ($data as $value) {
-            if (is_array($value)) {
-                $value = self::recuAddText($value);
-            }
-            $this->addText($value);
-        }
-
-        return true;
-    }
-
-    /**
      * 创建文本框
+     * @param string $content
+     * @param int $line_space
      * @param int $height
      * @param int $width
      * @param int $offsetX
      * @param int $OffsetY
-     * @param string $content
      * @param string $font_style
      * @param bool $is_bold
      * @param int $size
@@ -149,11 +89,13 @@ class PowerPoint {
      * @return bool
      * @throws \Exception
      */
-    public function addText($content = '欢迎使用武林柱PowerPoint生成类，有问题请联系微信！', $height = 300, $width = 810, $offsetX = 70, $OffsetY = 80, $font_style = '方正兰亭黑简体', $is_bold = false, $size = 24, $color = 'FF000000') {
+    public function addText($content = '欢迎使用武林柱PowerPoint生成类，有问题请联系微信！', $line_space = 125, $height = 300, $width = 810, $offsetX = 70, $OffsetY = 80, $font_style = '方正兰亭黑简体', $is_bold = false, $size = 24, $color = 'FF000000') {
         $slide = $this->PPT->createSlide();
 
         //设置一个文本框
         $shape = $slide->createRichTextShape();
+        //设置文本行间距
+        $shape->getActiveParagraph()->setLineSpacing($line_space);
         //设置文本框高度, 单位像素
         $shape->setHeight($height);
         //设置文本框宽度, 单位像素
@@ -166,7 +108,8 @@ class PowerPoint {
         $shape->getActiveParagraph()->getAlignment()->setHorizontal( \PhpOffice\PhpPresentation\Style\Alignment::HORIZONTAL_GENERAL );
         $shape->getActiveParagraph()->getAlignment()->setVertical( \PhpOffice\PhpPresentation\Style\Alignment::VERTICAL_BASE );
 
-        //设置文本框文本内容. 在中文环境下测试没中文问题. 如果在 e 文环境. 注意要指定支持中文的字体. 否则可能出乱码了.
+        //设置文本框文本内容
+        //在中文环境下测试没中文问题，如果在 e 文环境，注意要指定支持中文的字体，否则可能出乱码了
         $text = $shape->createTextRun($content);
         //设置文本字体
         $text->getFont()->setName($font_style);
@@ -220,52 +163,20 @@ class PowerPoint {
     }
 
     /**
-     * 按照层级关系拆分数据取得对应key
-     * @param $data
-     * @param $rule
-     * @return array
+     * 递归创建文本框
+     * @param array $data
+     * @return bool
+     * @throws \Exception
      */
-    private static function getSliceKey($data, $rule) {
-        $keys = [];
-        foreach ($data as $key => $value) {
-            if (in_array(mb_substr($value, 0, 1), $rule)) {
-                $keys[] = $key;
+    private function recuAddText(array $data) {
+        foreach ($data as $value) {
+            if (is_array($value)) {
+                $value = self::recuAddText($value);
             }
+            $this->addText($value);
         }
 
-        return $keys;
-    }
-
-    /**
-     * 取得分段后的数据
-     * @param $data
-     * @param $keys
-     * @return array
-     */
-    private static function getSliceData($data, $keys) {
-        $ret = [];
-        for ($i = 0; $i < count($keys); $i++) {
-            if (! isset($keys[$i + 1])) { //防止超出数组长度
-                $ret[] = array_slice($data, $keys[$i]);
-            } else {
-                $ret[] = array_slice($data, $keys[$i], $keys[$i + 1] - $keys[$i]);
-            }
-        }
-
-        return $ret;
-    }
-
-    /**
-     * 按照规则数组转字符串
-     * @param $array
-     * @return string
-     */
-    private static function arrayToString($array) {
-        $str = '';
-        foreach ($array as $item) {
-            $str .= $item . "\n";
-        }
-        return $str;
+        return true;
     }
 
 }

@@ -33,12 +33,12 @@ foreach ($params as $param) {
 
 try {
     if (count($uri) > 2) {
-        header(\S\Fun::http(404));
+        header(\S\Tools::http(404));
         exit();
     }
     $class = ucfirst(current($uri));
     if (empty($class)) {
-        header(\S\Fun::http(404));
+        header(\S\Tools::http(404));
         exit();
     }
     $function = (1 == count($uri)) ? 'index' : end($uri);

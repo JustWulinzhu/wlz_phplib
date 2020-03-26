@@ -11,7 +11,7 @@
 
 namespace S\Daemon;
 
-use S\Fun;
+use \S\Tools;
 use S\Log;
 
 class Thread
@@ -125,7 +125,7 @@ class Thread
             unlink($pid_path);
         }
         //删除进程配置文件
-        $files = Fun::scanDir(self::DAEMON_CONFIG);
+        $files = Tools::scanDir(self::DAEMON_CONFIG);
         foreach ($files as $file) {
             unlink(self::DAEMON_CONFIG . DIRECTORY_SEPARATOR . $file);
         }
@@ -169,7 +169,7 @@ class Thread
      * @throws \Exception
      */
     public function getDaemonConfig() {
-        $files = Fun::scanDir(self::DAEMON_CONFIG);
+        $files = Tools::scanDir(self::DAEMON_CONFIG);
 
         $configs = [];
         foreach ($files as $file) {

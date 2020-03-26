@@ -16,7 +16,7 @@ class CreateIv implements \Job\Base {
      * @throws \Exception
      */
     public function exec($argv = null) {
-        if (\S\Fun::isCli()) {
+        if (\S\Tools::isCli()) {
             $iv = substr(md5(microtime(true)), 0, 16);
             \S\Log::getInstance()->debug(array('create_iv', $iv));
             echo $iv . "\n";

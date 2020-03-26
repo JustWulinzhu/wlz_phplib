@@ -12,7 +12,7 @@
 
 namespace Job\Jobs\Tmp;
 
-use S\Fun;
+use \S\Tools;
 use S\Log;
 
 class Test implements \Job\Base

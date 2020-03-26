@@ -5,7 +5,7 @@ namespace S;
 
 header("content-type='text/html',charset='utf-8'");
 
-class Fun
+class Tools
 {
 
     /**
@@ -537,11 +537,48 @@ class Fun
      */
     public static function getNum() {
         $data = [];
-        for ($i = 1; $i <= 1000; $i++) {
+        for ($i = 0; $i <= 1000; $i++) {
             $data[] = $i;
         }
 
         return $data;
+    }
+
+    /**
+     * 查找字符串中的数字（只适用于PPT读取方法）
+     * @param string $str
+     * @return mixed|string
+     */
+    public static function findNum($str){
+        $str = mb_substr($str, 0, 3); //只取前3位，防止后面的数字造成影响
+        $arr = str_split($str);
+
+        $num = '';
+        foreach ($arr as $value) {
+            if (is_numeric($value)) {
+                $num .= $value;
+            }
+        }
+
+        return $num ? $num : false;
+    }
+
+    /**
+     * 判断数组维度
+     * @param $arr
+     * @return bool|int
+     */
+    public static function getArrayDim($arr) {
+        if (! is_array($arr)) {
+            return false;
+        }
+        $dim = 0;
+        foreach($arr as $item) {
+            $t = self::getArrayDim($item);
+            if ($t > $dim) $dim = $t;
+        }
+
+        return $dim + 1;
     }
     
 }
