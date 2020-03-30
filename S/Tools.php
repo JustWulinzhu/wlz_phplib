@@ -549,7 +549,10 @@ class Tools
      * @param string $str
      * @return mixed|string
      */
-    public static function findNum($str){
+    public static function findNum($str) {
+        if (! is_numeric(mb_substr($str, 0, 1))) { //第一个字符不是数字的直接返回
+            return false;
+        }
         $str = mb_substr($str, 0, 3); //只取前3位，防止后面的数字造成影响
         $arr = str_split($str);
 

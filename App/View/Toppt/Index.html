@@ -5,7 +5,9 @@
     <title>PPT生成器</title>
 
     <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+<!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" rel="stylesheet">-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
     <style>
         . main {
@@ -13,7 +15,7 @@
             padding-left: 2300px;
         }
         form {
-            margin-left: 30px;
+            margin-left: 40px;
         }
     </style>
 
@@ -58,12 +60,27 @@
 
     <div class="main">
         <form action="toppt/doupload" method="post" enctype="multipart/form-data">
+
+            <div class="page-header" style="padding: 0px;border: 0px;">
+                <div class="form-horizontal">
+                    <div style="width: 200px">
+                        <select class="form-control" name="type" οnchange="selectOnchang(this)">
+                            <option value="default">请选择文件内容类型</option>
+                            <option value="single">单选题</option>
+                            <option value="complete">整套题（含单选、多选、判断等）</option>
+                            <option value="article">讲义（暂未上线）</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
             <div class="form-group">
-                <h3 for="file">选择要转换的文件：</h3>
+                <h4 for="file">选择要转换的文件：</h4>
                 <input type="file" name="file" id="file">
             </div>
+
             <div class="checkbox">
-                <p class="help-block">只支持doc、docx、txt类型的文件, 建议采用txt文件，准确率更高！</p>
+                <p class="help-block">只支持txt、doc、docx类型的文件, 建议采用txt文件，准确率更高！</p>
             </div>
             <input type="submit" class="btn btn-info btn-default" name="submit" value="生 成" />
         </form>
