@@ -20,8 +20,12 @@ class Toppt {
         '一', '二', '三', '四', '五', '六', '七', '八', '九', '十',
     ];
 
-    private $topic_type = [
+    private static $topic_type = [
         '单选', '多选', '判断',
+    ];
+
+    private static $letter = [
+        'A', 'B', 'C', 'D', 'F',
     ];
 
     /**
@@ -76,7 +80,7 @@ class Toppt {
         //分段取出
         $data = self::getSliceData($file_data, $keys);
         foreach ($data as $key => $value) {
-            $data[$key] = self::arrayToString($value);
+            $data[$key] = self::selectFormat(self::arrayToString($value));
         }
 
         return $data;
@@ -93,7 +97,7 @@ class Toppt {
      */
     public function completeMultiple($file_data) {
         //按照层级关系拆分数据并组装数组
-        $first_keys = self::getSliceKeyForComplete($file_data, $this->topic_type);
+        $first_keys = self::getSliceKeyForComplete($file_data, self::$topic_type);
         //分段取出
         $first_data = self::getSliceData($file_data, $first_keys);
 
@@ -103,7 +107,7 @@ class Toppt {
             $second_keys = self::getSliceKeyForSelect($value, Tools::getNum());
             $second_data = self::getSliceData($value, $second_keys);
             foreach ($second_data as $key => &$s) {
-                $second_data[$key] = self::arrayToString($s);
+                $second_data[$key] = self::selectFormat(self::arrayToString($s));
             }
 
             $second_datas = array_merge($second_datas, $second_data); //转换成一维数组
@@ -176,6 +180,31 @@ class Toppt {
     }
 
     /**
+     * 格式化选择题，一项一行
+     * @param $str
+     * @return string
+     */
+    public static function selectFormat($str) {
+        $keys = [];
+        $arr = \S\Tools::mbStrSplit($str);
+        foreach ($arr as $key => $value) {
+            if (in_array($value, self::$letter)) {
+                $keys[] = $key;
+            }
+        }
+        array_push($keys, count($arr));
+
+        $i = 0;
+        $new_str = '';
+        foreach ($keys as $key) {
+            $new_str .= trim(mb_substr($str, $i, $key - $i)) . "\n";
+            $i = $key;
+        }
+
+        return $new_str;
+    }
+
+    /**
      * 按照规则数组(一维)转字符串
      * @param $array
      * @return string
@@ -185,6 +214,7 @@ class Toppt {
         foreach ($array as $item) {
             $str .= $item . "\n";
         }
+
         return $str;
     }
 

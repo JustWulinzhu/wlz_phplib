@@ -583,5 +583,15 @@ class Tools
 
         return $dim + 1;
     }
-    
+
+    /**
+     * 分割中文字符串为数组防止乱码，类比str_split
+     * @param $str
+     * @return array|false|string[]
+     */
+    public static function mbStrSplit($str) {
+        return preg_split('/(?<!^)(?!$)/u', $str);
+    }
+
+
 }
