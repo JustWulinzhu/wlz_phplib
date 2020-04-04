@@ -13,8 +13,10 @@ namespace S\Api\Image;
 
 class Baidu {
 
-    const ACCESS_TOKEN_URL = 'https://aip.baidubce.com/oauth/2.0/token'; //access_token接口地址
-    const IDCARD_URL = 'https://aip.baidubce.com/rest/2.0/ocr/v1/idcard'; //身份证识别
+    const BAIDU_OCR_HOST = 'https://aip.baidubce.com';
+
+    const ACCESS_TOKEN_URI = '/oauth/2.0/token'; //获取access_token
+    const IDCARD_URI = '/rest/2.0/ocr/v1/idcard'; //身份证识别
 
     /**
      * 获取access_token
@@ -29,7 +31,7 @@ class Baidu {
             'client_id'     => $config['api_key'],
             'client_secret' => $config['secret_key'],
         ];
-        $url = self::ACCESS_TOKEN_URL . '?' . http_build_query($params);
+        $url = self::BAIDU_OCR_HOST . self::ACCESS_TOKEN_URI . '?' . http_build_query($params);
 
         $cache = new \App\Dao\Cache\Baidu();
         $ret = $cache->get($config['api_key']);
@@ -48,18 +50,19 @@ class Baidu {
 
     /**
      * 身份证识别
+     * @param $image 二进制文件
      * @return bool|mixed|string
      * @throws \S\Exceptions
      * @throws \Exception
      */
-    public function idcard() {
+    public function idcard($image) {
         $params = [
             'access_token' => $this->getAccessToken(),
         ];
 
-        $url = self::IDCARD_URL . '?' . http_build_query($params);
+        $url = self::BAIDU_OCR_HOST . self::IDCARD_URI . '?' . http_build_query($params);
         $request_params = [
-            'image' => base64_encode(file_get_contents("/www/tmp/image/WechatIMG48887.jpeg")),
+            'image' => base64_encode($image),
             'id_card_side' => 'front',
         ];
 

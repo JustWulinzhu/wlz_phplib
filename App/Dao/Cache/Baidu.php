@@ -19,8 +19,16 @@ class Baidu {
      * @return \Redis|null
      * @throws \Exception
      */
-    public function getInstance() {
+    private function getInstance() {
         return (new \S\Redis\BaseRedis())->getInstance();
+    }
+
+    /**
+     * @param $key
+     * @return string
+     */
+    private function getKey($key) {
+        return self::PRE_KEY . $key;
     }
 
     /**
@@ -29,7 +37,7 @@ class Baidu {
      * @throws \Exception
      */
     public function get($key) {
-        return $this->getInstance()->get($key);
+        return $this->getInstance()->get($this->getKey($key));
     }
 
     /**
@@ -40,7 +48,7 @@ class Baidu {
      * @throws \Exception
      */
     public function set($key, $value, $ttl = self::TTL) {
-        return $this->getInstance()->set($key, $value, $ttl);
+        return $this->getInstance()->set($this->getKey($key), $value, $ttl);
     }
 
 }
