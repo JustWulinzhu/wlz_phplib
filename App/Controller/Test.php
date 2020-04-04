@@ -29,7 +29,7 @@ class Test {
      * @throws Exceptions
      */
     public function index($arr = null) {
-        $ret = (new \S\Office\PowerPoint())->TransToPPT("/www/tmp/file/z.txt");
+        $ret = (new \S\Api\Image\Baidu())->idcard();
         return $ret;
     }
 

@@ -121,6 +121,7 @@ class Files {
     }
 
     /**
+     * 设置浏览器输出头信息
      * @param $file_name
      * @return bool
      */
