@@ -29,7 +29,7 @@ class Test {
      * @throws Exceptions
      */
     public function index($arr = null) {
-        $ret = (new \S\Api\Image\Baidu())->idcard(file_get_contents("/www/tmp/image/WechatIMG48887.jpeg"));
+        $ret = (new \S\Api\Image\Xunfei())->idcard(file_get_contents("/www/tmp/image/WechatIMG48887.jpeg"));
         return $ret;
     }
 

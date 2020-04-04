@@ -11,10 +11,17 @@
 
 return [
     'image' => [
+
         'baidu' => [
             'app_id' => '19249591',
             'api_key' => 'VkNo7VTlWmBfqDFNSiGOrRbn',
             'secret_key' => 'v04gt6LGQsGHnin3VhCTolyrKTjhf5b7',
         ],
+
+        'xunfei' => [
+            'app_id' => '5e8834c4',
+            'api_key' => 'fe3dfd329218a69265b6513e5e8c4094',
+        ],
+
     ],
 ];
