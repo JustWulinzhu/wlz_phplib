@@ -11,7 +11,7 @@
 
 namespace S\Api\Image;
 
-class Baidu {
+class Baidu extends Base {
 
     const BAIDU_OCR_HOST = 'https://aip.baidubce.com';
 
@@ -55,7 +55,7 @@ class Baidu {
      * @throws \S\Exceptions
      * @throws \Exception
      */
-    public function idcard($image) {
+    public function idCard($image) {
         $params = [
             'access_token' => $this->getAccessToken(),
         ];

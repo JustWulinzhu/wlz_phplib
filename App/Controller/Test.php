@@ -25,11 +25,12 @@ class Test {
 
     /**
      * @param null $arr
-     * @return bool
-     * @throws Exceptions
+     * @return mixed
+     * @throws \Exception
      */
     public function index($arr = null) {
-        $ret = (new \S\Api\Image\Xunfei())->idcard(file_get_contents("/www/tmp/image/WechatIMG48887.jpeg"));
+        $obj = new \App\Data\Image();
+        $ret = $obj->idCard(file_get_contents("/www/tmp/image/WechatIMG48887.jpeg"));
         return $ret;
     }
 

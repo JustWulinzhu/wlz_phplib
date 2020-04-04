@@ -4,13 +4,16 @@
  * User: wulinzhu
  * Date: 20/4/4 下午3:27
  * Email: 18515831680@163.com
+ *
+ * 科大讯飞开放平台文字识别
+ *
  */
 
 namespace S\Api\Image;
 
 use Config\Conf;
 
-class Xunfei {
+class Xunfei extends Base {
 
     const XUNFEI_OCR_HOST = 'https://webapi.xfyun.cn';
 
@@ -57,7 +60,7 @@ class Xunfei {
      * @return mixed
      * @throws \Exception
      */
-    public function idcard($image) {
+    public function idCard($image) {
         $param = ['engine_type' => 'idcard'];
         $headers = self::getHeader($param);
 
