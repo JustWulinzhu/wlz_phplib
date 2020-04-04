@@ -10,7 +10,7 @@ namespace S;
 
 class Curl {
 
-    const TIME_OUT = 2;
+    const TIME_OUT = 60;
 
     /**
      * request请求 POST GET
