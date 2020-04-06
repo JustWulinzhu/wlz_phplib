@@ -39,7 +39,7 @@ class Image extends \App\Controller\Base
         }
 
         $image_binary = file_get_contents($path);
-        if (self::MAX_IMAGE_SIZE < Tools::formatSize(filesize($path))) {
+        if (Tools::formatSize(filesize($path)) > self::MAX_IMAGE_SIZE) {
             try {
                 $image_binary = $image->compressBinary(file_get_contents($path));
             } catch (\S\Exceptions $e) {
