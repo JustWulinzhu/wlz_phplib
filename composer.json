@@ -4,6 +4,7 @@
       "ext-json": "*",
       "ext-gd": "*",
       "ext-mbstring": "*",
-      "ext-curl": "*"
+      "ext-curl": "*",
+      "ext-bcmath": "*"
     }
 }

@@ -137,12 +137,15 @@ class Tools
      * @return string
      */
     public static function formatSize($size) {
-        $kb = $size / 1024;
-        $mb = $kb / 1024;
+        $kb = bcdiv($size, 1024, 2);
+        $mb = bcdiv($kb, 1024, 2);
         if ($mb < 1) {
-            return number_format($kb, 3, '.', '') . ' KB';
+            $size = round($mb, 2) . ' KB';
+        } else {
+            $size = round($mb, 2) . ' M';
         }
-        return number_format($mb, 3, '.', '') . ' M';
+
+        return $size;
     }
 
     /**

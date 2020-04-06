@@ -12,7 +12,7 @@ namespace S;
 
 class Image {
 
-    const TMP_PATH = '/tmp'; //默认文件保存路径
+    const TMP_PATH = '/www/tmp/image'; //默认文件保存路径
 
     const IMAGE_TYPE_JPEG = 'jpeg';
     const IMAGE_TYPE_PNG = 'png';
@@ -28,7 +28,7 @@ class Image {
      * @return false|string
      * @throws \Exception
      */
-    public function getImage($image_base64_info) {
+    public function show($image_base64_info) {
         $data = base64_decode($image_base64_info);
 
         $type = $this->getFileType($data);
