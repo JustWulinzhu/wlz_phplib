@@ -29,7 +29,7 @@ class Image extends \App\Controller\Base
     public function show($args) {
         $image = new \S\Image();
 
-        if (empty($args) || ! isset($args['image_name'])) {
+        if (empty($args) || (! isset($args['image_name'])) || empty($args['image_name'])) {
             throw new \S\Exceptions('image_name must be provide');
         }
         $image_name = $args['image_name'];
