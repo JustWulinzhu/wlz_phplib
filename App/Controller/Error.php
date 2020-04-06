@@ -10,7 +10,10 @@ namespace App\Controller;
 
 class Error extends \App\Controller\Base {
 
-    public function NotFound404() {
+    /**
+     *  404错误页面
+     */
+    public function notFound404() {
         $this->smarty->assign("APP_HOST", APP_HOST);
         $this->smarty->display("Error/404.html");
     }
