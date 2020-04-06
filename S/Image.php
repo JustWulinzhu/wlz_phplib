@@ -10,6 +10,8 @@
 
 namespace S;
 
+use S\Oss\Oss;
+
 class Image {
 
     const TMP_PATH = '/www/tmp/image'; //默认文件保存路径
@@ -87,10 +89,7 @@ class Image {
 
         //指定浏览器输出下载
         $filename = date('Ymd', time()) . '_' . substr(md5(mt_rand(1, 10000)), 0, 12) . '.' . $type;
-        header("Content-Type: application/octet-stream");
-        header("Content-Disposition: attachment; filename=$filename");
-        header("Pragma: no-cache");
-        header("Expires: 0");
+        \S\Oss\Files::setHeader($filename);
 
         header("Content-Type: image/{$type}");
         switch ($type) {
