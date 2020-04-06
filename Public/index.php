@@ -47,9 +47,5 @@ try {
     $ret = $obj->$function($request_params);
     outputJson($ret);
 } catch (\Throwable $e) {
-    if ($e->getCode() == 404) {
-        outputJson([], $e->getCode(), $e->getMessage());
-        exit();
-    }
     throw $e;
 }
