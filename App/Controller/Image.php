@@ -20,7 +20,7 @@ class Image extends \App\Controller\Base
     const MAX_IMAGE_SIZE = '2M';
 
     /**
-     * 图片展示
+     * 服务器本地图片展示
      * @param $args
      * @return bool
      * @throws \S\Exceptions
