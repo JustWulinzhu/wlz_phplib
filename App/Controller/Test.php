@@ -29,9 +29,7 @@ class Test {
      * @throws \Exception
      */
     public function index($arr = null) {
-        $obj = new \App\Data\Image();
-        $ret = $obj->idCard(file_get_contents("/www/tmp/image/WechatIMG48887.jpeg"));
-        return $ret;
+        (new Files())->output("iphone/pic/201909/IMG_1110");
     }
 
 }

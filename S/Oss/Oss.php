@@ -48,7 +48,7 @@ class Oss {
      * @throws \Exception
      */
     private static function getOssInstance() {
-        self::$oss_conf = Conf::getConfig('oss/oss');
+        self::$oss_conf = Conf::getConfig('oss/oss_internal');
         if (is_null(self::$oss_client)) {
             self::$oss_client = new OssClient(self::$oss_conf['access_key_id'], self::$oss_conf['access_key_secret'], self::$oss_conf['end_point']);
         }
