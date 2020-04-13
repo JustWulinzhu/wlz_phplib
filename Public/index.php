@@ -23,14 +23,6 @@ ini_set('memory_limit', '1024M');
 $uri_arr = parse_url($_SERVER['REQUEST_URI']);
 $uri = array_values(array_filter(explode("/", $uri_arr['path'])));
 
-//请求参数
-$params = array_filter(explode("&", isset($uri_arr['query']) ? $uri_arr['query'] : ''));
-$request_params = [];
-foreach ($params as $param) {
-    $value = explode("=", $param);
-    $request_params[current($value)] = end($value);
-}
-
 try {
     if (count($uri) > 2) {
         header(\S\Tools::http(404));
@@ -44,7 +36,7 @@ try {
     $function = (1 == count($uri)) ? 'index' : end($uri);
     $namespace = '\\App\\Controller\\' . $class;
     $obj = new $namespace;
-    $ret = $obj->$function($request_params);
+    $ret = $obj->$function(\S\Param::get());
     outputJson($ret);
 } catch (\Throwable $e) {
     throw $e;

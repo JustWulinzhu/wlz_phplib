@@ -16,12 +16,28 @@ class Base {
     protected $smarty;
 
     /**
+     * 不允许子类重写
      * Base constructor.
      * @throws \Exception
      */
-    public function __construct()
+    public final function __construct()
     {
+        $this->verify();
         $this->initSmarty();
+    }
+
+    /**
+     * 签名校验
+     * @throws \Exception
+     */
+    private function verify() {
+        $request_params = array_merge(\S\Param::get(), \S\Param::post());
+        \S\Log::getInstance()->debug(['api_request_params', json_encode($request_params)]);
+        try {
+            \S\Sign::verify($request_params);
+        } catch (\Exception $e) {
+            outputJson([], $e->getCode(), $e->getMessage());
+        }
     }
 
     /**

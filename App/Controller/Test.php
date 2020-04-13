@@ -21,7 +21,7 @@ use S\Queue\Mns\Mns;
 use S\Redis\BaseRedis as BaseRedis;
 use S\Queue\Redis\Redis as QueueRedis;
 
-class Test {
+class Test extends Base {
 
     /**
      * @param null $arr
@@ -29,7 +29,8 @@ class Test {
      * @throws \Exception
      */
     public function index($arr = null) {
-        (new Files())->output("iphone/pic/201909/IMG_1110");
+        $ip = Tools::getCliIp();
+        dd($ip);
     }
 
 }

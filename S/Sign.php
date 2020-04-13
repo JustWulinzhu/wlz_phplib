@@ -13,26 +13,50 @@
 
 namespace S;
 
-use \S\Tools;
-
 class Sign {
 
+    const TIME_OUT = 600; //10分钟有效期
     const TIMESTAMP_FILE = '/www/sign_timestamp.txt';
 
     /**
-     * 接口权限验证
-     * @param $time
-     * @param array $param
-     * @return string
+     * 接口签名校验
+     * @param $data
+     * @return bool
+     * @throws \Exception
      */
-    public static function auth($time, array $param) {
+    public static function verify($data) {
+        if (! isset($data['sign'])) {
+            throw new \Exception('签名参数sign验证失败');
+        }
+        if (! isset($data['timestamp']) || (! $data['timestamp'])) {
+            throw new \Exception('时间参数验证失败');
+        }
+        if (time() - $data['timestamp'] > self::TIME_OUT) {
+            throw new \Exception('请求已失效，请重新发送');
+        }
+
+        $sign = $data['sign'];
+        unset($data['sign']);
+        if ($sign != self::getSign($data)) {
+            throw new \Exception('签名验证失败');
+        }
+
+        return true;
+    }
+
+    /**
+     * 获取签名
+     * @param array $param
+     * @return false|string
+     */
+    public static function getSign(array $param) {
         $param_str = '';
-        if (!empty($param)) {
+        if (! empty($param)) {
             ksort($param);
             $param = array_values($param);
             $param_str = strtoupper(implode("", $param));
         }
-        return substr(md5($time . '|' . $param_str), 0, 18);
+        return substr(md5($param_str), 0, 18);
     }
 
     /**
