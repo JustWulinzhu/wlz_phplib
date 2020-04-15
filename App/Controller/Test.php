@@ -21,7 +21,7 @@ use S\Queue\Mns\Mns;
 use S\Redis\BaseRedis as BaseRedis;
 use S\Queue\Redis\Redis as QueueRedis;
 
-class Test extends Base {
+class Test {
 
     /**
      * @param null $arr
@@ -29,8 +29,11 @@ class Test extends Base {
      * @throws \Exception
      */
     public function index($arr = null) {
-        $ip = Tools::getCliIp();
-        dd($ip);
+        $files = [
+            '/tmp/a.txt',
+            '/tmp/b.txt',
+        ];
+        (new \S\Compress\Zip)->create($files, '/tmp/test.zip');
     }
 
 }

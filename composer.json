@@ -5,6 +5,7 @@
       "ext-gd": "*",
       "ext-mbstring": "*",
       "ext-curl": "*",
-      "ext-bcmath": "*"
+      "ext-bcmath": "*",
+      "ext-zip": "*"
     }
 }
