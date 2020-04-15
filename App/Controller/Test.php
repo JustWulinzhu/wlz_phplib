@@ -33,7 +33,7 @@ class Test {
             '/tmp/a.txt',
             '/tmp/b.txt',
         ];
-        (new \S\Compress\Zip)->create($files, '/tmp/test.zip');
+        (new \S\Compress\Zip())->create($files, '/tmp/test.zip');
     }
 
 }
