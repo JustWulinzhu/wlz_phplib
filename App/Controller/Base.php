@@ -14,6 +14,7 @@ namespace App\Controller;
 class Base {
 
     protected $smarty;
+    protected $is_html = false;
 
     /**
      * 不允许子类重写
@@ -22,7 +23,9 @@ class Base {
      */
     public final function __construct()
     {
-        $this->verify();
+        if (! $this->is_html) { //页面不进行参数验证
+            $this->verify();
+        }
         $this->initSmarty();
     }
 

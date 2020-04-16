@@ -14,6 +14,8 @@ use S\Log;
 class Toppt extends \App\Controller\Base
 {
 
+    protected $is_html = true; //声明html页面
+
     const OFFICE_FILE_PATH = '/www/tmp/file/';
 
     /**
