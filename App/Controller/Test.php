@@ -29,11 +29,7 @@ class Test {
      * @throws \Exception
      */
     public function index($arr = null) {
-        $files = [
-            '/tmp/a.txt',
-            '/tmp/b.txt',
-        ];
-        (new \S\Compress\Zip())->create($files, '/tmp/test.zip');
+
     }
 
 }

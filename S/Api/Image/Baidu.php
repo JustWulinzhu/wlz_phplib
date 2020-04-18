@@ -50,7 +50,7 @@ class Baidu extends Base {
 
     /**
      * 身份证识别
-     * @param $image 二进制文件
+     * @param string $image 二进制文件
      * @return bool|mixed|string
      * @throws \S\Exceptions
      * @throws \Exception

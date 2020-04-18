@@ -39,7 +39,7 @@ function outputJson($data = [], $code = 200, $msg = '成功') {
     $arr = [
         'code'  => $code,
         'msg'   => $msg,
-        'data'  => $data,
+        'data'  => is_null($data) ? [] : $data,
     ];
     if (200 != $code) {
         unset($arr['data']);
