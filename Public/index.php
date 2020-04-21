@@ -24,16 +24,19 @@ $uri_arr = parse_url($_SERVER['REQUEST_URI']);
 $uri = array_values(array_filter(explode("/", $uri_arr['path'])));
 
 try {
-    if (count($uri) > 2) {
+    if ($uri && count($uri) > 2) {
         header(\S\Tools::http(404));
         exit();
     }
     $class = ucfirst(current($uri));
-    if (empty($class)) {
+    if ($uri && empty($class)) {
         header(\S\Tools::http(404));
         exit();
     }
     $function = (1 == count($uri)) ? 'index' : end($uri);
+    if (empty($uri)) { //网站默认首页
+        $class = 'Home'; $function = 'index';
+    }
     $namespace = '\\App\\Controller\\' . $class;
     $obj = new $namespace;
     $ret = $obj->$function(\S\Param::get());
