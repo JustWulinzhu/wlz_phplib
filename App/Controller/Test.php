@@ -29,7 +29,26 @@ class Test {
      * @throws \Exception
      */
     public function index($arr = null) {
+        $src = "/tmp/cfca/bg.jpg";
+        $gd = new \S\Gd($src);
 
+        $source = "/tmp/cfca/bg.jpg";
+        $gd -> waterMarkImage($source, 0, 0, 30);
+        $gd -> thumb(200, 80);
+
+        $fontPath = "/www/tmp/arialuni.ttf";
+        $text = "赵子龙";
+        $gd -> waterMarkText(
+            $text,
+            $fontPath,
+            24,
+            array(0, 0, 0, 20),
+            20,
+            50,
+            0);
+
+        $gd -> show();
+        $gd -> save("image_mark");
     }
 
 }

@@ -25,6 +25,29 @@ class Image {
     );
 
     /**
+     * 生成图片并且保存到本地
+     * @param $text
+     * @return bool
+     */
+    public function createImage($text) {
+        header("content-type:image/png");
+
+        $image = imagecreatetruecolor(150, 100); //设置画布大小
+        $white = imagecolorallocate($image, 255, 255, 255);
+        imagefill($image,0,0, $white);
+        $font = "/www/tmp/arialuni.ttf";
+        $font_color = imagecolorallocate($image, 0, 0, 0);
+
+        imagettftext($image, 24, 0, 10,60, $font_color, $font, $text);
+
+        $file_path = '/www/tmp/' . date('Ymd', time()) . '_' . uniqid() . '.png';
+        imagejpeg($image, $file_path);
+        imagedestroy($image);
+
+        return true;
+    }
+
+    /**
      * 图片流处理,展示图片
      * @param $image_base64_info
      * @return false|string
