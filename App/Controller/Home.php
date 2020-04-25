@@ -11,11 +11,13 @@
 
 namespace App\Controller;
 
-class Home {
+class Home extends Base {
+
+    protected $is_html = true;
 
     public function index() {
-        echo "welcome to 武林爹 的网站";
-        exit();
+        $this->smarty->assign('APP_ROOT_PATH', APP_ROOT_PATH);
+        $this->smarty->display('Home/Index.html');
     }
 
 }

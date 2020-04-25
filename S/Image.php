@@ -27,7 +27,7 @@ class Image {
     /**
      * 生成图片并且保存到本地
      * @param $text
-     * @return bool
+     * @return string
      */
     public function createImage($text) {
         header("content-type:image/png");
@@ -35,16 +35,18 @@ class Image {
         $image = imagecreatetruecolor(150, 100); //设置画布大小
         $white = imagecolorallocate($image, 255, 255, 255);
         imagefill($image,0,0, $white);
-        $font = "/www/tmp/arialuni.ttf";
+        $font_file = APP_ROOT_PATH . DIRECTORY_SEPARATOR . 'Ext/arialuni.ttf';
         $font_color = imagecolorallocate($image, 0, 0, 0);
 
-        imagettftext($image, 24, 0, 10,60, $font_color, $font, $text);
+        //图片添加文件
+        imagettftext($image, 24, 0, 10,60, $font_color, $font_file, $text);
 
         $file_path = '/www/tmp/' . date('Ymd', time()) . '_' . uniqid() . '.png';
         imagejpeg($image, $file_path);
         imagedestroy($image);
+        chmod($file_path, 0777);
 
-        return true;
+        return $file_path;
     }
 
     /**
@@ -107,6 +109,8 @@ class Image {
         $new_height = $percent * $height;
 
         $image = imagecreatetruecolor($new_width, $new_height);
+        $white = imagecolorallocate($image, 255, 255, 255);
+        imagefill($image,0,0, $white);
         $image_string = imagecreatefromstring($image_binary);
         imagecopyresampled($image, $image_string, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
 
@@ -157,6 +161,8 @@ class Image {
         $new_height = $percent * $height;
 
         $image = imagecreatetruecolor($new_width, $new_height);
+        $white = imagecolorallocate($image, 255, 255, 255);
+        imagefill($image,0,0, $white);
         $image_string = imagecreatefromstring($image_binary);
         imagecopyresampled($image, $image_string, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
         //在php临时文件目录新建临时文件,前缀image_,用于下面图片保存

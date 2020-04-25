@@ -17,9 +17,9 @@
 
 namespace S\Office;
 
-require_once dirname(dirname(__DIR__)) . '/Ext/excel/PHPExcel.php';
-require_once dirname(dirname(__DIR__)) . '/Ext/excel/PHPExcel/IOFactory.php';
-require_once dirname(dirname(__DIR__)) . '/Ext/excel/PHPExcel/Reader/Excel5.php';
+require_once APP_ROOT_PATH . '/Ext/excel/PHPExcel.php';
+require_once APP_ROOT_PATH . '/Ext/excel/PHPExcel/IOFactory.php';
+require_once APP_ROOT_PATH . '/Ext/excel/PHPExcel/Reader/Excel5.php';
 
 class Excel {
 

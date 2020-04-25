@@ -13,7 +13,7 @@
 
 namespace S\Office;
 
-require_once dirname(dirname(__DIR__)) . "/Ext/PHPWord/bootstrap.php";
+require_once APP_ROOT_PATH . "/Ext/PHPWord/bootstrap.php";
 
 class Word {
 

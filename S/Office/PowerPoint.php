@@ -22,9 +22,9 @@ use PhpOffice\PhpPresentation\Style\Color;
 use \S\Tools;
 use S\Log;
 
-require_once dirname(dirname(__DIR__)) . '/Ext/PHPPresentation/src/PhpPresentation/Autoloader.php';
+require_once APP_ROOT_PATH . '/Ext/PHPPresentation/src/PhpPresentation/Autoloader.php';
 \PhpOffice\PhpPresentation\Autoloader::register();
-require_once dirname(dirname(__DIR__)) . '/Ext/Common/src/Common/Autoloader.php';
+require_once APP_ROOT_PATH . '/Ext/Common/src/Common/Autoloader.php';
 \PhpOffice\Common\Autoloader::register();
 
 date_default_timezone_set('PRC'); //中国时区
