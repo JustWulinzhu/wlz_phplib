@@ -230,9 +230,9 @@ class Tools
     public static function getClientType() {
         $http_user_agent = strtolower($_SERVER['HTTP_USER_AGENT']);
         if (
-            strpos($http_user_agent, 'iPhone')
-            || strpos($http_user_agent, 'iPad')
-            || strpos($http_user_agent, 'iOS')
+            strpos($http_user_agent, 'iphone')
+            || strpos($http_user_agent, 'ipad')
+            || strpos($http_user_agent, 'ios')
         )
         {
             return 'iOS';
@@ -612,6 +612,52 @@ class Tools
      */
     public static function mbStrSplit($str) {
         return preg_split('/(?<!^)(?!$)/u', $str);
+    }
+
+    /**
+     * 阿拉伯数字转汉字
+     * @param $num
+     * @return mixed|string
+     */
+    public static function numberToChinese($num) {
+        $chi_num = array('零', '一', '二', '三', '四', '五', '六', '七', '八', '九');
+        $chi_uni = array('','十', '百', '仟', '万', '亿', '十', '百', '千');
+
+        $num_str = (string)$num;
+
+        $count = strlen($num_str);
+        $last_flag = true; //上一个 是否为0
+        $zero_flag = true; //是否第一个
+        $temp_num = null; //临时数字
+
+        $chi_str = ''; //拼接结果
+        if ($count == 2) { //两位数
+            $temp_num = $num_str[0];
+            $chi_str = $temp_num == 1 ? $chi_uni[1] : $chi_num[$temp_num] . $chi_uni[1];
+            $temp_num = $num_str[1];
+            $chi_str .= $temp_num == 0 ? '' : $chi_num[$temp_num];
+        } else if ($count > 2) {
+            $index = 0;
+            for ($i = $count-1; $i >= 0 ; $i--) {
+                $temp_num = $num_str[$i];
+                if ($temp_num == 0) {
+                    if (!$zero_flag && !$last_flag ) {
+                        $chi_str = $chi_num[$temp_num] . $chi_str;
+                        $last_flag = true;
+                    }
+                } else {
+                    $chi_str = $chi_num[$temp_num] . $chi_uni[$index%9] . $chi_str;
+
+                    $zero_flag = false;
+                    $last_flag = false;
+                }
+                $index ++;
+            }
+        } else {
+            $chi_str = $chi_num[$num_str[0]];
+        }
+
+        return $chi_str;
     }
 
 }
