@@ -1,11 +1,13 @@
 {
     "require": {
-        "phpoffice/phpword": "^0.17.0",
+      "phpoffice/phpword": "^0.17.0",
       "ext-json": "*",
       "ext-gd": "*",
       "ext-mbstring": "*",
       "ext-curl": "*",
       "ext-bcmath": "*",
-      "ext-zip": "*"
+      "ext-zip": "*",
+      "ext-pcntl": "*",
+      "ext-posix": "*"
     }
 }

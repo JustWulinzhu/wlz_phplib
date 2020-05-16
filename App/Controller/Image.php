@@ -17,6 +17,8 @@ use S\Tools;
 class Image extends \App\Controller\Base
 {
 
+    protected $verify = false;
+
     const MAX_IMAGE_SIZE = '2M';
 
     /**
@@ -30,7 +32,7 @@ class Image extends \App\Controller\Base
         $image = new \S\Image();
 
         if (empty($args) || (! isset($args['image_name'])) || empty($args['image_name'])) {
-            throw new \S\Exceptions('image_name must be provide');
+            throw new \S\Exceptions('缺少图片参数');
         }
         $image_name = $args['image_name'];
         $path = \S\Image::TMP_PATH . DIRECTORY_SEPARATOR . $image_name;

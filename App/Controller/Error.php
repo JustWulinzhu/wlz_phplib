@@ -10,6 +10,8 @@ namespace App\Controller;
 
 class Error extends \App\Controller\Base {
 
+    protected $verify = false;
+
     /**
      *  404错误页面
      */

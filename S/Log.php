@@ -96,7 +96,7 @@ class Log {
         $log_ret = $this->log($data, $dir_name);
 
         try {
-            (new Mail(Conf::getConfig('mail/exception')))->send('18515831680@163.com', '异常报警', implode("; ", $data));
+            //(new Mail(Conf::getConfig('mail/exception')))->send('18515831680@163.com', '异常报警', implode("; ", $data));
         } catch (\Exception $e) {}
         return $log_ret;
     }
