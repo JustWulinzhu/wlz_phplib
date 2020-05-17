@@ -10,6 +10,8 @@ namespace App\Controller;
 
 class Phpinfo {
 
+    protected $verify = false;
+
     public function index() {
         phpinfo();
     }

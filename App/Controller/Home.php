@@ -13,7 +13,7 @@ namespace App\Controller;
 
 class Home extends Base {
 
-    protected $verify = true;
+    protected $verify = false;
 
     public function index() {
         $this->smarty->assign('APP_ROOT_PATH', APP_ROOT_PATH);

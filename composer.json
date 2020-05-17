@@ -8,6 +8,8 @@
       "ext-bcmath": "*",
       "ext-zip": "*",
       "ext-pcntl": "*",
-      "ext-posix": "*"
+      "ext-posix": "*",
+      "ext-openssl": "*",
+      "ext-sockets": "*"
     }
 }
