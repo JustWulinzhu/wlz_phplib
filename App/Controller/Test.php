@@ -29,11 +29,7 @@ class Test {
      * @throws \Exception
      */
     public function index($arr = null) {
-        session_start();
-//        $session_id = session_id();
-//        $_SESSION['test'] = 'wlfeng';
-//        var_dump($session_id);die;
-        unset($_SESSION);
+        
     }
 
 }

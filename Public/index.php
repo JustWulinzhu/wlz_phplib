@@ -37,6 +37,10 @@ try {
     if (empty($uri)) { //网站默认首页
         $class = 'Home'; $function = 'index';
     }
+    if ('Favicon.ico' == $class) { //网站icon
+        exit((new \App\Controller\Image())->show(['image_name' => 'vip.ico']));
+    }
+
     $namespace = '\\App\\Controller\\' . $class;
     $obj = new $namespace;
     $ret = $obj->$function(\S\Param::get());
