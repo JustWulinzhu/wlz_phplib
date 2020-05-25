@@ -25,11 +25,11 @@ class Test {
 
     /**
      * @param null $arr
-     * @return mixed
-     * @throws \Exception
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function index($arr = null) {
-        
+        $ret = \S\Guzzle::request('http://mapglobal.baidu.com/mapsguide/hotcity?format=json&_=1517563094325', 'get', ['format' => 'json']);
+        dd($ret);
     }
 
 }
