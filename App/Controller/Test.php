@@ -11,7 +11,7 @@ use S\Oss\Files;
 use S\Queue\Redis\Redis;
 use S\Url;
 use S\Log;
-use S\Curl;
+use S\Http\Curl;
 use S\Crypt\Aes;
 use S\Crypt\Rsa;
 use S\Oss\Oss;
@@ -28,7 +28,9 @@ class Test {
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function index($arr = null) {
-        $ret = \S\Guzzle::request('http://mapglobal.baidu.com/mapsguide/hotcity?format=json&_=1517563094325', 'get', ['format' => 'json']);
+//        $ret = \S\Http\Guzzle::request('http://mapglobal.baidu.com/mapsguide/hotcity?format=json&_=1517563094325', 'get', ['format' => 'json']);
+//        dd($ret);
+        $ret = (new \App\Data\Image())->idCard(file_get_contents('/www/tmp/image/WechatIMG48887.jpeg'));
         dd($ret);
     }
 

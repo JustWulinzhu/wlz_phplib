@@ -30,7 +30,7 @@ class Pic {
 
         foreach ($files as $file) {
             if (in_array(Tools::getExtendName($file), $this->pic)) {
-                $ret = Curl::request(
+                $ret = \S\Http\Curl::request(
                     APP_HOST . '/test/index',
                     'POST',
                     array('file' => new \CURLFile(self::FILE_ROOT_DIR . $file))

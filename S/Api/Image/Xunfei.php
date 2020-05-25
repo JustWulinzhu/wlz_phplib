@@ -56,9 +56,9 @@ class Xunfei extends Base {
 
     /**
      * 身份证识别
-     * @param $image 二进制文件
+     * @param string $image 二进制文件
      * @return mixed
-     * @throws \Exception
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function idCard($image) {
         $param = ['engine_type' => 'idcard'];
@@ -69,7 +69,7 @@ class Xunfei extends Base {
         ];
 
         $url = self::XUNFEI_OCR_HOST . self::IDCARD_URI;
-        $ret = \S\Curl::request($url, 'POST', $request_params, \S\Curl::TIME_OUT, $headers);
+        $ret = \S\Http\Guzzle::request($url, 'POST', $request_params, $headers);
         $ret = json_decode($ret, true);
 
         return $ret['data'];

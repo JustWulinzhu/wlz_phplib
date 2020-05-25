@@ -37,7 +37,7 @@ class Baidu extends Base {
         $ret = $cache->get($config['api_key']);
         $ret = json_decode($ret, true);
         if (! $ret) {
-            $ret = \S\Curl::request($url, 'POST');
+            $ret = \S\Http\Curl::request($url, 'POST');
             $ret = json_decode($ret, true);
             if (isset($ret['error'])) {
                 throw new \S\Exceptions($ret['error_description']);
@@ -66,7 +66,7 @@ class Baidu extends Base {
             'id_card_side' => 'front',
         ];
 
-        $ret = \S\Curl::request($url, 'POST', $request_params);
+        $ret = \S\Http\Curl::request($url, 'POST', $request_params);
         $ret = json_decode($ret, true);
 
         return $ret;

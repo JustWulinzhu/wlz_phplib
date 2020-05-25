@@ -6,7 +6,9 @@
  * 在post方法中也可以执行get请求,只需在url中拼接地址就行。
  */
 
-namespace S;
+namespace S\Http;
+
+use \S\Log;
 
 class Curl {
 

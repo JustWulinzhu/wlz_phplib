@@ -8,11 +8,13 @@
  * Guzzle HTTP请求
  *
  * demo:
- * \S\Guzzle::request('http://wlfeng.vip/test/index', 'GET');
+ * \S\Http\Guzzle::request('http://wlfeng.vip/test/index', 'GET');
  *
  */
 
-namespace S;
+namespace S\Http;
+
+use S\Log;
 
 require APP_ROOT_PATH . '/Ext/vendor/autoload.php';
 
@@ -20,7 +22,7 @@ class Guzzle
 {
 
     const HTTP_SUCCESS_CODE = 200;
-    const HTTP_TIMEOUT = 10;
+    const HTTP_TIMEOUT = 60;
 
     /**
      * @param $url
@@ -28,7 +30,7 @@ class Guzzle
      * @param array $params
      * @param array $headers
      * @param string $proxy
-     * @param float $time_out
+     * @param int $time_out
      * @return string
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Exception
@@ -51,10 +53,15 @@ class Guzzle
             $options['proxy'] = $proxy;
         }
 
+        Log::getInstance()->debug([__METHOD__, 'request params', $method, $url]);
         $response = $client->request($method, $url, $options);
+        Log::getInstance()->debug([__METHOD__, 'response params', $response->getBody()->getContents()]);
 
         if (self::HTTP_SUCCESS_CODE != $response->getStatusCode()) {
-            throw new \Exception('error');
+            throw new \Exception("response error code {$response->getStatusCode()}");
+        }
+        if (empty($response)) {
+            throw new \Exception("empty response from {$url}");
         }
 
         return $response->getBody()->getContents();
