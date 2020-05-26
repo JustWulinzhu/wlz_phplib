@@ -36,10 +36,10 @@ class Image {
             $api = new $namespace;
             $ret = $api->idCard($image);
             if ($ret) {
-                Log::getInstance()->debug([__CLASS__, __FUNCTION__, $channel, json_encode($ret)]);
+                Log::getInstance()->debug([__METHOD__, $channel, json_encode($ret)]);
                 break;
             } else {
-                Log::getInstance()->warning([__CLASS__, __FUNCTION__, $channel, json_encode($ret)]);
+                Log::getInstance()->warning([__METHOD__, $channel, json_encode($ret)]);
             }
         }
         if (! $ret) {

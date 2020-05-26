@@ -61,7 +61,7 @@ class Guzzle
         if (self::HTTP_SUCCESS_CODE != ($error_code = $response->getStatusCode())) {
             throw new \Exception("response error code {$error_code}");
         }
-        if (empty($response)) {
+        if (empty($result)) {
             throw new \Exception("empty response from {$url}");
         }
 
