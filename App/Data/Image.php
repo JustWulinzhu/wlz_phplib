@@ -19,8 +19,8 @@ class Image {
      * @var array
      */
     private $channels = [
-        \S\Api\Image\Base::CHANNEL_XUNFEI,
         \S\Api\Image\Base::CHANNEL_BAIDU,
+        \S\Api\Image\Base::CHANNEL_XUNFEI,
     ];
 
     /**

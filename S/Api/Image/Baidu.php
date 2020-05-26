@@ -11,9 +11,9 @@
 
 namespace S\Api\Image;
 
-class Baidu extends Base {
+use Config\Conf;
 
-    const BAIDU_OCR_HOST = 'https://aip.baidubce.com';
+class Baidu extends Base {
 
     const ACCESS_TOKEN_URI = '/oauth/2.0/token'; //获取access_token
     const IDCARD_URI = '/rest/2.0/ocr/v1/idcard'; //身份证识别
@@ -25,13 +25,13 @@ class Baidu extends Base {
      * @throws \Exception
      */
     public function getAccessToken() {
-        $config = \Config\Conf::getConfig("apps/image.baidu");
+        $config = Conf::getConfig("apps/image.baidu");
         $params = [
             'grant_type'    => 'client_credentials',
             'client_id'     => $config['api_key'],
             'client_secret' => $config['secret_key'],
         ];
-        $url = self::BAIDU_OCR_HOST . self::ACCESS_TOKEN_URI . '?' . http_build_query($params);
+        $url = $config['host'] . self::ACCESS_TOKEN_URI . '?' . http_build_query($params);
 
         $cache = new \App\Dao\Cache\Baidu();
         $ret = $cache->get($config['api_key']);
@@ -60,7 +60,8 @@ class Baidu extends Base {
             'access_token' => $this->getAccessToken(),
         ];
 
-        $url = self::BAIDU_OCR_HOST . self::IDCARD_URI . '?' . http_build_query($params);
+        $host = Conf::getConfig('apps/image.baidu.host');
+        $url = $host . self::IDCARD_URI . '?' . http_build_query($params);
         $request_params = [
             'image' => base64_encode($image),
             'id_card_side' => 'front',

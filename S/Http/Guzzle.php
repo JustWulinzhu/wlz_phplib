@@ -55,7 +55,8 @@ class Guzzle
 
         Log::getInstance()->debug([__METHOD__, 'request params', $method, $url]);
         $response = $client->request($method, $url, $options);
-        Log::getInstance()->debug([__METHOD__, 'response params', $response->getBody()->getContents()]);
+        $result = $response->getBody()->getContents();
+        Log::getInstance()->debug([__METHOD__, 'response params', $result]);
 
         if (self::HTTP_SUCCESS_CODE != $response->getStatusCode()) {
             throw new \Exception("response error code {$response->getStatusCode()}");
@@ -64,7 +65,7 @@ class Guzzle
             throw new \Exception("empty response from {$url}");
         }
 
-        return $response->getBody()->getContents();
+        return $result;
     }
 
 }

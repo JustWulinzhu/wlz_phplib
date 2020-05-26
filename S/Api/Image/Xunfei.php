@@ -15,8 +15,6 @@ use Config\Conf;
 
 class Xunfei extends Base {
 
-    const XUNFEI_OCR_HOST = 'https://webapi.xfyun.cn';
-
     const IDCARD_URI = '/v1/service/v1/ocr/idcard'; //身份证识别
 
     /**
@@ -59,6 +57,7 @@ class Xunfei extends Base {
      * @param string $image 二进制文件
      * @return mixed
      * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Exception
      */
     public function idCard($image) {
         $param = ['engine_type' => 'idcard'];
@@ -68,7 +67,8 @@ class Xunfei extends Base {
             'image' => base64_encode($image),
         ];
 
-        $url = self::XUNFEI_OCR_HOST . self::IDCARD_URI;
+        $host = Conf::getConfig('apps/image.xunfei.host');
+        $url = $host . self::IDCARD_URI;
         $ret = \S\Http\Guzzle::request($url, 'POST', $request_params, $headers);
         $ret = json_decode($ret, true);
 
