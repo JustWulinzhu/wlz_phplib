@@ -57,9 +57,7 @@ class Image {
      */
     public function show($image_base64_info) {
         $data = base64_decode($image_base64_info);
-
         $type = $this->getFileType($data);
-        Log::getInstance()->debug(array('file_type', $type));
 
         $im = imagecreatefromstring($data);
         if ($im) {
