@@ -5,7 +5,9 @@
  * Date: 20/5/25 上午10:40
  * Email: 18515831680@163.com
  *
- * Guzzle HTTP请求
+ * Guzzle中文官网：https://guzzle-cn.readthedocs.io/zh_CN/latest/quickstart.html#id7
+ *
+ * PHP HTTP客户端 GuzzleHTTP
  *
  * @query array
  *      get参数
