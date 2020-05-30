@@ -26,7 +26,9 @@
  *
  * demo:
  * \S\Http\Guzzle::request('http://wlfeng.vip/test/index', 'GET');
- * \S\Http\Guzzle::request('http://wlfeng.vip/test/index', 'POST', ['form_params' => ['name' => '张三'], 'upload_file' => file_get_contents('/tmp/a.txt')]);
+ * \S\Http\Guzzle::request('http://wlfeng.vip/test/index', 'POST', ['name' => '张三', 'upload_file' => file_get_contents('/tmp/a.txt')]);
+ *
+ * 文件上传请用POST方式
  *
  */
 
@@ -62,6 +64,10 @@ class Guzzle
                 $options['query'] = $params;
             }
         } else {
+            if (isset($params['upload_file'])) {
+                $options['body'] = $params['upload_file'];
+                unset($params['upload_file']);
+            }
             $options['form_params'] = $params;
         }
         if ($headers) {
@@ -69,9 +75,6 @@ class Guzzle
         }
         if ($proxy) {
             $options['proxy'] = $proxy;
-        }
-        if (isset($params['upload_file'])) {
-            $options['body'] = $params['upload_file'];
         }
 
         Log::getInstance()->debug([__METHOD__, 'request params', $method, $url, json_encode($options)]);

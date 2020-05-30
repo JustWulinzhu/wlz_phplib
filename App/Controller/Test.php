@@ -25,13 +25,17 @@ class Test {
 
     /**
      * @param null $arr
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws Exceptions
+     * @throws \Exception
      */
     public function index($arr = null) {
-//        $ret = \S\Http\Guzzle::request('http://mapglobal.baidu.com/mapsguide/hotcity?format=json&_=1517563094325', 'get', ['format' => 'json']);
-//        dd($ret);
-        $ret = (new \App\Data\Image())->idCard(file_get_contents('/www/tmp/image/WechatIMG48887.jpeg'));
-        dd($ret);
+        $ret = \S\Qrcode::create('http://wlfeng.vip/image/show?image_name=jiehun1.jpg', '/www/tmp/image/gou.png');
+        //$ret = \S\Qrcode::read($ret);
+        (new \S\Image())->show(base64_encode(file_get_contents($ret)));
+    }
+
+    public function demo() {
+        return [];
     }
 
 }
