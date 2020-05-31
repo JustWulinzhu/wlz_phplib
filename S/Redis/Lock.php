@@ -4,6 +4,7 @@
  * Author: wulinzhu
  * Email: 18515831680@163.com
  * Date: 18/7/12 下午4:23
+ *
  * redis锁机制,防止并发请求造成的超卖等问题
  * 参考mutexLock、transactionLock方法
  * 参考文献: http://www.36nu.com/post/314

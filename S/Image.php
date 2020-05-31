@@ -51,7 +51,7 @@ class Image {
 
     /**
      * 图片流处理,展示图片
-     * @param $image_base64_info
+     * @param string $image_base64_info base64图片流数据
      * @return false|string
      * @throws \Exception
      */
