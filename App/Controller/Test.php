@@ -25,13 +25,11 @@ class Test {
 
     /**
      * @param null $arr
-     * @throws Exceptions
-     * @throws \Exception
+     * @return string
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function index($arr = null) {
-        $ret = \S\Qrcode::create('http://wlfeng.vip/image/show?image_name=jiehun1.jpg', '/www/tmp/image/gou.png');
-        //$ret = \S\Qrcode::read($ret);
-        (new \S\Image())->show(base64_encode(file_get_contents($ret)));
+        return \S\Http\Guzzle::request('https://mapglobal.baidu.com/mapsguide/hotcity?format=json');
     }
 
     public function demo() {

@@ -56,8 +56,6 @@ class Guzzle
      * @throws \Exception
      */
     public static function request($url, $method = 'GET', array $params = [], array $headers = [], $proxy = '', $time_out = self::HTTP_TIMEOUT) {
-        $client = new \GuzzleHttp\Client();
-
         $options['timeout'] = $time_out;
         if ('GET' === ($method = strtoupper($method))) {
             if ($params) {
@@ -78,7 +76,7 @@ class Guzzle
         }
 
         Log::getInstance()->debug([__METHOD__, 'request params', $method, $url, json_encode($options)]);
-        $response = $client->request($method, $url, $options);
+        $response = (new \GuzzleHttp\Client())->request($method, $url, $options);
         $result = $response->getBody()->getContents();
         Log::getInstance()->debug([__METHOD__, 'response params', $result]);
 
