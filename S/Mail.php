@@ -50,10 +50,10 @@ class Mail {
     }
 
     /**
-     * @param $to 收件人 单个、批量
-     * @param $title 邮件标题
-     * @param $content 邮件内容
-     * @param string $files 附件 单个、多个
+     * @param array|string $to 收件人 单个、批量
+     * @param string $title 邮件标题
+     * @param string $content 邮件内容
+     * @param array|string $files 附件 单个、多个
      * @return bool
      * @throws \PHPMailer\PHPMailer\Exception
      * @throws \Exception
@@ -111,6 +111,7 @@ class Mail {
         }
 
         try {
+            Log::getInstance()->debug([$to, $title, $content, $files]);
             if (false === ($ret = $mail->send())) {
                 throw new \Exception($mail->ErrorInfo);
             }
