@@ -10,10 +10,9 @@
 namespace S;
 
 use Config\Conf;
-use S\Log;
 
-require_once dirname(__DIR__) . "/Ext/PHPMailer/src/PHPMailer.php";
-require_once dirname(__DIR__) . "/Ext/PHPMailer/src/SMTP.php";
+require_once APP_ROOT_PATH . "/Ext/PHPMailer/src/PHPMailer.php";
+require_once APP_ROOT_PATH . "/Ext/PHPMailer/src/SMTP.php";
 
 class Mail {
 
@@ -111,13 +110,13 @@ class Mail {
         }
 
         try {
-            Log::getInstance()->debug([$to, $title, $content, $files]);
+            \S\Log::getInstance()->debug([$to, $title, $content, $files]);
             if (false === ($ret = $mail->send())) {
                 throw new \Exception($mail->ErrorInfo);
             }
             return $ret;
         } catch (\Exception $e) {
-            Log::getInstance()->warning(array('mail send warning', $e->getCode(), $e->getMessage()));
+            \S\Log::getInstance()->warning(array('mail send warning', $e->getCode(), $e->getMessage()));
             throw $e;
         }
     }
