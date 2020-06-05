@@ -13,8 +13,6 @@
 
 namespace Job\Jobs\Mail;
 
-use S\Mail;
-
 class Wife implements \Job\Base
 {
 
@@ -30,7 +28,7 @@ class Wife implements \Job\Base
         $days = (strtotime($date) - strtotime($start_date)) / 86400;
 
         $content = "<p style='color: #de3b8a; font-size: large'>我爱你，今天是{$date}，爱你的第{$days}天</p>";
-        return (new Mail())->send('790793352@qq.com', '亲爱的老婆', $content);
+        return (new \S\Mail())->send('790793352@qq.com', '亲爱的老婆', $content);
     }
 
 }
