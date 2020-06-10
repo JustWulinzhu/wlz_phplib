@@ -263,11 +263,13 @@ class Tools
 
     /**
      * 获取字符串编码方式
+     * EUC-CN即GB2312
+     *
      * @param $str
      * @return string
      */
     public static function getUnicodeByStr($str) {
-        return mb_detect_encoding($str, array('ASCII', 'UTF-8', 'GBK', 'GB2312', 'BIG'));
+        return mb_detect_encoding($str, array('GB2312', 'GBK', 'UTF-16', 'UCS-2', 'UTF-8', 'BIG5', 'ASCII'));
     }
 
     /**

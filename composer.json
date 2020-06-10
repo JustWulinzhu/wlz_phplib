@@ -10,6 +10,7 @@
       "ext-pcntl": "*",
       "ext-posix": "*",
       "ext-openssl": "*",
-      "ext-sockets": "*"
+      "ext-sockets": "*",
+      "ext-iconv": "*"
     }
 }

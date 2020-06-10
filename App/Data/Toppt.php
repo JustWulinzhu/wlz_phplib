@@ -46,6 +46,12 @@ class Toppt {
         } else {
             throw new \S\Exceptions('文件类型错误，只支持txt和word');
         }
+        foreach ($file_data as &$str) {
+            if ('UTF-8' == ($encoding = Tools::getUnicodeByStr($str))) {
+                continue;
+            }
+            $str = iconv($encoding,'UTF-8', $str);
+        }
 
         //区分文件内容类型选择、判断、讲义
         switch ($type) {
