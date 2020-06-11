@@ -39,15 +39,21 @@ class Param {
 
     /**
      * 获取get参数
-     * @return array
+     * @param string $field
+     * @param string $default
+     * @return array|mixed|string
      */
-    public static function get() {
+    public static function get($field = '', $default = '') {
         $uri_arr = parse_url($_SERVER['REQUEST_URI']);
         $params = array_filter(explode("&", isset($uri_arr['query']) ? $uri_arr['query'] : ''));
         $request_params = [];
         foreach ($params as $param) {
             $value = explode("=", $param);
             $request_params[current($value)] = end($value);
+        }
+
+        if ($field) {
+            return isset($request_params[$field]) ? $request_params[$field] : $default;
         }
 
         return $request_params;

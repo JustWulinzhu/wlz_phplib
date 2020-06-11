@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -21,30 +20,34 @@
 
     <script>
 
-        // $(document).ready(function(){
-        //
-        //     $('#btn'). click(function() {
-        //         var file = $("#file")[0].files[0];
-        //         var formdata = new FormData();
-        //         formdata.append('file', file);
-        //
-        //         $.ajax({
-        //             url: "{APP_HOST}" + "/toppt/doUpload",
-        //             type: "POST",
-        //             processData: false,
-        //             contentType: false,
-        //             data: formdata,
-        //             success: function (result) {
-        //                 var result_obj = new Function("return" + result)();
-        //                 console.log(result_obj);
-        //
-        //                 if (result_obj.code !== 200) {
-        //                     alert(result_obj.msg);
-        //                 }
-        //             }
-        //         });
-        //     })
-        // })
+        $(document).ready(function(){
+
+            $('#btn'). click(function() {
+                var type = $("select").val();
+                var file = $("#file")[0].files[0];
+
+                var formData = new FormData();
+                formData.append("type",type);
+                formData.append('file', file);
+
+                $.ajax({
+                    url : "{{APP_HOST}}" + "/toppt/doUpload",
+                    type : "POST",
+                    data : formData,
+                    contentType : false,
+                    processData : false,
+                    dataType : 'json',
+                    success : function(response) {
+                        if (200 == response.code) {
+                            window.location = "{{APP_HOST}}" + "/toppt/download?path=" + response.data;
+                        } else {
+                            alert(response.msg);
+                        }
+                    }
+                });
+            })
+        })
+
     </script>
 
 </head>
@@ -82,7 +85,7 @@
             <div class="checkbox">
                 <p class="help-block">只支持txt、doc、docx类型的文件, 建议采用txt文件，准确率更高！</p>
             </div>
-            <input type="submit" class="btn btn-info btn-default" name="submit" value="生 成" />
+            <input type="button" class="btn btn-info btn-default" id="btn" name="submit" value="生 成"/>
         </form>
     </div>
 

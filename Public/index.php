@@ -43,8 +43,7 @@ try {
 
     $namespace = '\\App\\Controller\\' . $class;
     $obj = new $namespace;
-    $ret = $obj->$function(\S\Param::get());
-    outputJson($ret);
+    $obj->$function(\S\Param::get());
 } catch (\Throwable $e) {
     throw $e;
 }

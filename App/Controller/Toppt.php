@@ -8,8 +8,11 @@
 
 namespace App\Controller;
 
+header('Access-Control-Allow-Origin:*');
+
 use S\Exceptions;
 use S\Log;
+use S\Param;
 
 class Toppt extends \App\Controller\Base
 {
@@ -33,27 +36,42 @@ class Toppt extends \App\Controller\Base
      */
     public function doUpload()
     {
-        $file_content_type = $_POST['type'];
-        if ($_POST['type'] == 'default') {
-            exit("<script>alert('请选择文件内容类型');history.back();</script>");
-        }
-        if (empty($_FILES['file']['name']) || 0 === $_FILES['file']['size']) {
-            exit("<script>alert('请选择要上传的文件！');history.back();</script>");
-        }
-        $file_name = $_FILES['file']['name'];
-        $new_file_name = pathinfo($file_name)['filename'] . '.ppt';
+        $this->response_format = self::RESPONSE_FORMAT_JSON;
 
-        $file_path = self::OFFICE_FILE_PATH . $file_name;
-        $move_file = move_uploaded_file($_FILES['file']['tmp_name'], $file_path);
-        if ($move_file) {
-            chmod($file_path, 0777);
+        try {
+            if ('default' == ($file_content_type = \S\Param::post('type'))) {
+                throw new \S\Exceptions('请选择文件内容类型');
+            }
+            if (empty($_FILES['file']['name']) || 0 === $_FILES['file']['size']) {
+                throw new \S\Exceptions('请选择要上传的文件');
+            }
+            $file_name = $_FILES['file']['name'];
+            $new_file_name = pathinfo($file_name)['filename'] . '.ppt';
 
-            $new_file_path = (new \App\Data\Toppt())->transToPPT($file_content_type, $file_path, $new_file_name);
+            $file_path = self::OFFICE_FILE_PATH . $file_name;
+            $move_file = move_uploaded_file($_FILES['file']['tmp_name'], $file_path);
+            if ($move_file) {
+                chmod($file_path, 0777);
+
+                $new_file_path = (new \App\Data\Toppt())->transToPPT($file_content_type, $file_path, $new_file_name);
+            }
+            Log::getInstance()->debug(['create PPT', $file_name, $new_file_path]);
+            $this->response['data'] = urlencode($new_file_path);
+        } catch (\S\Exceptions $e) {
+            $this->response['code'] = $e->getCode();
+            $this->response['msg'] = $e->getMessage();
         }
-        Log::getInstance()->debug(['create PPT', $file_name, $new_file_path]);
+    }
 
-        \S\Oss\Files::setHeader($new_file_name);
-        exit(file_get_contents($new_file_path));
+    /**
+     * 浏览器文件下载
+     * @throws \Exception
+     */
+    public function download() {
+        $file_path = urldecode(\S\Param::get('path'));
+        Log::getInstance()->debug([__METHOD__, $file_path]);
+        \S\Oss\Files::setHeader(pathinfo($file_path)['basename']);
+        readfile($file_path);
     }
 
 }

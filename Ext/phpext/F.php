@@ -35,7 +35,7 @@ function ppp($arr = []) {
     echo "</pre>";
 }
 
-function outputJson($data = [], $code = 200, $msg = '成功') {
+function outputJson($data = [], $code = 200, $msg = 'success') {
     $arr = [
         'code'  => $code,
         'msg'   => $msg,
@@ -61,6 +61,10 @@ function S() {
     $smarty->cache_dir = $conf['cache_dir'];
     //是否缓存
     $smarty->caching = $conf['caching'];
+    //设置页面变量左分隔符
+    $smarty->setLeftDelimiter("{{");
+    //设置页面变量右分隔符
+    $smarty->setRightDelimiter("}}");
 
     return $smarty;
 }

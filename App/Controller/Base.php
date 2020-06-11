@@ -11,10 +11,22 @@
 
 namespace App\Controller;
 
+use S\Tools;
+
 class Base {
 
+    //接口返回格式
+    const RESPONSE_FORMAT_JSON = 'json';
+    const RESPONSE_FORMAT_HTML = 'html';
+
+    //smarty
     protected $smarty;
+    //参数验证
     protected $verify = true;
+    //返回数据
+    protected $response = [];
+    //返回数据格式，json、html,默认html
+    protected $response_format = self::RESPONSE_FORMAT_HTML;
 
     /**
      * 不允许子类重写
@@ -63,6 +75,23 @@ class Base {
         $this->smarty->cache_dir = $conf['cache_dir'];
         //是否缓存
         $this->smarty->caching = $conf['caching'];
+        //设置页面变量左分隔符
+        $this->smarty->setLeftDelimiter("{{");
+        //设置页面变量右分隔符
+        $this->smarty->setRightDelimiter("}}");
+    }
+
+    /**
+     * 输出返回内容
+     */
+    public function __destruct() {
+        $code = isset($this->response['code']) ? $this->response['code'] : 200;
+        $msg = isset($this->response['msg']) ? $this->response['msg'] : 'success';
+        $data = isset($this->response['data']) ? $this->response['data'] : [];
+
+        if ($this->response_format == self::RESPONSE_FORMAT_JSON) {
+            outputJson($data, $code, $msg);
+        }
     }
 
 }
