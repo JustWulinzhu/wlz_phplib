@@ -50,7 +50,9 @@ class Toppt {
             if ('UTF-8' == ($encoding = Tools::getUnicodeByStr($str))) {
                 continue;
             }
-            $str = iconv($encoding,'UTF-8', $str);
+            if ('EUC-CN' == $encoding) { //EUC-CN GB2312特殊处理
+                $str = @iconv($encoding,'UTF-8', $str);
+            }
         }
 
         //区分文件内容类型选择、判断、讲义

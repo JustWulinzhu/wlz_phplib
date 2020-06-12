@@ -269,7 +269,7 @@ class Tools
      * @return string
      */
     public static function getUnicodeByStr($str) {
-        return mb_detect_encoding($str, array('GB2312', 'GBK', 'UTF-16', 'UCS-2', 'UTF-8', 'BIG5', 'ASCII'));
+        return @mb_detect_encoding($str, array('GB2312', 'GBK', 'UTF-16', 'UCS-2', 'UTF-8', 'BIG5', 'ASCII'));
     }
 
     /**

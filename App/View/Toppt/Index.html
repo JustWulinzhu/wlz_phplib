@@ -4,7 +4,6 @@
     <title>PPT生成器</title>
 
     <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
-<!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" rel="stylesheet">-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
@@ -20,7 +19,7 @@
 
     <script>
 
-        $(document).ready(function(){
+        $(document).ready(function() {
 
             $('#btn'). click(function() {
                 var type = $("select").val();
@@ -31,14 +30,14 @@
                 formData.append('file', file);
 
                 $.ajax({
-                    url : "{{APP_HOST}}" + "/toppt/doUpload",
+                    url : "{{APP_HOST}}" + "/toppt/doupload",
                     type : "POST",
                     data : formData,
                     contentType : false,
                     processData : false,
                     dataType : 'json',
                     success : function(response) {
-                        if (200 == response.code) {
+                        if (200 === response.code) {
                             window.location = "{{APP_HOST}}" + "/toppt/download?path=" + response.data;
                         } else {
                             alert(response.msg);

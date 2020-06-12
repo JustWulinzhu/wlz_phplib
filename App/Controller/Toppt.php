@@ -4,15 +4,16 @@
  * User: wulinzhu
  * Date: 20/3/25 下午2:19
  * Email: 18515831680@163.com
+ *
+ * ajax请求，前端js无法直接指定浏览器输出下载文件，解决方案为ajax请求成功后跳转到下载地址进行下载
+ *
  */
 
 namespace App\Controller;
 
 header('Access-Control-Allow-Origin:*');
 
-use S\Exceptions;
 use S\Log;
-use S\Param;
 
 class Toppt extends \App\Controller\Base
 {
