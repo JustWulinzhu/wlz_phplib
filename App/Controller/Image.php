@@ -29,13 +29,13 @@ class Image extends \App\Controller\Base
      * @throws \Exception
      */
     public function show($args) {
-        $image = new \S\Image();
+        $img = new \S\Image();
 
-        if (empty($args) || (! isset($args['image_name'])) || empty($args['image_name'])) {
+        if (empty($args) || (! isset($args['image'])) || empty($args['image'])) {
             throw new \S\Exceptions('缺少图片参数');
         }
-        $image_name = $args['image_name'];
-        $path = \S\Image::TMP_PATH . DIRECTORY_SEPARATOR . $image_name;
+        $image = $args['image'];
+        $path = \S\Image::TMP_PATH . DIRECTORY_SEPARATOR . $image;
         if (! file_exists($path)) {
             Log::getInstance()->warning(['image not found', $path]);
             exit(header("Location:" . APP_HOST . DIRECTORY_SEPARATOR . "error/notfound404"));
@@ -44,12 +44,12 @@ class Image extends \App\Controller\Base
         $image_binary = file_get_contents($path);
         if (Tools::formatSize(filesize($path)) > self::MAX_IMAGE_SIZE) {
             try {
-                $image_binary = $image->compressBinary(file_get_contents($path));
+                $image_binary = $img->compressBinary(file_get_contents($path));
             } catch (\S\Exceptions $e) {
                 Log::getInstance()->warning([__CLASS__, __FUNCTION__, 'compress fail', $path]);
             }
         }
-        $image->show(base64_encode($image_binary));
+        $img->show(base64_encode($image_binary));
 
         return true;
     }
