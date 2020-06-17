@@ -45,5 +45,5 @@ try {
     $obj = new $namespace;
     $obj->$function(\S\Param::get());
 } catch (\Throwable $e) {
-    throw $e;
+    outputJson([], $e->getCode(), $e->getMessage());
 }

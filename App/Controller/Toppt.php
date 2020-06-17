@@ -57,11 +57,13 @@ class Toppt extends \App\Controller\Base
                 $new_file_path = (new \App\Data\Toppt())->transToPPT($file_content_type, $file_path, $new_file_name);
             }
             Log::getInstance()->debug(['create PPT', $file_name, $new_file_path]);
-            $this->response['data'] = urlencode($new_file_path);
+
+            $data = urlencode($new_file_path);
         } catch (\S\Exceptions $e) {
-            $this->response['code'] = $e->getCode();
-            $this->response['msg'] = $e->getMessage();
+            throw new \S\Exceptions($e->getMessage(), $e->getCode());
         }
+
+        $this->response['data'] = $data;
     }
 
     /**
