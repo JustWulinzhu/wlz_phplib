@@ -29,7 +29,7 @@ class Files {
     }
 
     /**
-     * * 文件上传,返回oss文件存储路径
+     * 文件上传,返回oss文件存储路径
      * 可采用模拟文件上传方式,demo :
      * Http::request('http://localhost/wlz_phplib/oss/files.php', 'POST', array('file' => new \CURLFile('/Users/wulinzhu/Documents/gou.png')));
      * @param $dir
