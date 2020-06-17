@@ -81,17 +81,4 @@ class Base {
         $this->smarty->setRightDelimiter("}}");
     }
 
-    /**
-     * 输出返回内容
-     */
-    public function __destruct() {
-        $code = isset($this->response['code']) ? $this->response['code'] : 200;
-        $msg  = isset($this->response['msg'])  ? $this->response['msg']  : 'success';
-        $data = isset($this->response['data']) ? $this->response['data'] : [];
-
-        if ($this->response_format == self::RESPONSE_FORMAT_JSON) {
-            outputJson($data, $code, $msg);
-        }
-    }
-
 }

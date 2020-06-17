@@ -63,7 +63,7 @@ class Toppt extends \App\Controller\Base
             throw new \S\Exceptions($e->getMessage(), $e->getCode());
         }
 
-        $this->response['data'] = $data;
+        return $data;
     }
 
     /**
