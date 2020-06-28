@@ -16,8 +16,10 @@ class Toppt {
     const FILE_CONTENT_TYPE_COMPLETE = 'complete';
     const FILE_CONTENT_TYPE_ARTICLE = 'article';
 
-    private $chinese_num = [
-        '一', '二', '三', '四', '五', '六', '七', '八', '九', '十',
+    public static $file_content_type_map = [
+        self::FILE_CONTENT_TYPE_SINGLE => '选择题',
+        self::FILE_CONTENT_TYPE_COMPLETE => '整套',
+        self::FILE_CONTENT_TYPE_ARTICLE => '讲义',
     ];
 
     private static $topic_type = [

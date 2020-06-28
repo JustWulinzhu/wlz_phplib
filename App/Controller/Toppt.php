@@ -14,6 +14,7 @@ namespace App\Controller;
 header('Access-Control-Allow-Origin:*');
 
 use S\Log;
+use App\Data\Toppt as DataToppt;
 
 class Toppt extends \App\Controller\Base
 {
@@ -56,7 +57,7 @@ class Toppt extends \App\Controller\Base
 
                 $new_file_path = (new \App\Data\Toppt())->transToPPT($file_content_type, $file_path, $new_file_name);
             }
-            Log::getInstance()->debug(['create PPT', $file_name, $new_file_path]);
+            Log::getInstance()->debug(['create PPT', $file_name, DataToppt::$file_content_type_map[$file_content_type], $new_file_path]);
 
             $data = urlencode($new_file_path);
         } catch (\S\Exceptions $e) {
