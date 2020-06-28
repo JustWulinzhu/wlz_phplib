@@ -27,7 +27,7 @@ class Toppt extends \App\Controller\Base
      */
     public function index($arr)
     {
-        $this->smarty->assign("APP_HOST", APP_HOST);
+        $this->smarty->assign("APP_DOMAIN", APP_DOMAIN);
         $this->smarty->display("Toppt/Index.html");
     }
 

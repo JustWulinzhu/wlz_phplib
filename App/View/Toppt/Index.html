@@ -30,7 +30,7 @@
                 formData.append('file', file);
 
                 $.ajax({
-                    url : "{{APP_HOST}}" + "/toppt/doupload",
+                    url : "{{APP_DOMAIN}}" + "/toppt/doupload",
                     type : "POST",
                     data : formData,
                     contentType : false,
@@ -38,7 +38,7 @@
                     dataType : 'json',
                     success : function(response) {
                         if (200 === response.code) {
-                            window.location = "{{APP_HOST}}" + "/toppt/download?path=" + response.data;
+                            window.location = "{{APP_DOMAIN}}" + "/toppt/download?path=" + response.data;
                         } else {
                             alert(response.msg);
                         }

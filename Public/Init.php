@@ -14,7 +14,9 @@ define("APP_ROOT_PATH", dirname(__DIR__));
 //项目脚本路径
 define("APP_JOB_PATH", __DIR__);
 //项目host
-define("APP_HOST", 'https://www.wlfeng.vip');
+define("APP_HOST", 'www.wlfeng.vip');
+//项目域名
+define("APP_DOMAIN", 'https://' . APP_HOST);
 
 //顺序不可变
 require_once APP_ROOT_PATH . "/Public/Autoload.php";

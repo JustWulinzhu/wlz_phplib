@@ -38,7 +38,7 @@ try {
         $class = 'Home'; $function = 'index';
     }
     if ('Favicon.ico' == $class) { //网站icon
-        exit((new \App\Controller\Image())->show(['image_name' => 'vip.ico']));
+        exit((new \App\Controller\Image())->show(['image' => 'vip.ico']));
     }
 
     $namespace = '\\App\\Controller\\' . $class;

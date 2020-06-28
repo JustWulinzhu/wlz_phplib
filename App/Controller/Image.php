@@ -38,7 +38,7 @@ class Image extends \App\Controller\Base
         $path = \S\Image::TMP_PATH . DIRECTORY_SEPARATOR . $image;
         if (! file_exists($path)) {
             Log::getInstance()->warning(['image not found', $path]);
-            exit(header("Location:" . APP_HOST . DIRECTORY_SEPARATOR . "error/notfound404"));
+            exit(header("Location:" . APP_DOMAIN . DIRECTORY_SEPARATOR . "error/notfound404"));
         }
 
         $image_binary = file_get_contents($path);
