@@ -75,10 +75,8 @@ class Guzzle
             $options['proxy'] = $proxy;
         }
 
-        Log::getInstance()->debug([__METHOD__, 'request params', $method, $url, json_encode($options)]);
         $response = (new \GuzzleHttp\Client())->request($method, $url, $options);
         $result = $response->getBody()->getContents();
-        Log::getInstance()->debug([__METHOD__, 'response params', $result]);
 
         if (self::HTTP_SUCCESS_CODE != ($error_code = $response->getStatusCode())) {
             throw new \Exception($response->getReasonPhrase(), $error_code);

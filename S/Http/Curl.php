@@ -65,12 +65,10 @@ class Curl {
         curl_setopt($curl, CURLOPT_POSTFIELDS, $data); //设置post请求参数
         $response = curl_exec($curl);
         if (0 != curl_errno($curl)) {
-            Log::getInstance()->warning(array('CURL POST error msg', curl_error($curl)));
             if (curl_errno($curl) == CURLE_OPERATION_TIMEDOUT) {
                 throw new \S\Exceptions(curl_error($curl));
             }
         }
-        Log::getInstance()->debug(array('CURL POST INFO', $url, $response, json_encode(curl_getinfo($curl))));
         curl_close($curl);
 
         return $response;
@@ -94,12 +92,10 @@ class Curl {
         curl_setopt($curl, CURLOPT_TIMEOUT, $time_out);
         $response = curl_exec($curl);
         if (0 != curl_errno($curl)) {
-            Log::getInstance()->warning(array('CURL GET error msg', curl_error($curl)));
             if (curl_errno($curl) == CURLE_OPERATION_TIMEDOUT) {
                 throw new \S\Exceptions(curl_error($curl));
             }
         }
-        Log::getInstance()->debug(array('CURL GET INFO', $url, $response, json_encode(curl_getinfo($curl))));
         curl_close($curl);
 
         return $response;

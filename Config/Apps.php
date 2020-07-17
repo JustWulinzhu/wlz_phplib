@@ -10,6 +10,7 @@
  */
 
 return [
+
     'image' => [
 
         'baidu' => [
@@ -26,4 +27,12 @@ return [
         ],
 
     ],
+
+    'map' => [
+        'baidu' => [
+            'host' => 'http://api.map.baidu.com/location/ip',
+            'ak' => 'S7XVQqxFYzegWV5x07T4dxcXc8TswOFX',
+        ],
+    ],
+
 ];

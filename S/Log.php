@@ -105,7 +105,8 @@ class Log {
      * 日志写入
      * @param array $data
      * @param string $dir_name
-     * @return bool|false|int
+     * @return bool
+     * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Exception
      */
     private function log(array $data, $dir_name = '') {
@@ -132,7 +133,12 @@ class Log {
             chmod($dir_file, 0777);
         }
         $data_str = implode(" | ", $data);
-        $content = "[ " . $dir_file . " ] | " . date('Y-m-d H:i:s', time()) . " | " . (isset($_SERVER['SERVER_ADDR']) ? $_SERVER['SERVER_ADDR'] : '') . ' | ' . (isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '') . ' | ' . $data_str . "\n";
+
+        $server_ip = isset($_SERVER['SERVER_ADDR']) ? $_SERVER['SERVER_ADDR'] : '';
+        $client_ip = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '';
+        $server_address = \App\Data\Map::getCityByIp($server_ip);
+        $client_address = \App\Data\Map::getCityByIp($client_ip);
+        $content = "[ " . $dir_file . " ] | " . date('Y-m-d H:i:s', time()) . " | " . $server_ip . '-' . $server_address . ' | ' . $client_ip . '-' . $client_address . ' | ' . $data_str . "\n";
         if (! \S\Tools::write($dir_file, $content)) {
             throw new \Exception('日志写入失败');
         }
