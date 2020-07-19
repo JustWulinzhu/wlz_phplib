@@ -662,4 +662,19 @@ class Tools
         return $chi_str;
     }
 
+    /**
+     * 文件编码方式转换
+     * @param string $file_path 文件路径
+     * @param string $output_encoding 输出文件编码方式
+     * @return mixed
+     */
+    public static function fileEncodingTrans($file_path, $output_encoding = 'UTF-8') {
+        $content = file_get_contents($file_path);
+        $encoding = self::getUnicodeByStr($content);
+        $content = iconv($encoding, $output_encoding, $content);
+        file_put_contents($file_path, $content);
+
+        return $file_path;
+    }
+
 }
