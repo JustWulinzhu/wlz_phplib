@@ -15,7 +15,7 @@ namespace S;
 
 class Sign {
 
-    const TIME_OUT = 600; //10分钟有效期
+    const TIME_OUT = 60; //1分钟有效期
     const TIMESTAMP_FILE = '/www/sign_timestamp.txt';
 
     /**
@@ -28,10 +28,10 @@ class Sign {
         if (! isset($data['sign'])) {
             throw new \Exception('签名参数sign验证失败');
         }
-        if (! isset($data['timestamp']) || (! $data['timestamp'])) {
+        if (! isset($data['time']) || (! $data['time'])) {
             throw new \Exception('时间参数验证失败');
         }
-        if (time() - $data['timestamp'] > self::TIME_OUT) {
+        if (time() - $data['time'] > self::TIME_OUT) {
             throw new \Exception('请求已失效，请重新发送');
         }
 
@@ -57,6 +57,19 @@ class Sign {
             $param_str = strtoupper(implode("", $param));
         }
         return substr(md5($param_str), 0, 18);
+    }
+
+    /**
+     * 构建请求地址
+     * @param $url
+     * @param array $param 原始参数
+     * @return string
+     */
+    public static function createSign($url, array $param) {
+        $param['time'] = time();
+        $param['sign'] = self::getSign($param);
+
+        return $url . "?" . http_build_query($param);
     }
 
     /**

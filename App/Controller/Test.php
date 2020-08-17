@@ -26,14 +26,14 @@ class Test {
     /**
      * @param null $arr
      * @return string
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Exception
      */
     public function index($arr = null) {
-        return \S\Http\Guzzle::request('https://mapglobal.baidu.com/mapsguide/hotcity?format=json');
-    }
-
-    public function demo() {
-        return [];
+        $url = 'https://wlfeng.vip/id';
+        $data = [
+            'id' => '34062119910411415X',
+        ];
+        return \S\Sign::createSign($url, $data);
     }
 
 }
