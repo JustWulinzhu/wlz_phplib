@@ -37,7 +37,7 @@ class Test {
     }
 
     public function demo() {
-        $ret = (new Db('url'))->queryone(['key' => '12345678']);
+        $ret = (new Db('url'))->query('select * from url where id = 222');
         return $ret;
     }
 

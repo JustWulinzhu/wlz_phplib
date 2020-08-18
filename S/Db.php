@@ -159,14 +159,16 @@ class Db {
 
     /**
      * 原生sql查询
-     * @param $sql
+     * @param string $sql
      * @return array
      * @throws \Exception
      */
-    public function query($sql) {
-        $result = $this->mysql->query($sql, \PDO::FETCH_ASSOC);
+    public function query(string $sql) {
         Log::getInstance()->debug(array($sql), 'sql');
-        return self::formatQueryData($result);
+        $result = $this->mysql->query($sql, \PDO::FETCH_ASSOC);
+        $result = self::SUCCESS == $this->mysql->errorCode() ? self::formatQueryData($result) : $this->mysql->errorInfo();
+
+        return $result;
     }
 
     /**
