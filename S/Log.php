@@ -125,7 +125,8 @@ class Log {
         $file = self::$type . "." . date('Ymd', time()) . ".log";
         //日志全路径
         $dir_file = $dir . DIRECTORY_SEPARATOR . $file;
-        if (! file_exists($dir)) { //创建目录, 需要www目录的写权限,chown -R www-data:root /www,解决办法:把www目录所属者改为对应php程序执行的用户(查看php执行用户ps aux)
+        if (! file_exists($dir)) {
+            //创建目录, 需要www目录的写权限,chown -R www-data:root /www,解决办法:把www目录所属者改为对应php程序执行的用户(查看php执行用户ps aux)
             mkdir($dir, 0777, true);
         }
         if (! file_exists($dir_file)) { //创建文件
@@ -136,9 +137,7 @@ class Log {
 
         $server_ip = isset($_SERVER['SERVER_ADDR']) ? $_SERVER['SERVER_ADDR'] : '';
         $client_ip = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '';
-        $server_address = \App\Data\Map::getCityByIp($server_ip);
-        $client_address = \App\Data\Map::getCityByIp($client_ip);
-        $content = "[ " . $dir_file . " ] | " . date('Y-m-d H:i:s', time()) . " | " . $server_ip . '-' . $server_address . ' | ' . $client_ip . '-' . $client_address . ' | ' . $data_str . "\n";
+        $content = "[ " . $dir_file . " ] | " . date('Y-m-d H:i:s', time()) . " | " . $server_ip . ' | ' . $client_ip . ' | ' . $data_str . "\n";
         if (! \S\Tools::write($dir_file, $content)) {
             throw new \Exception('日志写入失败');
         }

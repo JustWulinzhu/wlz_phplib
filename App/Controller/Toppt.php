@@ -33,6 +33,8 @@ class Toppt extends \App\Controller\Base
     }
 
     /**
+     * @return string
+     * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \S\Exceptions
      * @throws \Exception
      */
@@ -57,7 +59,10 @@ class Toppt extends \App\Controller\Base
 
                 $new_file_path = (new \App\Data\Toppt())->transToPPT($file_content_type, $file_path, $new_file_name);
             }
-            Log::getInstance()->debug(['create PPT', $file_name, DataToppt::$file_content_type_map[$file_content_type], $new_file_path]);
+
+            $server_address = \App\Data\Map::getCityByIp(isset($_SERVER['SERVER_ADDR']) ? $_SERVER['SERVER_ADDR'] : '');
+            $client_address = \App\Data\Map::getCityByIp(isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '');
+            Log::getInstance()->debug(['create PPT', $file_name, DataToppt::$file_content_type_map[$file_content_type], $new_file_path, $server_address, $client_address]);
 
             $data = urlencode($new_file_path);
         } catch (\S\Exceptions $e) {

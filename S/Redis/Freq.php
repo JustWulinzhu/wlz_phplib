@@ -14,17 +14,17 @@
  * 例：给id为operation1操作添加每天访问20次的限制，超出20次报错。
  *
  * $freq = new Freq();
- * if ($freq->check('operation1', Frep::FREQ_TYPE_DAY, 20)) {
+ * if ($freq->check('operation1', Freq::FREQ_TYPE_DAY, 20)) {
  *      //超出频率限制
  *      return false;
  * }
  *
  * if (触发累加程序) {
- *      $freq->incr('operation1', Frep::FREQ_TYPE_DAY);
+ *      $freq->incr('operation1', Freq::FREQ_TYPE_DAY);
  * }
  *
  * 删除频率限制key
- * $freq->clear('operation1', Frep::FREQ_TYPE_DAY);
+ * $freq->clear('operation1', Freq::FREQ_TYPE_DAY);
  *
  */
 
@@ -33,7 +33,7 @@ namespace S\Redis;
 use \S\Redis\BaseRedis;
 use \S\Tools;
 
-class Frep extends BaseRedis
+class Freq extends BaseRedis
 {
 
     const FREQ = 'freq_';
@@ -66,7 +66,7 @@ class Frep extends BaseRedis
     private static $_redis = '';
 
     /**
-     * Frep constructor.
+     * Freq constructor.
      * @throws \Exception
      */
     public function __construct()
@@ -94,7 +94,7 @@ class Frep extends BaseRedis
      */
     public function check($hash_key, $hash_field = self::FREQ_TYPE_MINUTE, $limit = self::DEFAULT_LIMIT)
     {
-        self::checkFrepType($hash_field);
+        self::checkFreqType($hash_field);
         $ret = self::$_redis->hGet(self::getKey($hash_key), $hash_field);
         return ($ret > $limit);
     }
@@ -109,7 +109,7 @@ class Frep extends BaseRedis
      */
     public function incr($hash_key, $hash_field = self::FREQ_TYPE_MINUTE, $value = self::DEFAULT_ADD_NUM)
     {
-        self::checkFrepType($hash_field);
+        self::checkFreqType($hash_field);
         $ret = self::$_redis->hIncrBy(self::getKey($hash_key), $hash_field, $value);
         self::$_redis->expire(self::getKey($hash_key), self::getTTL($hash_field));
         return $ret;
@@ -131,7 +131,7 @@ class Frep extends BaseRedis
      * @return bool
      * @throws \Exception
      */
-    public static function checkFrepType($hash_field)
+    public static function checkFreqType($hash_field)
     {
         if (in_array($hash_field, self::$freq_type)) {
             return true;

@@ -18,7 +18,6 @@ class Map {
     public static function getCityByIp($ip) {
         $baidu = new \S\Api\Map\Baidu();
         try {
-            throw new \Exception("暂停定位");
             $ret = $baidu->getLocationByIp($ip);
             if (0 != $ret['status']) {
                 throw new \Exception('ip定位失败');

@@ -24,6 +24,10 @@ class Baidu {
      * @throws \Exception
      */
     public function getLocationByIp($ip) {
+        $freq = new \S\Redis\Freq();
+        if ($freq->check("IPlocation", \S\Redis\Freq::FREQ_TYPE_DAY, 30)) {
+            throw new \S\Exceptions("IP定位访问超出每日限制");
+        }
         $config = Conf::getConfig('apps/map.baidu');
         $params = [
             'ak' => $config['ak'],
@@ -39,6 +43,7 @@ class Baidu {
                 'msg' => $this->errors($ret['status']),
             ];
         }
+        $freq->incr("IPlocation", \S\Redis\Freq::FREQ_TYPE_DAY);
 
         return $ret;
     }
