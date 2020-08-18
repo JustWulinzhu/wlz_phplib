@@ -13,6 +13,8 @@ use Config\Conf;
 
 class Db {
 
+    const SUCCESS = '00000';
+
     private $mysql = null;
     private $table;
 
@@ -24,9 +26,9 @@ class Db {
     function __construct($table) {
         $conf = Conf::getConfig('db/db1');
         if (is_null($this->mysql)) {
-            $this->mysql = new \PDO("mysql:host={$conf['host']}; dbname={$conf['db']}", $conf['user'], '');
+            $this->mysql = new \PDO("mysql:host={$conf['host']}; dbname={$conf['db']}", $conf['user'], $conf['pwd']);
+            $this->mysql->exec("SET names utf8");
         }
-        $this->mysql->exec("SET names utf8");
         $this->table = $table;
     }
 
@@ -49,17 +51,17 @@ class Db {
     public function rollBack() { return $this->mysql->rollBack(); }
 
     /**
-     * @param $res
-     * @return array
+     * 执行结果
+     * @param $sql
+     * @return array|false|int
+     * @throws \Exception
      */
-    public static function formatQueryData($res){
-        $data = [];
-        if ($res) {
-            foreach ($res as $r) {
-                $data[] = $r;
-            }
-        }
-        return $data;
+    private function exec($sql) {
+        $ret = $this->mysql->exec($sql);
+        $status = self::SUCCESS == $this->mysql->errorCode() ? $ret : $this->mysql->errorInfo();
+        Log::getInstance()->debug([$sql, is_array($status) ? json_encode($status) : $status], 'sql');
+
+        return $status;
     }
 
     /**
@@ -77,35 +79,82 @@ class Db {
         $field = implode(",", array_keys($arr));
         $field_values = "'" . implode("','", $data) . "'";
         $sql = "insert into " . $this->table . ' (' . $field . ')' . " values (" . $field_values . ')';
-        Log::getInstance()->debug(array($sql), 'sql');
 
-        $res = $this->mysql->prepare($sql);
-        $res->execute();
-        return '00000' == $res->errorCode() ? true : $res->errorInfo();
+        return $this->exec($sql);
     }
 
     /**
      * 通用update方法
      * @param array $data
      * @param array $condition
-     * @return false|int
+     * @return array|false|int
      * @throws \Exception
      */
     public function update(array $data, array $condition) {
+        //修改字段
         $field_str = '';
         foreach (array_keys($data) as $key) {
-            $field_str .= $key . '=' . "'" .$data[$key] . "'" . ',';
+            $field_str .= '`' . $key . '`' . '=' . "'" .$data[$key] . "'" . ',';
         }
         $field_str = trim($field_str, ',');
+        //查询条件
+        $condition_str = '';
+        foreach ($condition as $key => $value) {
+            $condition_str .= '`' . $key . '`' . '=' . "'" . $value . "'" . ' and ';
+        }
+        $condition_str = trim($condition_str, "and ");
+
+        $sql = "update " . $this->table . ' set ' . $field_str . " where " . $condition_str;
+
+        return $this->exec($sql);
+    }
+
+    /**
+     * 通用删除方法
+     * @param array $condition
+     * @return array|false|int
+     * @throws \Exception
+     */
+    public function delete(array $condition) {
         $value_str = '';
         foreach ($condition as $key => $value) {
-            $value_str .= $key . '=' . "'" . $value . "'" . ' and ';
+            $value_str .= '`' . $key . '`' . '=' . "'" . $value . "'" . ' and ';
         }
         $value_str = trim($value_str, "and ");
-        $sql = "update " . $this->table . ' set ' . $field_str . " where " . $value_str;
-        Log::getInstance()->debug(array($sql), 'sql');
 
-        return $this->mysql->exec($sql);
+        $sql = "delete from " . $this->table . " where " . $value_str;
+
+        return $this->exec($sql);
+    }
+
+    /**
+     * 通用查询方法
+     * @param array $condition
+     * @param string $field
+     * @return array
+     * @throws \Exception
+     */
+    public function select($condition = array(), $field = '*') {
+        //查询条件
+        $condition_str = '';
+        foreach ($condition as $key => $value) {
+            $condition_str .= '`' . $key . '`' . '=' . "'" . $value . "'" . ' and ';
+        }
+        $condition_str = substr($condition_str, 0, -5);
+        //查询字段
+        if (is_array($field)) {
+            $field = array_map(function ($e) { return '`' . $e . '`'; }, $field);
+            $field_str = implode(",", $field);
+        }
+        $field_str = isset($field_str) ? $field_str : $field;
+
+        if ($condition) {
+            $sql = "select " . $field_str . " from " . $this->table . " where " . $condition_str;
+        } else {
+            $sql = "select " . $field_str . " from " . $this->table;
+        }
+
+        return $this->query($sql);
     }
 
     /**
@@ -136,7 +185,7 @@ class Db {
     }
 
     /**
-     * 查询一条记录
+     * 查询一条记录sql版
      * @param $sql
      * @return array|mixed
      * @throws \Exception
@@ -150,29 +199,18 @@ class Db {
     }
 
     /**
-     * 通用sql查询
-     * @param array $condition
-     * @param string $field
+     * 数据格式化
+     * @param $res
      * @return array
-     * @throws \Exception
      */
-    public function select($condition = array(), $field = '*') {
-        $condition_str = '';
-        foreach ($condition as $key => $value) {
-            $condition_str .= $key . '=' . "'" . $value . "'" . ' and ';
+    public static function formatQueryData($res){
+        $data = [];
+        if ($res) {
+            foreach ($res as $r) {
+                $data[] = $r;
+            }
         }
-        $condition_str = substr($condition_str, 0, -5);
-        if (is_array($field)) {
-            $field_str = implode(",", $field);
-        }
-        $field_str = isset($field_str) ? $field_str : $field;
-        if ($condition) {
-            $sql = "select " . $field_str . " from " . $this->table . " where " . $condition_str;
-        } else {
-            $sql = "select " . $field_str . " from " . $this->table;
-        }
-
-        return $this->query($sql);
+        return $data;
     }
 
     /**

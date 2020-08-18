@@ -11,6 +11,7 @@
       "ext-posix": "*",
       "ext-openssl": "*",
       "ext-sockets": "*",
-      "ext-iconv": "*"
+      "ext-iconv": "*",
+      "ext-pdo": "*"
     }
 }

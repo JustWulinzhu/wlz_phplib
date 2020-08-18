@@ -36,4 +36,9 @@ class Test {
         return \S\Sign::createSign($url, $data);
     }
 
+    public function demo() {
+        $ret = (new Db('url'))->queryone(['key' => '12345678']);
+        return $ret;
+    }
+
 }
