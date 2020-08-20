@@ -13,6 +13,8 @@
 define("APP_ROOT_PATH", dirname(__DIR__));
 //项目脚本路径
 define("APP_JOB_PATH", __DIR__);
+//项目Static路径
+define("APP_STATIC_PATH", APP_ROOT_PATH . DIRECTORY_SEPARATOR . 'Public/Static');
 //项目host
 define("APP_HOST", 'www.wlfeng.vip');
 //项目域名

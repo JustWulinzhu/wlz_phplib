@@ -30,7 +30,7 @@
                 formData.append('file', file);
 
                 $.ajax({
-                    url : "{{APP_DOMAIN}}" + "/toppt/doupload",
+                    url : "{{APP_DOMAIN}}" + "/toppt/toppt",
                     type : "POST",
                     data : formData,
                     contentType : false,
@@ -61,7 +61,7 @@
     </nav>
 
     <div class="main">
-        <form action="toppt/doupload" method="post" enctype="multipart/form-data">
+        <form action="toppt/toppt" method="post" enctype="multipart/form-data">
 
             <div class="page-header" style="padding: 0px;border: 0px;">
                 <div class="form-horizontal">

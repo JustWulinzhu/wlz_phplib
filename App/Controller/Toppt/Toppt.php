@@ -2,44 +2,34 @@
 /**
  * Created by PhpStorm
  * User: wulinzhu
- * Date: 20/3/25 下午2:19
+ * Date: 20/8/20 下午3:00
  * Email: 18515831680@163.com
  *
  * ajax请求，前端js无法直接指定浏览器输出下载文件，解决方案为ajax请求成功后跳转到下载地址进行下载
  *
  */
 
-namespace App\Controller;
+namespace App\Controller\Toppt;
+
+use App\Data\Toppt as DataToppt;
+use S\Log;
 
 header('Access-Control-Allow-Origin:*');
 
-use S\Log;
-use App\Data\Toppt as DataToppt;
-
-class Toppt extends \App\Controller\Base
-{
+class Toppt extends \App\Controller\Base {
 
     protected $verify = false;
 
     const OFFICE_FILE_PATH = '/www/tmp/file/';
 
     /**
-     * @param $arr
-     */
-    public function index($arr)
-    {
-        $this->smarty->assign("APP_DOMAIN", APP_DOMAIN);
-        $this->smarty->display("Toppt/Index.html");
-    }
-
-    /**
+     * @param $args
      * @return string
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \S\Exceptions
      * @throws \Exception
      */
-    public function doUpload()
-    {
+    public function index($args) {
         $this->response_format = self::RESPONSE_FORMAT_JSON;
 
         try {
@@ -70,17 +60,6 @@ class Toppt extends \App\Controller\Base
         }
 
         return $data;
-    }
-
-    /**
-     * 浏览器文件下载
-     * @throws \Exception
-     */
-    public function download() {
-        $file_path = urldecode(\S\Param::get('path'));
-        Log::getInstance()->debug([__METHOD__, $file_path]);
-        \S\Oss\Files::setHeader(pathinfo($file_path)['basename']);
-        readfile($file_path);
     }
 
 }

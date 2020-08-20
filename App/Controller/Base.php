@@ -7,13 +7,15 @@
  *
  * 控制器基类
  *
+ * ps: 所有继承该类的类必须实现index方法，以index方法作为接口的入口
+ *
  */
 
 namespace App\Controller;
 
 use S\Tools;
 
-class Base {
+abstract class Base {
 
     //接口返回格式
     const RESPONSE_FORMAT_JSON = 'json';
@@ -27,6 +29,9 @@ class Base {
     protected $response = [];
     //返回数据格式，json、html,默认html
     protected $response_format = self::RESPONSE_FORMAT_HTML;
+
+    //默认接口入口方法为index，子类必须实现
+    abstract function index($args);
 
     /**
      * 不允许子类重写
