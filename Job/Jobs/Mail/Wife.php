@@ -23,12 +23,25 @@ class Wife implements \Job\Base
      */
     public function exec($argv = null)
     {
+        //恋爱日期
         $date = date('Y-m-d');
         $start_date = '2008-09-01';
         $days = (strtotime($date) - strtotime($start_date)) / 86400;
 
-        $content = "<p style='color: #de3b8a; font-size: large'>我爱你，今天是{$date}，爱你的第{$days}天</p>";
-        return (new \S\Mail())->send('790793352@qq.com', '亲爱的老婆', $content);
+        //结婚日期
+        $marry_day = '2020-10-29';
+        $marryed_days = (strtotime($date) - strtotime($marry_day)) / 86400 + 1;
+
+        $content = "<p style='color: #de3b8a; font-size: large'>我爱你，今天是{$date}，爱你的第{$days}天。我们结婚的第{$marryed_days}天。</p>";
+
+        $i = 0;
+        while ($i < 3) {
+            $ret = (new \S\Mail())->send('790793352@qq.com', '亲爱的老婆', $content);
+            if ($ret) break;
+            $i++;
+        }
+
+        return true;
     }
 
 }
