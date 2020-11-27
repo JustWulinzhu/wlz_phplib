@@ -28,7 +28,7 @@ class Image extends \App\Controller\Base
      * @throws \S\Exceptions
      * @throws \Exception
      */
-    public function show($args) {
+    public function index($args) {
         $img = new \S\Image();
 
         if (empty($args) || (! isset($args['image'])) || empty($args['image'])) {

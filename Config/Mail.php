@@ -10,13 +10,13 @@ return array(
     'mail' => array(
         'from_title' => '武林柱邮件系统',
         'smtp_debug' => false,
-        'host' => 'smtp.qq.com',
+        'host' => 'smtp.163.com',
         'smtp_secure' => 'ssl',
         'port' => 465,
         'charset' => 'UTF-8',
-        'smtp_username' => '599075133@qq.com',
-        'smtp_password' => 'njudjiowlmzubbhb', //IMAP，qq邮箱系统设置生成
-        'from' => '599075133@qq.com',
+        'smtp_username' => '18515831680@163.com',
+        'smtp_password' => 'MTRKHMEBLXVIMJYP', //IMAP，163邮箱系统设置生成
+        'from' => '18515831680@163.com',
         'nickname' => '',
     ),
     'exception' => array(

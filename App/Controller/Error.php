@@ -13,9 +13,9 @@ class Error extends \App\Controller\Base {
     protected $verify = false;
 
     /**
-     *  404错误页面
+     * @param $args
      */
-    public function notFound404() {
+    public function index($args) {
         $this->smarty->assign("APP_DOMAIN", APP_DOMAIN);
         $this->smarty->display("Error/404.html");
     }
