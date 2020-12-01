@@ -32,7 +32,7 @@ class Wife implements \Job\Base
         $marry_day = '2020-10-29';
         $marryed_days = (strtotime($date) - strtotime($marry_day)) / 86400 + 1;
 
-        $content = "<p style='color: #de3b8a; font-size: large'>我爱你，今天是{$date}，爱你的第{$days}天。我们结婚的第{$marryed_days}天。</p>";
+        $content = "<p style='color: #de3b8a; font-size: large'>我爱你，今天是{$date}，我们相爱的第{$days}天，结婚的第{$marryed_days}天。</p>";
 
         $i = 0;
         while ($i < 3) {
