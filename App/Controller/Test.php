@@ -29,11 +29,11 @@ class Test {
      * @throws \Exception
      */
     public function index($arr = null) {
-        $url = 'https://wlfeng.vip/id';
-        $data = [
-            'id' => '34062119910411415X',
-        ];
-        return \S\Sign::createSign($url, $data);
+
+
+        $reg = '/^[\x{4e00}-\x{9fa5}0-9a-zA-Z()（）]+$/u';
+        $str = '1啊啊啊a2222((()))（（（）-';
+        var_dump(preg_match($reg, $str));die;
     }
 
     public function demo() {

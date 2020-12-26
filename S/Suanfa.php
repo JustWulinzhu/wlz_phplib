@@ -11,9 +11,9 @@ class Suanfa {
      */
     public static function bubble($arr) {
         $count = count($arr);
-        for($i = 1; $i < $count; $i++){
-            for($j = 0; $j < $count - $i; $j++){
-                if($arr[$j + 1] < $arr[$j]){
+        for ($i = 1; $i < $count; $i++) {
+            for ($j = 0; $j < $count - $i; $j++) {
+                if ($arr[$j + 1] < $arr[$j]) {
                     $tmp = $arr[$j + 1];
                     $arr[$j + 1] = $arr[$j];
                     $arr[$j] = $tmp;
