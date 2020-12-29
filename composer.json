@@ -12,6 +12,7 @@
       "ext-openssl": "*",
       "ext-sockets": "*",
       "ext-iconv": "*",
-      "ext-pdo": "*"
+      "ext-pdo": "*",
+      "ext-soap": "*"
     }
 }

@@ -19,6 +19,8 @@ define("APP_STATIC_PATH", APP_ROOT_PATH . DIRECTORY_SEPARATOR . 'Public/Static')
 define("APP_HOST", 'www.wlfeng.vip');
 //项目域名
 define("APP_DOMAIN", 'https://' . APP_HOST);
+//图片服务器
+define("IMAGE_SERVER_DOMAIN", APP_HOST . ':8081');
 
 //顺序不可变
 require_once APP_ROOT_PATH . "/Public/Autoload.php";

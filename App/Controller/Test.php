@@ -5,6 +5,7 @@ namespace App\Controller;
 use S\Db;
 use S\Office\Excel;
 use S\Exceptions;
+use S\Soap\Server;
 use \S\Tools;
 use S\Mail;
 use S\Oss\Files;
@@ -29,6 +30,9 @@ class Test {
      * @throws \Exception
      */
     public function index($arr = null) {
+        $soap = new \S\Soap\Server('\\App\\Controller\\Id', 'getUserInfo');
+        $soap->request();
+        die;
 
 
         $reg = '/^[\x{4e00}-\x{9fa5}0-9a-zA-Z()（）]+$/u';
