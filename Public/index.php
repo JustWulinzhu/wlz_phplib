@@ -24,11 +24,6 @@ try {
     $uri = array_values(array_filter(explode("/", $uri_arr['path'])));
     $uri = array_map(function ($i) { return ucfirst($i); }, $uri);
     $class = implode("\\", $uri);
-
-    if ('Favicon.ico' == $class) {
-        exit((new \App\Controller\Image())->show(['image' => 'vip.ico']));
-    }
-
     $namespace = '\\App\\Controller\\' . $class;
     $obj = new $namespace;
     $ret = $obj->index(\S\Param::get());

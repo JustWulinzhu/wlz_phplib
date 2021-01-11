@@ -20,11 +20,12 @@ class Qrcode extends \App\Controller\Base {
      * @throws \S\Exceptions
      */
     public function index($argv) {
-        $text = $argv['text'];
-        if (! $text) {
+        if (! $this->params['text']) {
             throw new \S\Exceptions('text参数为空');
         }
-        $ret = \S\Qrcode::create($text, '/www/tmp/image/gou.png');
+        $logo = isset($this->params['logo']) ? '/www/tmp/image/gou.png' : '';
+
+        $ret = \S\Qrcode::create($this->params['text'], $logo);
         (new \S\Image())->show(base64_encode(file_get_contents($ret)));
     }
 

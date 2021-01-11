@@ -35,9 +35,12 @@ class Server
      * @throws \ReflectionException
      */
     public function request() {
+        ini_set("soap.wsdl_cache_enabled", "0");
+        libxml_disable_entity_loader(false);
+
         $wsdl_file = (new \S\Soap\Wsdl($this->class, $this->service))->getWSDL();
 
-        $soap_server = new \SoapServer($wsdl_file);
+        $soap_server = new \SoapServer('/www/image/Id.wsdl');
 
         $soap_server->setClass($this->class);
         $soap_server->handle();

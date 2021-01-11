@@ -30,9 +30,13 @@ class Test {
      * @throws \Exception
      */
     public function index($arr = null) {
-        $soap = new \S\Soap\Server('\\App\\Controller\\Id', 'getUserInfo');
-        $soap->request();
-        die;
+//        $soap = new \S\Soap\Server('\\App\\Controller\\Id', 'getUserInfo');
+//        $soap->request();
+//        die;
+
+        $client = new \SoapClient("/www/image/Id.wsdl");
+        $client->index();
+        dd($client);
 
 
         $reg = '/^[\x{4e00}-\x{9fa5}0-9a-zA-Z()（）]+$/u';

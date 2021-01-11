@@ -21,6 +21,8 @@ abstract class Base {
     const RESPONSE_FORMAT_JSON = 'json';
     const RESPONSE_FORMAT_HTML = 'html';
 
+    //请求参数
+    protected $params = [];
     //smarty
     protected $smarty;
     //参数验证
@@ -40,19 +42,20 @@ abstract class Base {
      */
     public final function __construct()
     {
+        $this->params = array_merge(\S\Param::get(), \S\Param::post());
+        \S\Log::getInstance()->debug(['api_request_params', json_encode($this->params)]);
+
         if ($this->verify) { //页面不进行参数验证
-            $this->verify();
+            $this->verify($this->params);
         }
         $this->initSmarty();
     }
 
     /**
      * 签名校验
-     * @throws \Exception
+     * @param $request_params
      */
-    private function verify() {
-        $request_params = array_merge(\S\Param::get(), \S\Param::post());
-        \S\Log::getInstance()->debug(['api_request_params', json_encode($request_params)]);
+    private function verify($request_params) {
         try {
             \S\Sign::verify($request_params);
         } catch (\Exception $e) {
