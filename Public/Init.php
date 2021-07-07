@@ -26,3 +26,8 @@ define("IMAGE_SERVER_DOMAIN", APP_HOST . ':8081');
 require_once APP_ROOT_PATH . "/Public/Autoload.php";
 require_once APP_ROOT_PATH . "/Ext/Smarty/Smarty.class.php";
 require_once APP_ROOT_PATH . "/Ext/phpext/F.php";
+
+//禁用错误报告
+//error_reporting(0);
+//报告运行时错误
+//error_reporting(E_ERROR | E_PARSE);

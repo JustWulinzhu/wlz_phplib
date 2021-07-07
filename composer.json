@@ -13,6 +13,7 @@
       "ext-sockets": "*",
       "ext-iconv": "*",
       "ext-pdo": "*",
-      "ext-soap": "*"
+      "ext-soap": "*",
+      "ext-redis": "*"
     }
 }

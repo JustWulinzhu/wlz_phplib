@@ -15,15 +15,6 @@ class Baidu {
     const TTL = 86400;
 
     /**
-     * 获取redis实例
-     * @return \Redis|null
-     * @throws \Exception
-     */
-    private function getInstance() {
-        return (new \S\Redis\BaseRedis())->getInstance();
-    }
-
-    /**
      * @param $key
      * @return string
      */
@@ -37,7 +28,7 @@ class Baidu {
      * @throws \Exception
      */
     public function get($key) {
-        return $this->getInstance()->get($this->getKey($key));
+        return (new \S\Redis\BaseRedis())->getInstance()->get($this->getKey($key));
     }
 
     /**
@@ -48,7 +39,7 @@ class Baidu {
      * @throws \Exception
      */
     public function set($key, $value, $ttl = self::TTL) {
-        return $this->getInstance()->set($this->getKey($key), $value, $ttl);
+        return (new \S\Redis\BaseRedis())->getInstance()->set($this->getKey($key), $value, $ttl);
     }
 
 }
