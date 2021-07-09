@@ -85,7 +85,7 @@ class Oss {
             Log::getInstance()->debug(array('oss uploadFile response', json_encode($ret)));
         } catch (OssException $e) {
             Log::getInstance()->error(array('oss uploadFile errors', $e->getCode(), $e->getMessage()));
-            throw new \Exception($e->getCode(), $e->getMessage());
+            throw new \Exception($e->getMessage(), $e->getCode());
         }
         return true;
     }
@@ -104,7 +104,7 @@ class Oss {
             Log::getInstance()->debug(array('oss put response', json_encode($ret)));
         } catch (OssException $e) {
             Log::getInstance()->error(array('oss put errors', $e->getCode(), $e->getMessage()));
-            throw new \Exception($e->getCode(), $e->getMessage());
+            throw new \Exception($e->getMessage(), $e->getCode());
         }
         return true;
     }
@@ -204,7 +204,7 @@ class Oss {
             Log::getInstance()->debug(array('oss get response', json_encode($ret)));
         } catch (OssException $e) {
             Log::getInstance()->error(array('oss get errors', $e->getCode(), $e->getMessage()));
-            throw new \Exception($e->getCode(), $e->getMessage());
+            throw new \Exception($e->getMessage(), $e->getCode());
         }
         return $ret;
     }
@@ -222,7 +222,7 @@ class Oss {
             Log::getInstance()->debug(array('oss delete response', json_encode($ret)));
         } catch (OssException $e) {
             Log::getInstance()->error(array('oss delete errors', $e->getCode(), $e->getMessage()));
-            throw new \Exception($e->getCode(), $e->getMessage());
+            throw new \Exception($e->getMessage(), $e->getCode());
         }
         return true;
     }
@@ -239,7 +239,7 @@ class Oss {
             $exist = self::getOssInstance()->doesObjectExist($bucket, $name);
         } catch (OssException $e) {
             Log::getInstance()->error(array('oss isFileExist errors', $e->getCode(), $e->getMessage()));
-            throw new \Exception($e->getCode(), $e->getMessage());
+            throw new \Exception($e->getMessage(), $e->getCode());
         }
         return $exist;
     }
@@ -256,7 +256,7 @@ class Oss {
             $permit = self::getOssInstance()->doesObjectExist($bucket, $name);
         } catch (OssException $e) {
             Log::getInstance()->error(array('oss getFilePermit errors', $e->getCode(), $e->getMessage()));
-            throw new \Exception($e->getCode(), $e->getMessage());
+            throw new \Exception($e->getMessage(), $e->getCode());
         }
         return $permit;
     }

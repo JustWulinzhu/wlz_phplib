@@ -56,13 +56,8 @@ class Files {
      * @throws \Exception
      */
     public function uploadLocal($local_file_path, $dir, $call_back_url = '') {
-        if (! file_exists($dir)) {
-            throw new \S\Exceptions('文件不存在。');
-        }
         $file_path = self::getDefaultFileStoragePath($dir, $local_file_path);
-
-        $oss = new Oss();
-        $oss->uploadFile(\S\Oss\Oss::BUCKET, $file_path, $local_file_path, $call_back_url);
+        (new Oss())->uploadFile(\S\Oss\Oss::BUCKET, $file_path, $local_file_path, $call_back_url);
         return $file_path;
     }
 
@@ -102,9 +97,7 @@ class Files {
      * @throws \Exception
      */
     public function download($file_path, $local_file_path = null) {
-        $oss = new Oss();
-        $file = $oss->get(\S\Oss\Oss::BUCKET, $file_path, $local_file_path);
-        return $file;
+        return (new Oss())->get(\S\Oss\Oss::BUCKET, $file_path, $local_file_path);
     }
 
     /**
