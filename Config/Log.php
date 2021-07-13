@@ -8,6 +8,6 @@
 
 return array(
     'log' => array(
-        'root_path' => '/www/log/' . APP_HOST,
+        'root_path' => '/data1/www/log/' . APP_HOST,
     ),
 );

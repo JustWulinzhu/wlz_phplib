@@ -27,7 +27,7 @@ require_once APP_ROOT_PATH . "/Public/Autoload.php";
 require_once APP_ROOT_PATH . "/Ext/Smarty/Smarty.class.php";
 require_once APP_ROOT_PATH . "/Ext/phpext/F.php";
 
-//禁用错误报告
-//error_reporting(0);
-//报告运行时错误
-//error_reporting(E_ERROR | E_PARSE);
+//打开错误提示
+ini_set("display_errors", "On");
+//显示所有错误
+ini_set("error_reporting",E_ALL);

@@ -305,24 +305,6 @@ class Tools
      * @return bool|string
      */
     public static function reverse($str) {
-        if (empty($tr)) {
-            return false;
-        }
-        $length = strlen($str);
-        $new_str = '';
-        for ($i = $length - 1; $i >= 0; $i--) {
-            $new_str .= $str{$i};
-        }
-
-        return $new_str;
-    }
-
-    /**
-     * 反转字符串2
-     * @param $str
-     * @return bool|string
-     */
-    public static function reverse2($str) {
         if (empty($str)) {
             return false;
         }

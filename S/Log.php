@@ -40,6 +40,9 @@ class Log {
     public static function getInstance($root_dir = '') {
         if (empty($root_dir)) {
             self::$root_dir = Conf::getConfig('log/log.root_path');
+            if (empty(self::$root_dir)) {
+                self::$root_dir = "/tmp/" . APP_HOST;
+            }
         }
         if (is_null(self::$log)) {
             self::$log = new self;
