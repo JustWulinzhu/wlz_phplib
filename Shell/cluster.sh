@@ -45,6 +45,7 @@ function stop() {
 function start() {
     stop;
 
+    #启动节点
     for redis_conf in `ls $redis_path"cluster"`;
     	  do
         /usr/local/redis/redis-server $redis_path"cluster/"$redis_conf >/dev/null 2>&1;
@@ -54,6 +55,7 @@ function start() {
         hosts=$hosts" 127.0.0.1:"$port" "
     done
 
+    #配置集群
     $redis_path"redis-cli" " --cluster create "$hosts" --cluster-replicas 1" >/dev/null 2>&1;
 }
 
