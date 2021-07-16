@@ -35,4 +35,11 @@ return [
         ],
     ],
 
+    'sms' => [
+        'tskj' => [
+            'host' => 'http://toushitz.market.alicloudapi.com',
+            'appcode' => 'ed5a18036f2b4a5d8912c07cf2d77a2b'
+        ]
+    ]
+
 ];
