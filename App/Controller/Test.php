@@ -30,7 +30,7 @@ class Test {
      * @throws \Exception
      */
     public function index($arr = null) {
-        (new \S\Api\Sms\Tskj())->send('18515931680', 'TP1710262', ['code' => random_int(100000, 999999)]);
+        (new \S\Api\Sms\Tskj())->send('18515831680', 'TP1710262', ['code' => random_int(100000, 999999)]);
     }
 
     public function demo() {
