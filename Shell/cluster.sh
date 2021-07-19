@@ -76,12 +76,12 @@ fi;
 
 if [ "$1" == "stop" ]
 then
-    start && echo "success";
+    stop && echo "success";
 fi;
 
 if [ "$1" = "reload" ]
 then
-    start && echo "success";
+    reload && echo "success";
 fi;
 
 if [ "$1" = "status" ]
