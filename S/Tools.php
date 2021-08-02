@@ -659,4 +659,17 @@ class Tools
         return $file_path;
     }
 
+    /**
+     * 创建目录如果不存在
+     *
+     * @param $path
+     * @return bool
+     */
+    public static function mkdirIfNotExist($path) {
+        if (! file_exists($path)) {
+            return mkdir($path, 0777, true);
+        }
+        return false;
+    }
+
 }

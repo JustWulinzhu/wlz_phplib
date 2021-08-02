@@ -13,6 +13,7 @@ namespace App\Controller\Toppt;
 
 use App\Data\Toppt as DataToppt;
 use S\Log;
+use S\Tools;
 
 header('Access-Control-Allow-Origin:*');
 
@@ -42,6 +43,7 @@ class Toppt extends \App\Controller\Base {
             $file_name = $_FILES['file']['name'];
             $new_file_name = pathinfo($file_name)['filename'] . '.ppt';
 
+            Tools::mkdirIfNotExist(self::OFFICE_FILE_PATH);
             $file_path = self::OFFICE_FILE_PATH . $file_name;
             $move_file = move_uploaded_file($_FILES['file']['tmp_name'], $file_path);
             if ($move_file) {
