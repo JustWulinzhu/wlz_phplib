@@ -31,7 +31,7 @@ date_default_timezone_set('PRC'); //中国时区
 
 class PowerPoint {
 
-    const DEFAULT_FILE_PATH = '/www/tmp/file/ppt';
+    const DEFAULT_FILE_PATH = '/data1/www/file';
 
     private $PPT;
 

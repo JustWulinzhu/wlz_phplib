@@ -138,8 +138,8 @@ class Log {
         }
         $data_str = implode(" | ", $data);
 
-        $server_ip = isset($_SERVER['SERVER_ADDR']) ? $_SERVER['SERVER_ADDR'] : '';
-        $client_ip = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '';
+        $server_ip = isset($_SERVER['SERVER_ADDR']) ? : '';
+        $client_ip = isset($_SERVER['REMOTE_ADDR']) ? : '';
         $content = "[ " . $dir_file . " ] | " . date('Y-m-d H:i:s', time()) . " | " . $server_ip . ' | ' . $client_ip . ' | ' . $data_str . "\n";
         if (! \S\Tools::write($dir_file, $content)) {
             throw new \Exception('日志写入失败');

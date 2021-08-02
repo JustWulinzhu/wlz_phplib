@@ -13,7 +13,7 @@ use S\Log;
 class Wordtopdf extends \App\Controller\Base
 {
 
-    const OFFICE_FILE_PATH = '/www/tmp/file/';
+    const OFFICE_FILE_PATH = '/data1/www/file';
 
     /**
      * @param $arr

@@ -20,7 +20,7 @@ class Toppt extends \App\Controller\Base {
 
     protected $verify = false;
 
-    const OFFICE_FILE_PATH = '/www/tmp/file/';
+    const OFFICE_FILE_PATH = '/data1/www/file/tmp/';
 
     /**
      * @param $args

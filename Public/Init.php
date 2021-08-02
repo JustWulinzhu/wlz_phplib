@@ -18,7 +18,8 @@ define("APP_STATIC_PATH", APP_ROOT_PATH . DIRECTORY_SEPARATOR . 'Public/Static')
 //项目host
 define("APP_HOST", 'www.wlfeng.vip');
 //项目域名
-define("APP_DOMAIN", 'https://' . APP_HOST);
+define("APP_DOMAINS", 'https://' . APP_HOST);
+define("APP_DOMAIN", 'http://' . APP_HOST);
 //图片服务器
 define("IMAGE_SERVER_DOMAIN", APP_HOST . ':8081');
 
