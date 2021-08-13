@@ -10,7 +10,7 @@ return array(
     'db1' => [
         'host' => '172.17.248.207',
         'user' => 'root',
-        'pwd' => '',
-        'db' => 'test'
+        'pwd' => '123456',
+        'db' => 'Test'
     ],
 );
