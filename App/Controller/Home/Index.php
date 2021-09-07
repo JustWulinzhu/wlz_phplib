@@ -18,7 +18,6 @@ class Index extends \App\Controller\Base
      */
     public function index($arr)
     {
-        $this->smarty->assign("APP_ROOT_PATH", APP_ROOT_PATH);
         $this->smarty->display("Home/Index.html");
     }
 

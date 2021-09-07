@@ -30,7 +30,21 @@ class Test {
      * @throws \Exception
      */
     public function index($arr = null) {
-        //(new \S\Api\Sms\Tskj())->send('18515831680', 'TP1710262', ['code' => random_int(100000, 999999)]);
+        $stack = new \S\Datastructure\Queue();
+        var_dump($stack->length());
+        var_dump($stack->isEmpty());
+        var_dump($stack->push("111"));
+        var_dump($stack->push("222"));
+        var_dump($stack->push("333"));
+        var_dump($stack->get());
+        var_dump($stack->length());
+        var_dump($stack->isEmpty());
+        var_dump($stack->pop());
+        var_dump($stack->pop());
+        var_dump($stack->pop());
+        var_dump($stack->pop());
+        var_dump($stack->length());
+        var_dump($stack->isEmpty());
     }
 
     public function demo() {

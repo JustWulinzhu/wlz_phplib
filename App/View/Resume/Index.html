@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>我的简历是一个引导响应式网站</title>
+<title>武林柱的首页</title>
 <!--mobile apps-->
+<link rel="icon" href="{{IMAGE_SERVER_DOMAIN}}/image/gou.png" type="images/x-ico" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="keywords" content="My Resume Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
@@ -10,22 +11,22 @@
 <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
 <!--mobile apps-->
 <!--Custom Theme files-->
-<link rel="shortcut icon" href="images/your_ico.ico" type="image/x-icon">
-<link rel="icon" href="images/your_ico.ico" type="image/x-icon">
-<link href="css/bootstrap.css" type="text/css" rel="stylesheet" media="all">
-<link href="css/style.css" type="text/css" rel="stylesheet" media="all">
-<link rel="stylesheet" href="css/swipebox.css">
+<!--<link rel="shortcut icon" href="{{APP_STATIC_PATH}}/resume/images/your_ico.ico" type="image/x-icon">-->
+<!--<link rel="icon" href="{{APP_STATIC_PATH}}/resume/images/your_ico.ico" type="image/x-icon">-->
+<link href="{{APP_STATIC_PATH}}/resume/css/bootstrap.css" type="text/css" rel="stylesheet" media="all">
+<link href="{{APP_STATIC_PATH}}/resume/css/style.css" type="text/css" rel="stylesheet" media="all">
+<link rel="stylesheet" href="{{APP_STATIC_PATH}}/resume/css/swipebox.css">
 <!--//Custom Theme files-->
 <!--js-->
-<script src="{{APP_STATIC_PATH}}/Resume/js/jquery-1.11.1.min.js"></script>
+<script src="{{APP_STATIC_PATH}}/resume/js/jquery-1.11.1.min.js"></script>
 <!-- //js -->
 <!--web-fonts-->
 <!--<link href='//fonts.googleapis.com/css?family=Overlock:400,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>-->
 <!--<link href='//fonts.googleapis.com/css?family=Roboto+Condensed:400,300,300italic,400italic,700,700italic' rel='stylesheet' type='text/css'>-->
 <!--//web-fonts-->
 <!--start-smooth-scrolling-->
-<script type="text/javascript" src="js/move-top.js"></script>
-<script type="text/javascript" src="js/easing.js"></script>	
+<script type="text/javascript" src="{{APP_STATIC_PATH}}/resume/js/move-top.js"></script>
+<script type="text/javascript" src="{{APP_STATIC_PATH}}/resume/js/easing.js"></script>
 <script type="text/javascript">
 		jQuery(document).ready(function($) {
 			$(".scroll").click(function(event){		
@@ -42,11 +43,11 @@
 		<div class="banner-info">
 			<div class="container">
 				<div class="col-md-4 header-left">
-					<img src="images/img1.jpg" alt=""/>
+					<img src="{{APP_STATIC_PATH}}/resume/images/IMG_3034.JPG" alt=""/>
 				</div>
 				<div class="col-md-8 header-right">
 					<h2>Hello</h2>
-					<h1>My name is Fanbingbing</h1>
+					<h1>My name is 武林柱</h1>
 					<h6>平面设计师和网站建设人员</h6>
 					<ul class="address">
 						<li>
@@ -672,6 +673,6 @@
 	<!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="js/bootstrap.js"></script>
+    <script src="{{APP_STATIC_PATH}}/resume/js/bootstrap.js"></script>
 </body>
 </html>
