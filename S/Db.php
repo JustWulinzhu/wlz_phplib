@@ -135,12 +135,6 @@ class Db {
      * @throws \Exception
      */
     public function select($condition = array(), $field = '*') {
-        //查询条件
-        $condition_str = '';
-        foreach ($condition as $key => $value) {
-            $condition_str .= '`' . $key . '`' . '=' . "'" . $value . "'" . ' and ';
-        }
-        $condition_str = substr($condition_str, 0, -5);
         //查询字段
         if (is_array($field)) {
             $field = array_map(function ($e) { return '`' . $e . '`'; }, $field);
@@ -149,6 +143,13 @@ class Db {
         $field_str = isset($field_str) ? $field_str : $field;
 
         if ($condition) {
+            //查询条件
+            $condition_str = '';
+            foreach ($condition as $key => $value) {
+                $condition_str .= '`' . $key . '`' . '=' . "'" . $value . "'" . ' and ';
+            }
+            $condition_str = substr($condition_str, 0, -5);
+
             $sql = "select " . $field_str . " from " . $this->table . " where " . $condition_str;
         } else {
             $sql = "select " . $field_str . " from " . $this->table;

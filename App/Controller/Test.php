@@ -5,6 +5,7 @@ namespace App\Controller;
 use S\Db;
 use S\Office\Excel;
 use S\Exceptions;
+use S\Param;
 use S\Soap\Server;
 use \S\Tools;
 use S\Mail;
@@ -22,7 +23,9 @@ use S\Queue\Mns\Mns;
 use S\Redis\BaseRedis as BaseRedis;
 use S\Queue\Redis\Redis as QueueRedis;
 
-class Test {
+class Test extends \App\Controller\Base {
+
+    protected $verify = false;
 
     /**
      * @param null $arr
@@ -30,21 +33,11 @@ class Test {
      * @throws \Exception
      */
     public function index($arr = null) {
-        $stack = new \S\Datastructure\Queue();
-        var_dump($stack->length());
-        var_dump($stack->isEmpty());
-        var_dump($stack->push("111"));
-        var_dump($stack->push("222"));
-        var_dump($stack->push("333"));
-        var_dump($stack->get());
-        var_dump($stack->length());
-        var_dump($stack->isEmpty());
-        var_dump($stack->pop());
-        var_dump($stack->pop());
-        var_dump($stack->pop());
-        var_dump($stack->pop());
-        var_dump($stack->length());
-        var_dump($stack->isEmpty());
+        $params = Param::post();
+//        sleep(10);
+        Log::getInstance()->debug(['post data', json_encode($params)]);
+        $ret = (new Db('city'))->select();
+        return $ret;
     }
 
     public function demo() {

@@ -10,12 +10,11 @@ namespace App\Controller\Resume;
 
 use App\Controller\Base;
 
-class Intro extends Base {
+class Index extends Base {
 
     public $verify = false;
 
     public function index($arr) {
-        $this->smarty->assign("APP_STATIC_PATH", APP_DOMAIN);
         $this->smarty->display("Resume/Index.html");
     }
 
