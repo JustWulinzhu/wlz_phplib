@@ -323,14 +323,15 @@ class Tools
         if (! file_exists($file)) {
             throw new \Exception('文件不存在');
         }
-        $file = fopen($file, 'r');
+        //$handle 文件指针资源
+        $handle = fopen($file, 'r');
 
         $file_arr = array();
-        while (! feof($file)) { //feof判断是否到达文件末尾
-            $line = fgets($file); // 逐行读取文件
+        while (! feof($handle)) { //feof判断是否到达文件末尾
+            $line = fgets($handle); // 逐行读取文件
             $file_arr[] = trim($line);
         }
-        fclose($file);
+        fclose($handle);
 
         $file_arr = array_filter($file_arr);
         $file_arr = array_values($file_arr);
