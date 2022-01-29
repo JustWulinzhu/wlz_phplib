@@ -33,11 +33,10 @@ class Test extends \App\Controller\Base {
      * @throws \Exception
      */
     public function index($arr = null) {
-        $params = Param::post();
-//        sleep(10);
-        Log::getInstance()->debug(['post data', json_encode($params)]);
-        $ret = (new Db('city'))->select();
-        return $ret;
+        for ($i = 1; $i<= 10000; $i++) {
+            Log::getInstance()->debug(['内存测试', $i]);
+            sleep(1);
+        }
     }
 
     public function demo() {

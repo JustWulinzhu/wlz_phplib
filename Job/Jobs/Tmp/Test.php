@@ -26,12 +26,9 @@ class Test implements \Job\Base
      */
     public function exec($argv = null)
     {
-        for ($i = 100001; $i <= 300000; $i++) {
-            (new Db("test1"))->insert([
-                'id2' => $i,
-                'id3' => $i + 1,
-                'name' => md5(random_int(0, 10000)),
-            ]);
+        for ($i = 1; $i<=10;  $i++) {
+            file_get_contents("/root/jdk-16.0.2_linux-aarch64_bin.tar.gz");
+            sleep(1);
         }
     }
 

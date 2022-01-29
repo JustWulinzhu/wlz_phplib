@@ -20,8 +20,13 @@ use \S\Redis\BaseRedis;
 class Redis extends BaseRedis {
 
     const QUEUE = 'REDIS_QUEUE_';
-
     const MAX_QUEUE_NUM = 100000;
+
+    private $redisInstance = null;
+
+    public function __construct() {
+        $this->redisInstance = $this->getInstance(self::REDIS_MOD_SINGLE);
+    }
 
     /**
      * 拼接key
@@ -47,7 +52,7 @@ class Redis extends BaseRedis {
         if ($this->lLen($key) >= self::MAX_QUEUE_NUM) {
             throw new \Exception('队列已满');
         }
-        return $this->getInstance()->lPush($this->getKey($key), $value);
+        return $this->redisInstance->lPush($this->getKey($key), $value);
     }
 
     /**
@@ -60,7 +65,7 @@ class Redis extends BaseRedis {
         if (0 === $this->lLen($key)) {
             return false;
         }
-        return $this->getInstance()->rPop($this->getKey($key));
+        return $this->redisInstance->rPop($this->getKey($key));
     }
 
     /**
@@ -70,7 +75,7 @@ class Redis extends BaseRedis {
      * @throws \Exception
      */
     public function lLen($key) {
-        return $this->getInstance()->lLen($this->getKey($key));
+        return $this->redisInstance->lLen($this->getKey($key));
     }
 
 }
