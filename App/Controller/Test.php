@@ -33,6 +33,12 @@ class Test extends \App\Controller\Base {
      * @throws \Exception
      */
     public function index($arr = null) {
+        $str = 'aaa,bbdd,ccc   aaa';
+        $a = Tools::myExplode(",", $str);
+        dd($a);
+        $arr = explode(" ", $str);
+        dd($arr);
+
         for ($i = 1; $i<= 10000; $i++) {
             Log::getInstance()->debug(['内存测试', $i]);
             sleep(1);

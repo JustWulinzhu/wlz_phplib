@@ -673,4 +673,27 @@ class Tools
         return false;
     }
 
+    /**
+     * 实现explode功能
+     * @param $w
+     * @param $str
+     * @return array
+     */
+    public static function myExplode($w, $str) {
+        $arr = [];
+        while (true) {
+            $contain = strpos($str, $w);
+            $s = substr($str, 0, $contain);
+            $str = substr($str, $contain + 1, strlen($str));
+
+            if (false === $contain) { //最后一位
+                $arr[] = $str;
+                break;
+            }
+            $arr[] = $s;
+        }
+
+        return $arr;
+    }
+
 }
