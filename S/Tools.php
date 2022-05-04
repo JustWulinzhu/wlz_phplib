@@ -85,6 +85,20 @@ class Tools
     }
 
     /**
+     * 二维数组按照某个字段排序 array_multisort()
+     *
+     * @param $data
+     * @param $field
+     * @param bool $asc
+     * @return mixed
+     */
+    public static function sortArrByField($data, $field, $asc = true) {
+        $column = array_column($data, $field);
+        array_multisort($column, $asc === true ? SORT_ASC : SORT_DESC, $data);
+        return $data;
+    }
+
+    /**
      * $arr = ['中国', '美国', '日本', '韩国', '德国', '中国', '美国', '中国', '日本'];
      * 计算每个值出现的次数
      * @param $arr

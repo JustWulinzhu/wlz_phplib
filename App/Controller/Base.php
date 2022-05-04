@@ -43,8 +43,9 @@ abstract class Base {
     public final function __construct()
     {
         $this->params = array_merge(\S\Param::get(), \S\Param::post());
-        \S\Log::getInstance()->debug(['api_request_params', json_encode($this->params)]);
-
+        if ($this->params) {
+            \S\Log::getInstance()->debug(['api_request_params', json_encode($this->params)]);
+        }
         if ($this->verify) { //页面不进行参数验证
             $this->verify($this->params);
         }

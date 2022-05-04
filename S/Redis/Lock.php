@@ -8,6 +8,10 @@
  * redis锁机制,防止并发请求造成的超卖等问题
  * 参考mutexLock、transactionLock方法
  * 参考文献: http://www.36nu.com/post/314
+ *
+ * ab压测 ab -n 2000 -c 100 https://www.wlfeng.vip/test
+ * 测试mutexLock setnx 加锁效果
+ *
  */
 
 namespace S\Redis;
@@ -20,7 +24,7 @@ class Lock extends BaseRedis {
 
     private $redis;
 
-    const EXPIRE_TIME = 15; //默认业务执行时间
+    const EXPIRE_TIME = 30; //默认业务执行时间
     const DEFAULT_VALUE = 'default_value';
     const REDIS_LOCK = 'redis_lock_';
 
@@ -29,7 +33,7 @@ class Lock extends BaseRedis {
      * @throws \Exception
      */
     public function __construct() {
-        $this->redis = $this->getInstance();
+        $this->redis = $this->getInstance(self::REDIS_MOD_SINGLE);
     }
 
     /**
@@ -44,7 +48,7 @@ class Lock extends BaseRedis {
             return true;
         } else {
             $i = 0;
-            while ($i < 10) { //轮询10次
+            while ($i < 5) { //轮询5次
                 $lock_ret = $this->mutexLock($key);
                 if ($lock_ret) {
                     return true;
