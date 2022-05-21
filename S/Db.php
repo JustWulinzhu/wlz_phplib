@@ -26,7 +26,11 @@ class Db {
     function __construct($table) {
         $conf = Conf::getConfig('db/db1');
         if (is_null($this->mysql)) {
-            $this->mysql = new \PDO("mysql:host={$conf['host']}; dbname={$conf['db']}", $conf['user'], $conf['pwd']);
+            $option = [];
+            if ($conf['pconnect']) {
+                $option[\PDO::ATTR_PERSISTENT] = true;
+            }
+            $this->mysql = new \PDO("mysql:host={$conf['host']}; dbname={$conf['db']}", $conf['user'], $conf['pwd'], $option);
             $this->mysql->exec("SET names utf8");
         }
         $this->table = $table;

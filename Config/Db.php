@@ -11,6 +11,7 @@ return array(
         'host' => '172.17.248.207',
         'user' => 'root',
         'pwd' => '123456',
-        'db' => 'Test'
+        'db' => 'Test',
+        'pconnect' => true,
     ],
 );

@@ -33,6 +33,10 @@ class Test extends \App\Controller\Base {
      * @throws \Exception
      */
     public function index($arr = null) {
+        $str = crc32("wulinzhu");
+        $num = $str % 100;
+        dd($num);
+
         $lock = (new Lock())->mutexLock("lock_key");
         if ($lock) {
             Log::getInstance()->debug(['success']);
