@@ -69,6 +69,19 @@ class Redis extends BaseRedis {
     }
 
     /**
+     * 弹出多个队列，位置在前的key优先弹出，如果前面的key没数据的话才谈后面的，超时时间内是阻塞状态
+     * 可用做设计优先级队列，开启双队列
+     * @param array $keys
+     * @return array|false
+     */
+    public function brPop($keys = []) {
+        if (empty($keys) || (! is_array($keys))) {
+            return false;
+        }
+        return $this->redisInstance->brPop($keys, 5);
+    }
+
+    /**
      * 获取队列长度
      * @param $key
      * @return bool|int
