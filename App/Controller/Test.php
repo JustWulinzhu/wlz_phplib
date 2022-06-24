@@ -33,6 +33,11 @@ class Test extends \App\Controller\Base {
      * @throws \Exception
      */
     public function index($arr = null) {
+        $ret = Tools::insertStr("abcd", 2, "xxoo");
+        dd($ret);
+        Tools::myStrReplace("abcdbcfff", "bc" , "xxoo");
+
+
         $str = crc32("wulinzhu");
         $num = $str % 100;
         dd($num);

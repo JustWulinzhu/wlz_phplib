@@ -710,4 +710,62 @@ class Tools
         return $arr;
     }
 
+    /**
+     * 自定义substr函数 不使用内置函数
+     *
+     * @param $str
+     * @param $start
+     * @param $num
+     */
+    public static function mySubstr($str, $start, $num) {
+        $length = strlen($str);
+        $str_arr = [];
+        for ($i = 0; $i < $length; $i++) {
+            $str_arr[] = $str[$i];
+        }
+
+        $sub_arr = [];
+        for ($i = 0; $i < count($str_arr); $i++) {
+            if ($start == 0) {
+                if ($num - 1 >= $i) {
+                    $sub_arr[] = $str_arr[$i];
+                }
+            } else {
+                if ($start <= $i && $num + $start - 1 >= $i) {
+                    $sub_arr[] = $str_arr[$i];
+                }
+            }
+        }
+        $ret = "";
+        foreach ($sub_arr as $item) {
+            $ret .= $item;
+        }
+        return $ret;
+    }
+
+
+    /**
+     * 插入字符串
+     * @param $str
+     * @param $index 索引下标，在什么位置去插入
+     * @param $insert_str 要插入的字符串
+     * @return array
+     */
+    public static function insertStr($str, $index, $insert_str) {
+        $str_arr = [];
+        for ($i = 0; $i < strlen($str); $i++) {
+            $str_arr[] = $str[$i];
+        }
+        $end = $str_arr[count($str_arr) - 1];
+        for ($i = 0; $i < count($str_arr); $i++) {
+            if ($index == $i) {
+                $str_arr[$i + 1] = $str_arr[$i];
+                $str_arr[$i] = $insert_str;
+            }
+        }
+        $str_arr[count($str_arr)] = $end;
+
+        return $str_arr;
+    }
+
 }
