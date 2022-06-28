@@ -23,10 +23,10 @@
 				formData.append("username",username);
 				formData.append('password', password);
 
-				console.log("{{APP_DOMAIN}}" + "/mooc/DoLogin")
+				console.log(formData)
 
 				$.ajax({
-					url : "{{APP_DOMAIN}}" + "/mooc/DoLogin",
+					url : "{{APP_DOMAIN}}" + "/mooc/Dologin",
 					type : "POST",
 					data : formData,
 					contentType : false,
@@ -52,10 +52,10 @@
 
 	<div class="container">
 		<h1>Video 后台管理</h1>
-		<form class="form" action="" method="post">
+		<form class="form" action="Dologin" method="post">
 			<input type="text" name="username" id="username" placeholder="Username">
 			<input type="password" name="password" id="password" placeholder="Password"><br>
-			<button type="submit" id="login-button" ><strong>登陆</strong></button>
+			<button type="button" id="login-button" ><strong>登陆</strong></button>
 		</form>
 	</div>
 	
