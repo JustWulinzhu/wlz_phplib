@@ -9,6 +9,9 @@
             var video = document.getElementById("videoID");
             video.style.display = "none";
         }
+
+        $("video").removeAttr("width");
+        $("video").removeAttr("height");
     </script>
 
     <style>
@@ -40,15 +43,15 @@
         .wrap{
             width:100%;
             position:relative;
-            padding-bottom:62%;    /*需要用padding来维持16:9比例,也就是9除以16*/
-            height: 0;
+            height: 550px;
+            background-color: black;
+            margin-top: 55px;
         }
         video{
-            position: absolute;
-            top:0;
-            left: 0;
+            object-fit: contain;
+            /*position: absolute;*/
+            height: 100%;
             width: 100%;
-            height: 100%
         }
         .img {
             margin-top: 1px;
@@ -60,7 +63,15 @@
             font-size: 70px;
         }
         #heiping {
-            margin-top: 23px;
+            position: absolute;
+            margin-top: 60px;
+            width: 100%;
+            height: 120%;
+        }
+        #grep_line {
+            width: 100%;
+            height: 11px;
+            background-color: #888888;
         }
 
     </style>
@@ -78,23 +89,21 @@
             webkit-playsinline
             disablePictureInPicture="true"
             controlslist="nomutebutton notimeline nodownload nofullscreen noremoteplayback noplaybackrate"
-            width="100%"
-            height="240"
             onended="myhidden()"
     >
-        <source src={{MP4_URL}} type="video/mp4">
+        <source src={{IMAGE_URL}} type="video/mp4">
         您的浏览器不支持 video 标签。
     </video>
 
-    <img id="heiping" width="100%" height="561" position="absolute" src="http://www.wlfeng.vip:8081/image/video/heiping.png">
-
+<!--    <img id="heiping"  src="{{APP_STATIC_PATHS}}/mooc/images/heiping.png">-->
 </div>
+<div id="grep_line"> </div>
 
-<div class="img">
-    <img width="50%" height="300" src="{{IMAGE_URL}}">
-</div>
+<!--<div class="img">-->
+<!--    <img width="50%" height="300" src="{{IMAGE_URL}}">-->
+<!--</div>-->
 
-<h1>{{DES}}</h1>
+<!--<h1>{{DES}}</h1>-->
 
 </body>
 </html>
