@@ -4,16 +4,6 @@
     <meta charset="UTF-8">
     <title>video</title>
 
-    <script>
-        function myhidden() {
-            var video = document.getElementById("videoID");
-            video.style.display = "none";
-        }
-
-        $("video").removeAttr("width");
-        $("video").removeAttr("height");
-    </script>
-
     <style>
         <!--        /*隐藏video 音量按钮*/-->
         <!--        video::-webkit-media-controls-mute-button {-->
@@ -76,6 +66,24 @@
 
     </style>
 
+    <script>
+        function myhidden() {
+            var video = document.getElementById("videoID");
+            video.style.display = "none";
+        }
+
+        // $("video").removeAttr("width");
+        // $("video").removeAttr("height");
+
+        console.log("{{IS_LOOKED}}");
+        window.onload=function() { //页面打开即执行
+            if ("{{IS_LOOKED}}" == "looked") {
+                myhidden();
+            }
+        };
+
+    </script>
+
 </head>
 <body>
 
@@ -91,7 +99,8 @@
             controlslist="nomutebutton notimeline nodownload nofullscreen noremoteplayback noplaybackrate"
             onended="myhidden()"
     >
-        <source src={{IMAGE_URL}} type="video/mp4">
+        <?php echo phpinfo(); ?>
+        <source  src={{IMAGE_URL}} type="video/mp4">
         您的浏览器不支持 video 标签。
     </video>
 
