@@ -13,7 +13,7 @@ class Image extends \App\Controller\Base {
     public function index($args)
     {
         $ip = Tools::getCliIp();
-        $content = file_get_contents("/tmp/video.txt");
+        $content = @file_get_contents("/tmp/video.txt");
 
         $flag = 'unlooked';
         if (file_exists("/tmp/video_record_{$ip}.txt")) {
