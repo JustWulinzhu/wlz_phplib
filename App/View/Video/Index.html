@@ -76,12 +76,6 @@
             video.style.display = "none";
         }
 
-        function test() {
-            var videoTime = document.getElementById("videoID");
-            console.log(videoTime.duration); //获取视频时长
-            console.log(videoTime.currentTime); //获取视频当前播放时间
-        }
-
         console.log("{{IS_LOOKED}}");
         window.onload=function() { //页面打开即执行
             if ("{{IS_LOOKED}}" == "unlooked") {
@@ -106,8 +100,6 @@
             } else {
                 console.log("没有添加video");
             }
-
-            console.log($('#videoID').duration)
         };
 
     </script>
