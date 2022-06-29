@@ -11,8 +11,10 @@ class VideoList extends \App\Controller\Base {
 
     public function index($args)
     {
-        $content = file_get_contents("/tmp/video.txt");
-        define("IMAGE_URL", $content);
+        if (file_exists("/tmp/video.txt")) {
+            $content = file_get_contents("/tmp/video.txt");
+            define("IMAGE_URL", $content);
+        }
         $this->smarty->display("Mooc/VideoList.html");
     }
 
