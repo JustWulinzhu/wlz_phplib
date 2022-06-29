@@ -11,6 +11,7 @@ class doUpload extends \App\Controller\Base {
     public $verify = false;
 
     const OFFICE_FILE_PATH = '/data1/www/image';
+    const VIDEO = '/tmp/video.txt';
 
     public function index($args)
     {
@@ -22,11 +23,14 @@ class doUpload extends \App\Controller\Base {
             echo "<script>alert('上传文件限制50m以内');history.go(-1)</script>";
             return;
         }
-        Tools::mkdirIfNotExist(self::OFFICE_FILE_PATH . "/" . date("Ymd"));
-        $file_path = self::OFFICE_FILE_PATH . "/" . date("Ymd") ."/" . $_FILES['GoodsPicture']['name'];
+        $path = self::OFFICE_FILE_PATH . "/" . date("Ymd");
+        Tools::mkdirIfNotExist($path);
+        chmod($path, 0777);
+        $file_path = $path ."/" . $_FILES['GoodsPicture']['name'];
         move_uploaded_file($_FILES['GoodsPicture']['tmp_name'], $file_path);
         $url = APP_DOMAIN . ':8081/' . 'image/' . date("Ymd") . '/' . $_FILES['GoodsPicture']['name'];
-        file_put_contents("/tmp/video.txt", $url);
+        file_put_contents(self::VIDEO, $url);
+        chmod(self::VIDEO, 0777);
         echo "<script>alert('success');history.go(-1)</script>";
     }
 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/html">
 <head>
     <title></title>
     <meta charset="UTF-8">
@@ -30,32 +30,92 @@
                 padding-right: 5px;
             }
         }
-
+        #content {
+            margin-top: 40px;
+            margin-left: 30px;
+        }
 
     </style>
+
+    <script>
+
+        function isValid(str) { return /^\w+$/.test(str); }
+        $(document).ready(function() {
+
+            $('#login-button'). click(function() {
+                var password = $("#password").val();
+                var confirm_password = $("#confirm_password").val();
+                if (password === '') {
+                    alert('请输入密码');
+                    return;
+                }
+                if (confirm_password === '') {
+                    alert("请输入确认密码");
+                    return;
+                }
+                if (password !== confirm_password) {
+                    alert("两次输入密码不一致");
+                    return;
+                }
+                if (! isValid(password) || !isValid(confirm_password)) {
+                    alert("密码只能由字母数字下划线组成");
+                    return;
+                }
+                if (password.length < 6) {
+                    alert("密码长度不能低于6位");
+                    return;
+                }
+
+                var formData = new FormData();
+                formData.append('password', password);
+                formData.append("confirm_password", confirm_password);
+
+                console.log(formData)
+
+                $.ajax({
+                    url : "{{APP_DOMAIN}}" + "/mooc/Dochangepwd",
+                    type : "POST",
+                    data : formData,
+                    contentType : false,
+                    processData : false,
+                    dataType : 'json',
+                    success : function(response) {
+                        if (200 === response.code) {
+                            alert(response.msg);
+                            window.location = "{{APP_DOMAIN}}" + "/mooc/ChangePwd";
+                        } else {
+                            alert(response.msg);
+                        }
+                    }
+                });
+            })
+        })
+    </script>
+
 </head>
 <body>
+
+<div id="content">
 <font color="#777777"><strong>修改密码：</strong></font>
-<form action="#" method="post" class="definewidth m20" enctype="multipart/form-data">
-<table style="margin-left:10px;margin-top:3px;">
+<form action="Dochangepwd" method="post" class="definewidth m20" enctype="multipart/form-data">
+<table style="margin-left:10px;margin-top:30px;">
     <tr>
          <td>新密码</td>
-		 <td><input type="text" name="classname"/></td>
+		 <td><input type="password" id="password" name="classname"/></td>
     </tr>
 	<tr>
-         <td>确认密码</td>
-        <td><input type="text" name="classname"/></td>
+        <td>确认密码</td>
+        <td><input type="password" id="confirm_password" name="classname"/></td>
     </tr>
 	
     <tr>
-        
        <td>
-            <button style="margin-left:5px;"type="submit" class="btn btn-primary" type="button"  >保&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp存</button> &nbsp;
-        </td>
+            <button style="margin-left:5px;" type="button" id="login-button"  class="btn btn-primary" type="button"  >保&nbsp&nbsp&nbsp&nbsp存</button> &nbsp;
+       </td>
     </tr>
 </table>
 </form>
-
+</div>
 
 </body>
 </html>

@@ -18,6 +18,14 @@
 			$('#login-button'). click(function() {
 				var username = $("#username").val();
 				var password = $("#password").val();
+				if (username == '') {
+					alert("请输入账号");
+					return;
+				}
+				if (password == '') {
+					alert('请输入密码');
+					return;
+				}
 
 				var formData = new FormData();
 				formData.append("username",username);

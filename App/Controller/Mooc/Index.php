@@ -11,6 +11,11 @@ class Index extends \App\Controller\Base {
 
     public function index($args)
     {
+        Log::getInstance()->debug([]);
+        session_start();
+        if (! isset($_SESSION['is_login']) || $_SESSION['is_login'] !== true) {
+            exit(header("Location:" . APP_DOMAIN . "/mooc/login"));
+        }
         $this->smarty->display("Mooc/index.html");
     }
 

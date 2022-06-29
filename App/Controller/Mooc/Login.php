@@ -11,6 +11,8 @@ class Login extends \App\Controller\Base {
 
     public function index($args)
     {
+        session_start();
+        unset($_SESSION['is_login']);
         $this->smarty->display("Mooc/Login.html");
     }
 
