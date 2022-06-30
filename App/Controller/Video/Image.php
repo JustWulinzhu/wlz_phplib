@@ -28,7 +28,7 @@ class Image extends \App\Controller\Base {
             file_put_contents("/tmp/video_record_{$ip}.txt", $content);
             chmod("/tmp/video_record_{$ip}.txt", 0777);
         }
-        $flag = 'unlooked';
+//        $flag = 'unlooked';
 
         define("IMAGE_URL", $content);
         define("DES", "TEST");

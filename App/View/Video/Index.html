@@ -78,27 +78,28 @@
 
         console.log("{{IS_LOOKED}}");
         window.onload=function() { //页面打开即执行
-            // if ("{{IS_LOOKED}}" == "unlooked") {
-            //     $(document).ready(function() {
-            //         console.log("添加video成功");
-            //         var video_str = "<video\n" +
-            //             "            id=\"videoID\"\n" +
-            //             "            autoplay muted\n" +
-            //             "            x5-video-player-fullscreen=\"true\"\n" +
-            //             "            x5-playsinline\n" +
-            //             "            playsinline\n" +
-            //             "            webkit-playsinline\n" +
-            //             "            disablePictureInPicture=\"true\"\n" +
-            //             "            controlslist=\"nomutebutton notimeline nodownload nofullscreen noremoteplayback noplaybackrate\"\n" +
-            //             "    >\n" +
-            //             "        <source id=\"source\" src={{IMAGE_URL}} type=\"video/mp4\">\n" +
-            //             "        您的浏览器不支持 video 标签。\n" +
-            //             "    </video>";
-            //         $("#wrap").append(video_str);
-            //     })
-            // } else {
-            //     console.log("没有添加video");
-            // }
+            if ("{{IS_LOOKED}}" == "unlooked") {
+                $(document).ready(function() {
+                    console.log("添加video成功");
+                    var video_str = "<video\n" +
+                        "            id=\"videoID\"\n" +
+                        "            autoplay muted\n" +
+                        "            x5-video-player-fullscreen=\"true\"\n" +
+                        "            x5-playsinline\n" +
+                        "            playsinline\n" +
+                        "            webkit-playsinline\n" +
+                        "            disablePictureInPicture=\"true\"\n" +
+                        "            controlslist=\"nomutebutton notimeline nodownload nofullscreen noremoteplayback noplaybackrate\"\n" +
+                        "            onended=myhidden()\n" +
+                        "    >\n" +
+                        "        <source id=\"source\" src={{IMAGE_URL}} type=\"video/mp4\">\n" +
+                        "        您的浏览器不支持 video 标签。\n" +
+                        "    </video>";
+                    $("#wrap").append(video_str);
+                })
+            } else {
+                console.log("没有添加video");
+            }
 
             function ajax(currentTime, duration) {
                 var formData = new FormData();
@@ -114,57 +115,47 @@
                     dataType : 'json',
                     success : function(response) {
                         if (200 === response.code) {
-                            alert("发送ajax成功")
+
                         } else {
-                            alert(response.msg);
+
                         }
                     }
                 });
             }
 
-            function onTrackedVideoFrame(currentTime, duration){
-                var username = currentTime
-                var password = duration
-                var formData = new FormData();
-                formData.append("username",username);
-                formData.append('password', password);
-
-                console.log(formData)
-
-                $.ajax({
-                    url : "{{APP_DOMAIN}}" + "/mooc/Dorecord",
-                    type : "POST",
-                    data : formData,
-                    contentType : false,
-                    processData : false,
-                    dataType : 'json',
-                    success : function(response) {
-                        if (200 === response.code) {
-
-                        } else {
-                            alert(response.msg);
-                        }
-                    }
+            function getTime() {
+                var videoSize = document.querySelector("#videoID");
+                videoSize .addEventListener("loadedmetadata", function () {
+                    sessionStorage.setItem('session', parseInt(videoSize.duration));
                 });
             }
+            getTime();
 
-            function xx() {
-                $("#videoID").on(
-                    "timeupdate",
-                    function(event){
-                        onTrackedVideoFrame(this.currentTime, this.duration);
-                    });
-            }
+            var i = 0;
+            var timer = setInterval(function () {
+                i++;
+                sessionStorage.setItem('time', i);
+                if (i>600) {
+                   clearInterval(timer);
+                }
+            },1000)
 
-            window.onunload = function () {
-                $("#videoID").on(
-                    "timeupdate",
-                    function(event){
-                        onTrackedVideoFrame(this.currentTime, this.duration);
-                    });
-                ajax(111,222);
-            }
+            document.addEventListener('visibilitychange', () => {
+                var time = sessionStorage.getItem('time');
+                var total_time = sessionStorage.getItem('session');
+                if (time >= total_time) {
+                    time = total_time;
+                }
+                if (document.visibilityState == "visible") {
+                    ajax(time, total_time);
+                } else {
+                    ajax(time, total_time);
+                }
+            })
 
+            // window.onunload = function () {
+            //     ajax('ceshi1', 'ceshi2');
+            // }
         };
 
     </script>
@@ -173,19 +164,20 @@
 <body>
 
 <div class="wrap" id="wrap">
-    <video
-            id="videoID"
-            autoplay muted
-            x5-video-player-fullscreen="true"
-            x5-playsinline
-            playsinline
-            webkit-playsinline
-            disablePictureInPicture="true"
-            controlslist="nomutebutton notimeline nodownload nofullscreen noremoteplayback noplaybackrate"
-    >
-        <source id="source" src={{IMAGE_URL}} type="video/mp4">
-        您的浏览器不支持 video 标签。
-    </video>
+<!--    <video-->
+<!--            id="videoID"-->
+<!--            autoplay muted-->
+<!--            x5-video-player-fullscreen="true"-->
+<!--            x5-playsinline-->
+<!--            playsinline-->
+<!--            webkit-playsinline-->
+<!--            disablePictureInPicture="true"-->
+<!--            controlslist="nomutebutton notimeline nodownload nofullscreen noremoteplayback noplaybackrate"-->
+<!--            onended=myhidden()-->
+<!--    >-->
+<!--        <source id="source" src={{IMAGE_URL}} type="video/mp4">-->
+<!--        您的浏览器不支持 video 标签。-->
+<!--    </video>-->
 
 <!--    <img id="heiping"  src="{{APP_STATIC_PATHS}}/mooc/images/heiping.png">-->
 </div>
