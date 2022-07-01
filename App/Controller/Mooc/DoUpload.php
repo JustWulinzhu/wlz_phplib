@@ -26,7 +26,7 @@ class doUpload extends \App\Controller\Base {
         $path = self::OFFICE_FILE_PATH . "/" . date("Ymd");
         Tools::mkdirIfNotExist($path);
         chmod($path, 0777);
-        $file_name = date("His") . '-' . $_FILES['GoodsPicture']['name'];
+        $file_name = md5(uniqid() . '-' . $_FILES['GoodsPicture']['name']);
         $file_path = $path ."/" . $file_name;
         move_uploaded_file($_FILES['GoodsPicture']['tmp_name'], $file_path);
         $url = APP_DOMAIN . ':8081/' . 'image/' . date("Ymd") . '/' . $file_name;

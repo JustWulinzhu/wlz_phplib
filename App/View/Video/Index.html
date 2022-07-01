@@ -77,9 +77,11 @@
             video.style.display = "none";
         }
 
+        function RunOnBeforeUnload() {window.onbeforeunload = function(){ return '将丢失未保存的数据!'; } }
+
         console.log("{{IS_LOOKED}}");
         window.onload=function() { //页面打开即执行
-            // if ("{{IS_LOOKED}}" == "unlooked") {
+            if ("{{IS_LOOKED}}" == "unlooked") {
             $(document).ready(function() {
                 console.log("添加video成功");
                 var video_str = "<video\n" +
@@ -109,9 +111,9 @@
 
                 })
             })
-            // } else {
-            //     console.log("没有添加video");
-            // }
+            } else {
+                console.log("没有添加video");
+            }
 
         };
 
@@ -123,6 +125,7 @@
                 saveTime(currentTime,duration)
             }
             // 发送请求
+            location.reload();
         }
 
         function saveTime(currentTime, duration) {
