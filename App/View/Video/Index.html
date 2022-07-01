@@ -77,7 +77,11 @@
             video.style.display = "none";
         }
 
-        function RunOnBeforeUnload() {window.onbeforeunload = function(){ return '将丢失未保存的数据!'; } }
+        document.addEventListener("visibilitychange", function () {
+            if (!document.hidden) {   //处于当前页面
+                location.reload();
+            }
+        });
 
         console.log("{{IS_LOOKED}}");
         window.onload=function() { //页面打开即执行
