@@ -22,7 +22,7 @@ define("APP_DOMAIN", 'http://' . APP_HOST);
 define("APP_STATIC_PATH", APP_DOMAIN . '/static');
 define("APP_STATIC_PATHS", APP_DOMAINS . '/static');
 //图片服务器
-define("IMAGE_SERVER_DOMAIN", APP_DOMAIN . ':8080');
+define("IMAGE_SERVER_DOMAIN", 'http://image.wlfeng.vip');
 
 //顺序不可变
 require_once APP_ROOT_PATH . "/Public/Autoload.php";

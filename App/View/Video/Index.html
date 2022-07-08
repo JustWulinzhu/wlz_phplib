@@ -2,37 +2,18 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Video</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no, viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta name="format-detection" content="telephone=yes">
+    <title>index</title>
     <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
 
     <style>
-        <!--        /*隐藏video 音量按钮*/-->
-        <!--        video::-webkit-media-controls-mute-button {-->
-        <!--            display: none !important;-->
-        <!--        }-->
-
-        <!--        /*隐藏video 当前按钮*/-->
-        <!--           video::-webkit-media-controls-current-time-display {-->
-                       <!--               display: none !important;-->
-                       <!--           }-->
-
-        <!--        /*隐藏video 总时间*/-->
-        <!--           video::-webkit-media-controls-time-remaining-display {-->
-                       <!--               display: none !important;-->
-                       <!--           }-->
-
-        <!--        /*隐藏video 全屏按钮*/-->
-        <!--           video::-webkit-media-controls-fullscreen-button {-->
-                       <!--               display: none !important;-->
-                       <!--           }-->
-        <!--        video::-webkit-media-controls-timeline {-->
-                    <!--            display: none;-->
-                    <!--        }-->
-        <!--        video::-webkit-media-controls-play-button { display: none; }-->
-
         * {margin:0;padding:0;}
         .wrap{
             width:100%;
@@ -46,6 +27,16 @@
             /*position: absolute;*/
             height: 100%;
             width: 100%;
+        }
+        #videoID{
+            object-fit: contain;
+            height: 550px;
+            width: 90%;
+            margin: 0 auto;
+            position: absolute;
+            top:0;
+            left: 50%;
+            transform: translateX(-50%);
         }
         .img {
             margin-top: 1px;
@@ -67,10 +58,94 @@
             height: 11px;
             background-color: #888888;
         }
+        /*video默认全屏按钮*/
+
+        video::-webkit-media-controls-fullscreen-button{ display: none !important; }
+
+        /*video默认aduio音量按钮*/
+
+        video::-webkit-media-controls-mute-button { display: none !important;}
+
+        /*video默认setting按钮*/
+
+        video::-internal-media-controls-overflow-button{ display: none !important;}
+
+        /*腾讯云点播禁用firefox全屏、设置按钮*/
+
+        .trump-button[sub-component="fullscreen_btn"],.trump-button[now="fullscreen"]{ display:none!important;}
+
+        .trump-button[sub-component="setting"]{ display:none !important;}
+
+        /*禁用video的controls(要慎重！不要轻易隐藏掉，会导致点击视频不能播放)*/
+
+        video::-webkit-media-controls {
+
+            display:none !important;
+
+        }
+
+        /* // 隐藏video 音量按钮 */
+        video::-webkit-media-controls-mute-button {
+            display: none !important;
+        }
+
+        /* // 隐藏video 当前按钮 */
+        video::-webkit-media-controls-current-time-display {
+            display: none !important;
+        }
+
+        /* // 隐藏video 总时间 */
+        video::-webkit-media-controls-time-remaining-display {
+            display: none !important;
+        }
+
+        /* // 隐藏video 全屏按钮 */
+        video::-webkit-media-controls-fullscreen-button {
+            display: none !important;
+        }
+        /* //全屏按钮 */
+        video::-webkit-media-controls-fullscreen-button {
+            display: none;
+        }
+        /* //播放按钮 */
+        video::-webkit-media-controls-play-button {
+            display: none;
+        }
+        /* //进度条 */
+        video::-webkit-media-controls-timeline {
+            display: none;
+        }
+        /* //观看的当前时间 */
+        video::-webkit-media-controls-current-time-display{
+            display: none;
+        }
+        /* //剩余时间 */
+        video::-webkit-media-controls-time-remaining-display {
+            display: none;
+        }
+        /* //音量按钮 */
+        video::-webkit-media-controls-mute-button {
+            display: none;
+        }
+        video::-webkit-media-controls-toggle-closed-captions-button {
+            display: none;
+        }
+        /* //音量的控制条 */
+        video::-webkit-media-controls-volume-slider {
+            display: none;
+        }
+        /* //所有控件 */
+        video::-webkit-media-controls-enclosure{
+            display: none;
+
+        }
 
     </style>
 
     <script>
+
+        var ua = window.navigator.userAgent.toLowerCase();
+        let isWhiteList = ua.match(/MicroMessenger/i) == 'micromessenger'?false:true;
         let globalVideo = null;
         function myhidden() {
             var video = document.getElementById("videoID");
@@ -85,51 +160,75 @@
 
         console.log("{{IS_LOOKED}}");
         window.onload=function() { //页面打开即执行
-            if ("{{IS_LOOKED}}" == "unlooked") {
-            $(document).ready(function() {
-                console.log("添加video成功");
-                var video_str = "<video\n" +
-                    "            id=\"videoID\"\n" +
-                    "            autoplay muted\n" +
-                    "            x5-video-player-fullscreen=\"true\"\n" +
-                    "            x5-playsinline\n" +
-                    "            playsinline\n" +
-                    "            webkit-playsinline\n" +
-                    "            disablePictureInPicture=\"true\"\n" +
-                    "            controlslist=\"nomutebutton notimeline nodownload nofullscreen noremoteplayback noplaybackrate\"\n" +
-                    "            onended=myhidden()\n" +
-                    "    >\n" +
-                    "        <source id=\"source\" src='{{IMAGE_URL}}' type=\"video/mp4\">\n" +
-                    "        您的浏览器不支持 video 标签。\n" +
-                    "    </video>";
-                $("#wrap").append(video_str);
-                //  <source id=\"source\" src={{IMAGE_URL}} type=\"video/mp4\">\n"
-                globalVideo= document.getElementById("videoID");
-                // 提出后台视频暂停时触发
-                globalVideo.addEventListener("pause",function(){
-                    if(globalVideo && globalVideo.duration ){
-                        let duration =globalVideo.duration ||0;//视频时长，秒
-                        let currentTime =globalVideo.currentTime||0//当前播放时长。秒
-                        saveTime(currentTime,duration)
-                    }
+            if ("{{IS_LOOKED}}" == "unlooked" && isWhiteList) {
+                $(document).ready(function() {
+                    console.log("添加video成功");
+                    var video_str = "<video\n" +
+                        "            id=\"videoID\"\n" +
+                        "            autoplay muted \n" +
+                        "            x5-video-player-type=\"h5-page\"\n" +
+                        "            x5-video-player-fullscreen=\"false\"\n" +
+                        "            x-webkit-airplay=\"allow\"\n" +
+                        "            x5-playsinline\n" +
+                        "            playsinline=\"true\"\n" +
+                        "            webkit-playsinline\n" +
+                        "            disablePictureInPicture=\"true\"\n" +
+                        "            controlslist=\"nomutebutton notimeline nodownload nofullscreen noremoteplayback noplaybackrate\"\n" +
+                        "            onended=myhidden()\n" +
+                        "    >\n" +
+                        "        <source id=\"source\" src='{{IMAGE_URL}}' type=\"video/mp4\">\n" +
+                        "        您的浏览器不支持 video 标签。\n" +
+                        "    </video>";
+                    $("#wrap").append(video_str);
+                    //  <source id=\"source\" src={{IMAGE_URL}} type=\"video/mp4\">\n"
+                    globalVideo= document.getElementById("videoID");
+                    globalVideo.setAttribute("nomutebutton", "notimeline", "nodownload", "nofullscreen" ,"noremoteplayback", "noplaybackrate");
+                    globalVideo.controls=false;
+                    globalVideo.play();
+                    let isCanPlay = false;
+                    globalVideo.addEventListener("play",function(){
+                        console.log('----play-----')
+                        isCanPlay = true;
+                    })
+                    //  setTimeout(()=>{
+                    //     if(!isCanPlay){
+                    //         myhidden()
+                    //     }
+                    //  },500)
+                    // 退出后台视频暂停时触发
+                    globalVideo.addEventListener("pause",function(){
+                        if(globalVideo && globalVideo.duration ){
+                            let duration =globalVideo.duration ||0;//视频时长，秒
+                            let currentTime =globalVideo.currentTime||0//当前播放时长。秒
+                            saveTime(currentTime,duration)
+                        }
+
+                    });
 
                 })
-            })
             } else {
                 console.log("没有添加video");
             }
 
         };
 
-        window.onunload = function () {
+
+        var app = new Vue({
+            el: '#wrap',
+            data: {
+                message: 'Hello Vue!'
+            }
+        })
+
+
+
+        window.onbeforeunload = function () {
             let onunloadVideo=document.getElementById('videoID');
             if(onunloadVideo && onunloadVideo.duration ){
                 let duration =onunloadVideo.duration ||0;//视频时长，秒
                 let currentTime =onunloadVideo.currentTime||0//当前播放时长。秒
                 saveTime(currentTime,duration)
             }
-            // 发送请求
-            location.reload();
         }
 
         function saveTime(currentTime, duration) {
@@ -176,9 +275,6 @@
     <!--    <img id="heiping"  src="{{APP_STATIC_PATHS}}/mooc/images/heiping.png">-->
 </div>
 <div id="grep_line"> </div>
-<div>image::{{IMAGE_URL}}</div>
-<div>IS_LOOKED::{{IS_LOOKED}}</div>
-
 <!--<div class="img">-->
 <!--    <img width="50%" height="300" src="{{IMAGE_URL}}">-->
 <!--</div>-->
