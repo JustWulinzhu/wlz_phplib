@@ -185,7 +185,7 @@
         let IS_LOOKED ='{{IS_LOOKED}}';//unlooked
         // console.log("{'{IS_LOOKED}}");
         window.onload=function() { //页面打开即执行
-            if (IS_LOOKED == "unlooked") {
+            if (IS_LOOKED == "unlooked" && isWhiteList) {
                 $(document).ready(function() {
                     console.log("添加video成功");
                     var video_str = "<video\n" +
