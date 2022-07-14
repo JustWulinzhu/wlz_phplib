@@ -25,11 +25,9 @@ class Dorecord extends \App\Controller\Base {
         $record = @file_get_contents($file);
         if ($record) {
             $record_arr = explode(" ", $record);
-            $old_total_time = $record_arr[0];
             $old_current_time = $record_arr[1];
             $new_current_time = $old_current_time + $current_time;
             $content = $total_time . ' ' . $new_current_time;
-            Log::getInstance()->debug([$old_total_time, $old_current_time, $new_current_time]);
             file_put_contents($file, $content);
         } else {
             $content = $total_time . ' ' . $current_time;
