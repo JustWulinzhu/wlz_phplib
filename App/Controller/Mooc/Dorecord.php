@@ -32,6 +32,7 @@ class Dorecord extends \App\Controller\Base {
         } else {
             $content = $total_time . ' ' . $current_time;
             file_put_contents($file, $content);
+            chmod($file, 0777);
         }
     }
 
