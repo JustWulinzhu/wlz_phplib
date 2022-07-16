@@ -13,16 +13,16 @@ class Dorecord extends \App\Controller\Base {
 
     public function index($args)
     {
-        Log::getInstance()->debug(['video_record', json_encode(Param::request())]);
+        $ip = Tools::getCliIp();
         $param = Param::request();
         $total_time = intval($param["duration"]);
         $current_time = intval($param["currentTime"]);
 
-        $ip = Tools::getCliIp();
         $content = @file_get_contents("/tmp/video.txt");
         $name = pathinfo($content)['basename'];
         $file = "/tmp/video_time_record_{$ip}_{$name}.txt";
         $record = @file_get_contents($file);
+        Log::getInstance()->debug(['video_record', $ip, $name, json_encode(Param::request())]);
         if ($record) {
             $record_arr = explode(" ", $record);
             $old_current_time = $record_arr[1];
