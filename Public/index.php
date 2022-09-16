@@ -29,5 +29,5 @@ try {
     $ret = $obj->index(\S\Param::get());
     outputJson($ret);
 } catch (\Throwable $e) {
-    outputJson([], $e->getCode(), $e->getMessage());
+    throw $e;
 }

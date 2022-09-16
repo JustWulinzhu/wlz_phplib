@@ -33,6 +33,18 @@ class Test extends \App\Controller\Base {
      * @throws \Exception
      */
     public function index($arr = null) {
+        throw new \Exception("测试异常");
+        $files = Tools::scanDir("/data1/shell");
+        dd($files);
+        $test = (new BaseRedis())->getInstance()->get("a");
+        echo $test;
+        $redis = (new BaseRedis())->getInstance();
+        $redis->set("b", "b");
+        dd($redis->get("b"));
+//        $a = crc32("image.wlfeng.vip");
+//        echo $a;
+        $secret = hash("crc32", "image.wlfeng.vip");
+        dd($secret);
         $ret = Tools::insertStr("abcd", 2, "xxoo");
         dd($ret);
         Tools::myStrReplace("abcdbcfff", "bc" , "xxoo");

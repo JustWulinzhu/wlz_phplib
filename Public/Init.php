@@ -28,8 +28,5 @@ define("IMAGE_SERVER_DOMAIN", 'http://image.wlfeng.vip');
 require_once APP_ROOT_PATH . "/Public/Autoload.php";
 require_once APP_ROOT_PATH . "/Ext/Smarty/Smarty.class.php";
 require_once APP_ROOT_PATH . "/Ext/phpext/F.php";
-
-//打开错误提示
-ini_set("display_errors", "On");
-//显示所有错误
-ini_set("error_reporting",E_ALL);
+require_once APP_ROOT_PATH . "/Public/Error.php";
+require_once APP_ROOT_PATH . "/Public/Exception.php";
