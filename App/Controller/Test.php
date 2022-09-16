@@ -33,7 +33,7 @@ class Test extends \App\Controller\Base {
      * @throws \Exception
      */
     public function index($arr = null) {
-        throw new \Exception("测试异常");
+        throw new \S\Exceptions("测试异常AAA");
         $files = Tools::scanDir("/data1/shell");
         dd($files);
         $test = (new BaseRedis())->getInstance()->get("a");
