@@ -50,6 +50,7 @@ class Test extends \App\Controller\Base {
         dd($newArr);
     }
 
+
     public function lua() {
         try {
             $redis = (new BaseRedis())->getInstance(BaseRedis::REDIS_MOD_SINGLE);
