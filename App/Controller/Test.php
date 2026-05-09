@@ -33,26 +33,53 @@ class Test extends \App\Controller\Base {
      * @throws \Exception
      */
     public function index($arr = null) {
-        $ret = Tools::insertStr("abcd", 2, "xxoo");
-        dd($ret);
-        Tools::myStrReplace("abcdbcfff", "bc" , "xxoo");
+        phpinfo();
+        $arr = [
+            [
+                'name' => '张三',
+                'age' => 18,
+                'sex' => '男'
+            ],
+            [
+                'name' => '李四',
+                'age' => 19,
+                'sex' => '男'
+            ]
+        ];
+        $newArr = Tools::arraySort($arr, 'age', 'desc');
+        dd($newArr);
+    }
 
-
-        $str = crc32("wulinzhu");
-        $num = $str % 100;
-        dd($num);
-
-        $lock = (new Lock())->mutexLock("lock_key");
-        if ($lock) {
-            Log::getInstance()->debug(['success']);
-        } else {
-            Log::getInstance()->warning(['fail']);
+    public function lua() {
+        try {
+            $redis = (new BaseRedis())->getInstance(BaseRedis::REDIS_MOD_SINGLE);
+            if ($redis->set("lock:clientId:111", 123, "NX", "EX", 10)) {
+                echo "加锁成功";
+                //处理业务 or 进MQ异步处理
+            }
+        } catch (\Exception $e) {
+            //记录业务日志
+        } finally {
+            // 释放锁 调用lua脚本原子操作删除锁
+            $luaScript = <<<LUA
+local lockKey = KEYS[1];    --加锁的key
+local clientId = ARGV[1];   --锁key的value
+if redis.call("GET", lockKey) == clientId then
+    redis.call("DEL", lockKey); --是自己的锁，进行删除
+    return 1;
+else
+    return 0; --不是自己锁，返回0
+end
+LUA;
+            $lockDel = $redis->eval($luaScript, ["lock:clientId:111", 123], 1);
+            if ($lockDel) {
+                echo "删除成功";
+            } else {
+                echo "删除失败";
+            }
         }
+
     }
 
-    public function demo() {
-        $ret = (new Db('url'))->select(['key' => 12345678]);
-        return $ret;
-    }
 
 }

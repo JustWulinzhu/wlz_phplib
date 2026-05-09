@@ -25,6 +25,7 @@ class Log {
     private static $type;
 
     const LOG_TYPE_DEBUG = 'debug';
+    const LOG_TYPE_INFO = 'info';
     const LOG_TYPE_WARNING = 'warning';
     const LOG_TYPE_ERROR = 'error';
 
@@ -72,6 +73,18 @@ class Log {
      */
     public function debug(array $data, $dir_name = '') {
         self::$type = self::LOG_TYPE_DEBUG;
+        return $this->log($data, $dir_name);
+    }
+
+    /**
+     * info日志
+     * @param array $data
+     * @param string $dir_name
+     * @return bool|false|int
+     * @throws \Exception
+     */
+    public function info(array $data, $dir_name = '') {
+        self::$type = self::LOG_TYPE_INFO;
         return $this->log($data, $dir_name);
     }
 
@@ -128,6 +141,7 @@ class Log {
         $file = self::$type . "." . date('Ymd', time()) . ".log";
         //日志全路径
         $dir_file = $dir . DIRECTORY_SEPARATOR . $file;
+
         if (! file_exists($dir)) {
             //创建目录, 需要www目录的写权限,chown -R www-data:root /www,解决办法:把www目录所属者改为对应php程序执行的用户(查看php执行用户ps aux)
             mkdir($dir, 0777, true);

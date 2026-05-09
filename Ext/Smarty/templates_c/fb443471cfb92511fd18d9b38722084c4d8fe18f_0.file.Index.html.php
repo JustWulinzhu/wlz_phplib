@@ -1,0 +1,363 @@
+<?php
+/* Smarty version 3.1.34-dev-7, created on 2026-02-01 02:51:05
+  from '/Users/wulinzhu/Documents/www/wlz_phplib/App/View/Resume/Index.html' */
+
+/* @var Smarty_Internal_Template $_smarty_tpl */
+if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
+  'version' => '3.1.34-dev-7',
+  'unifunc' => 'content_697ebf99eecd68_88125104',
+  'has_nocache_code' => false,
+  'file_dependency' => 
+  array (
+    'fb443471cfb92511fd18d9b38722084c4d8fe18f' => 
+    array (
+      0 => '/Users/wulinzhu/Documents/www/wlz_phplib/App/View/Resume/Index.html',
+      1 => 1652804884,
+      2 => 'file',
+    ),
+  ),
+  'includes' => 
+  array (
+  ),
+),false)) {
+function content_697ebf99eecd68_88125104 (Smarty_Internal_Template $_smarty_tpl) {
+?><!DOCTYPE html>
+<html>
+<head>
+<title>武林柱的首页</title>
+<!--mobile apps-->
+<link rel="icon" href="<?php echo IMAGE_SERVER_DOMAIN;?>
+/image/gou.png" type="images/x-ico" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="My Resume Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
+	SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
+<?php echo '<script'; ?>
+ type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } <?php echo '</script'; ?>
+>
+<!--mobile apps-->
+<!--Custom Theme files-->
+<!--<link rel="shortcut icon" href="<?php echo APP_STATIC_PATHS;?>
+/resume/images/your_ico.ico" type="image/x-icon">-->
+<!--<link rel="icon" href="<?php echo APP_STATIC_PATHS;?>
+/resume/images/your_ico.ico" type="image/x-icon">-->
+<link href="<?php echo APP_STATIC_PATHS;?>
+/resume/css/bootstrap.css" type="text/css" rel="stylesheet" media="all">
+<link href="<?php echo APP_STATIC_PATHS;?>
+/resume/css/style.css" type="text/css" rel="stylesheet" media="all">
+<link rel="stylesheet" href="<?php echo APP_STATIC_PATHS;?>
+/resume/css/swipebox.css">
+<!--//Custom Theme files-->
+<!--js-->
+<?php echo '<script'; ?>
+ src="<?php echo APP_STATIC_PATHS;?>
+/resume/js/jquery-1.11.1.min.js"><?php echo '</script'; ?>
+>
+<!-- //js -->
+<!--web-fonts-->
+<!--<link href='//fonts.googleapis.com/css?family=Overlock:400,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>-->
+<!--<link href='//fonts.googleapis.com/css?family=Roboto+Condensed:400,300,300italic,400italic,700,700italic' rel='stylesheet' type='text/css'>-->
+<!--//web-fonts-->
+<!--start-smooth-scrolling-->
+<?php echo '<script'; ?>
+ type="text/javascript" src="<?php echo APP_STATIC_PATHS;?>
+/resume/js/move-top.js"><?php echo '</script'; ?>
+>
+<?php echo '<script'; ?>
+ type="text/javascript" src="<?php echo APP_STATIC_PATHS;?>
+/resume/js/easing.js"><?php echo '</script'; ?>
+>
+<?php echo '<script'; ?>
+ type="text/javascript">
+		jQuery(document).ready(function($) {
+			$(".scroll").click(function(event){		
+				event.preventDefault();
+				$('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
+			});
+		});
+<?php echo '</script'; ?>
+>
+<!--//end-smooth-scrolling-->
+</head>
+<body>
+	<!--banner-->
+	<div id="home" class="banner">
+		<div class="banner-info">
+			<div class="container">
+				<div class="col-md-4 header-left">
+					<img src="<?php echo APP_STATIC_PATHS;?>
+/resume/images/biyezhao.jpg" alt=""/>
+				</div>
+				<div class="col-md-8 header-right">
+					<h2>Hello</h2>
+					<h1>武林柱</h1>
+					<h6>服务端研发工程师</h6>
+					<ul class="address">
+						<li>
+							<ul class="address-text">
+								<li><b>出生日期</b></li>
+								<li>1991-04</li>
+							</ul>
+						</li>
+						<li>
+							<ul class="address-text">
+								<li><b>性别</b></li>
+								<li>男</li>
+							</ul>
+						</li>
+						<li>
+							<ul class="address-text">
+								<li><b>联系电话 </b></li>
+								<li>18515831680</li>
+							</ul>
+						</li>
+						<li>
+							<ul class="address-text">
+								<li><b>工作年限</b></li>
+								<li>5年+</li>
+							</ul>
+						</li>
+						<li>
+							<ul class="address-text">
+								<li><b>居住地址 </b></li>
+								<li>北京市通州区</li>
+							</ul>
+						</li>
+						<li>
+							<ul class="address-text">
+								<li><b>个人邮箱 </b></li>
+								<li><a target="_blank"> 18515831680@163.com</a></li>
+							</ul>
+						</li>
+
+					</ul>
+				</div>
+				<div class="clearfix"> </div>
+			</div>
+		</div>
+	</div>
+	<!--//banner-->
+	<!--top-nav-->
+	<div class="top-nav wow">
+		<div class="container">
+			<div class="navbar-header logo">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+					导航
+				</button>
+			</div>
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				<div class="menu">
+					<ul class="nav navbar">
+						<li><a href="#about" class="scroll">关于我</a></li>
+						<li><a href="#work" class="scroll">个人经历</a></li>
+						<li><a href="#education" class="scroll">教育背景</a></li>
+						<li><a href="#skills" class="scroll">专业技能</a></li>
+						<li><a href="#contact" class="scroll">联系我们</a></li>
+					</ul>
+					<div class="clearfix"> </div>
+				</div>
+			</div>
+		</div>
+	</div>	
+	<!--//top-nav-->
+	<!--about-->
+	<div id="about" class="about">
+		<div class="container">
+			<h3 class="title"> 关于我</h3>
+			<div class="col-md-8 about-left">
+				<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;技术栈：PHP、Mysql、Redis、Git、Linux、Shell、Nginx、Docker、Laravel及Yaf框架等，有Java开发经验；</p>
+				<br/>
+				<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Github：https://github.com/JustWulinzhu；</p>
+				<br/>
+				<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;较好的解决问题能力，学习能力，热爱编程喜欢设计出优美的代码；</p>
+
+			</div>
+			<div class="col-md-4 about-right">
+				<ul>
+					<h5>荣誉证书</h5>
+					<li><span class="glyphicon glyphicon-menu-right" ></span> 天津工业大学本科学历</li>
+				</ul>
+				<div class="clearfix"> </div>
+			</div>
+			<div class="clearfix"> </div>
+		</div>
+	</div>
+	<!--//about-->
+	<!--work-experience-->
+	<div id="work" class="work">
+		<div class="container">
+			<h3 class="title">个人经历</h3>
+			<div class="work-info"> 
+				<div class="col-md-6 work-left"> 
+					<h4>2017.12 - 至今 </h4>
+				</div>
+				<div class="col-md-6 work-right"> 
+					<h5><span class="glyphicon glyphicon-briefcase"> </span> 北京融兴通达科技有限公司</h5>
+					<p> 哈尔滨银行微信银行公众号开发、哈尔滨银行微信银行小程序开发。</p>
+				</div>
+				<div class="clearfix"> </div>
+			</div>
+			<div class="work-info"> 
+				<div class="col-md-6 work-right work-right2"> 
+					<h4>2017.3 - 2017.12 </h4>
+				</div>
+				<div class="col-md-6 work-left ">
+					<h5> 北京文思海辉 <span class="glyphicon glyphicon-briefcase"> </span></h5>
+					<p>外派百度地图地图内容生态部，负责百度地图国际化服务端开发。</p>
+				</div>
+				<div class="clearfix"> </div>
+			</div>
+			<div class="work-info"> 
+				<div class="col-md-6 work-left"> 
+					<h4>2015.7 - 2017.3 </h4>
+				</div>
+				<div class="col-md-6 work-right">
+					<h5> 北京厨品秀网络科技有限公司 <span class="glyphicon glyphicon-briefcase"></span> </h5>
+					<p>公司库房系统和商家后台系统，以及系统核心接口设计与开发。 </p>
+				</div>
+				<div class="clearfix"> </div>
+			</div>
+		</div>
+	</div>
+	<!--//work-experience-->
+	<!--education-->
+	<div id="education" class="education">
+		<div class="container">
+			<h3 class="title">教育背景</h3>
+			<div class="work-info"> 
+				<div class="col-md-6 work-left"> 
+					<h4>2011 - 2015</h4>
+				</div>
+				<div class="col-md-6 work-right"> 
+					<h5><span class="glyphicon glyphicon-education"> </span> 天津工业大学</h5>
+					<p>计算机科学与软件学院4年本科。</p>
+				</div>
+				<div class="clearfix"> </div>
+			</div>
+		</div>
+	</div>
+	<!--//education-->
+	<!--skills-->
+	<div id="skills" class="skills">
+		<div class="container">
+			<h3 class="title">专业技能</h3>
+			<div class="skills-info">
+				<div class="col-md-6 bar-grids">
+					<h6>PHP  <span> 掌握 </span></h6>
+					<div class="progress">
+						<div class="progress-bar progress-bar-striped active" style="width: 85%">
+						</div>
+					</div>
+					<h6>Mysql <span> 掌握 </span></h6>
+					<div class="progress">
+						<div class="progress-bar progress-bar-striped active" style="width: 85%">
+						</div>
+					</div>
+					<h6>Linux<span>掌握 </span></h6>
+					<div class="progress">
+						<div class="progress-bar progress-bar-striped active" style="width: 85%">
+						</div>
+					</div>
+					<h6>Nginx <span> 掌握 </span></h6>
+					<div class="progress">
+						<div class="progress-bar progress-bar-striped active" style="width: 80%">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6 bar-grids">
+					<h6>Shell <span> 掌握 </span></h6>
+					<div class="progress">
+						<div class="progress-bar progress-bar-striped active" style="width: 80%">
+						</div>
+					</div>
+					<h6>Redis<span> 掌握 </span></h6>
+					<div class="progress">
+						<div class="progress-bar progress-bar-striped active" style="width: 80%">
+						</div>
+					</div>
+					<h6>Git<span>掌握 </span></h6>
+					<div class="progress">
+						<div class="progress-bar progress-bar-striped active" style="width: 80%">
+						</div>
+					</div>
+					<h6>Laravel/TP/Yaf<span> 掌握 </span></h6>
+					<div class="progress">
+						<div class="progress-bar progress-bar-striped active" style="width: 80%">
+						</div>
+					</div>
+				</div>
+				<div class="clearfix"> </div>
+			</div>
+		</div>
+	</div>
+	<!--//education-->
+	<!--portfolio-->
+	<!--//portfolio-->
+	<!--contact -->
+	<div class="welcome contact" id="contact">
+		<div class="container">
+			<h3 class="title">联系我们</h3>
+			<div class="contact-row">
+				<div class="col-md-6 contact-left">
+					<iframe src="http://map.baidu.com/#panoid=09002200011706171137054909Z&panotype=street&heading=0&pitch=0&l=19&tn=B_NORMAL_MAP&sc=0&newmap=1&shareurl=1&pid=09002200011706171137054909Z"></iframe>
+				</div>
+				<div class="col-md-6 contact-right">
+					<div class="address-left">
+						<p>北京朝阳区赵九路风景线,中国 </p>
+					</div>
+					<div class="address-right">
+						<p>电话 : 18515831680</p>
+						<p>E-mail : <a href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=OwoLDg0MAwgIDgJ7SkoVWFRW" target="_blank">18515831680@163.com</a></p>
+					</div>
+					<div class="clearfix"></div>
+					<div class="contact-form">
+						<form action="#" method="post">
+							<input type="text" name="Name" placeholder="Name" required="">
+							<input class="email" name="Email" type="text" placeholder="Email" required="">
+							<input class="phone" name="phone" type="text" placeholder="Phone" required="">
+							<textarea name="Message" placeholder="Message" required=""></textarea>
+							<input type="submit" value="提交" >
+						</form>
+					</div>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+		</div>
+	</div>
+	<!--//contact -->
+	<!--footer-->
+	<div class="footer">
+		<div class="container">
+			<p>武林柱的简介</p>
+		</div>
+	</div>
+	<!--//footer-->
+	<!--smooth-scrolling-of-move-up-->
+	<?php echo '<script'; ?>
+ type="text/javascript">
+		$(document).ready(function() {
+		
+			var defaults = {
+				containerID: 'toTop', // fading element id
+				containerHoverID: 'toTopHover', // fading element hover id
+				scrollSpeed: 1200,
+				easingType: 'linear' 
+			};
+			
+			$().UItoTop({ easingType: 'easeOutQuart' });
+			
+		});
+	<?php echo '</script'; ?>
+>
+	<!--//smooth-scrolling-of-move-up-->
+	<!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <?php echo '<script'; ?>
+ src="<?php echo APP_STATIC_PATHS;?>
+/resume/js/bootstrap.js"><?php echo '</script'; ?>
+>
+</body>
+</html><?php }
+}
